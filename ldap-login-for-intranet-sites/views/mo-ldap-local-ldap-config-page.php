@@ -311,7 +311,7 @@ if ( strcasecmp( $active_step, '1' ) === 0 ) {
 				<br>
 				<div class="mo_ldap_position_relative mo_ldap_centerlized_btn">
 					<input type="submit" class="mo_ldap_save_user_mapping" value="Test Connection & Save"/>
-					<button type="button" id="mo_ldap_troubleshooting_btn1" class="mo_ldap_troubleshooting_btn mo_ldap_wireframe_btn">Troubleshooting</button>
+					<button type="button" id="mo_ldap_troubleshooting_btn1" class="mo_ldap_troubleshooting_btn">Troubleshooting</button>
 				</div>
 				<div id="mo_ldap_troubleshooting1" class="mo_ldap_local_hover_container mo_ldap_local_more_info_container3 mo_ldap_d_none">
 					Are you having trouble connecting to your LDAP server from this plugin?
@@ -529,7 +529,7 @@ if ( strcasecmp( $active_step, '1' ) === 0 ) {
 
 				<div class="mo_ldap_position_relative mo_ldap_centerlized_btn">
 					<input type="submit" class="mo_ldap_user_mapping_btn1" value="Save User Mapping" />
-					<button type="button" id="mo_ldap_troubleshooting_btn2" class="mo_ldap_user_mapping_btn2 mo_ldap_wireframe_btn">Troubleshooting</button>
+					<button type="button" id="mo_ldap_troubleshooting_btn2" class="mo_ldap_user_mapping_btn2">Troubleshooting</button>
 				</div>
 				<div id="mo_ldap_troubleshooting2" class="mo_ldap_local_hover_container mo_ldap_local_more_info_container3 mo_ldap_d_none mo_ldap_local_font_weight_normal">
 					Are you having trouble connecting to your LDAP server from this plugin?

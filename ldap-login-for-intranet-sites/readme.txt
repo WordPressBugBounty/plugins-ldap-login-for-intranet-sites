@@ -5,7 +5,7 @@ Tags: active directory, active directory integration, ldap, ldap authentication,
 Requires at least: 5.0
 Tested up to: 6.6
 Requires PHP: 5.2.0
-Stable tag: 5.1.4
+Stable tag: 5.1.5
 License: MIT/Expat
 License URI: https://docs.miniorange.com/mit-license
 
@@ -13,9 +13,9 @@ Active Directory Integration/LDAP Integration enables login & sync in WordPress 
 
 == Description ==
 
-[Features](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites#Features) | [Setup Guide](https://plugins.miniorange.com/step-by-step-guide-for-wordpress-ldap-login-plugin) | [Documentation](https://plugins.miniorange.com/wordpress-ldap-setup-guides) | [Integrations](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites#Add-Ons) | [Contact Us](https://www.miniorange.com/contact)
+[Features](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration#Features) | [Setup Guide](https://plugins.miniorange.com/step-by-step-guide-for-wordpress-ldap-login-plugin?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration) | [Documentation](https://plugins.miniorange.com/wordpress-ldap-setup-guides?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration) | [Integrations](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration#Add-Ons) | [Contact Us](https://www.miniorange.com/contact?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)
 
-[Active Directory Integration / LDAP Integration Login for Intranet Sites plugin](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites) allows you to authenticate your users using their Active Directory/LDAP credentials into your WordPress site. It helps in mapping the Active Directory/LDAP attributes to the WordPress user profile attributes and also lets you assign WordPress roles to your LDAP/Active Directory users. Additionally, the plugin has a user authentication report feature, which logs each unsuccessful Active Directory/LDAP authentication request, providing additional security functionalities. 
+[Active Directory Integration / LDAP Integration Login for Intranet Sites plugin](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)  allows you to authenticate your users using their Active Directory/LDAP credentials into your WordPress site. It helps map the Active Directory/LDAP attributes to the WordPress user profile attributes and also lets you assign WordPress roles to your LDAP/Active Directory users. Additionally, the plugin has a user authentication report feature, which logs each unsuccessful Active Directory/LDAP authentication request, providing additional security functionalities.
 
 This plugin allows users to authenticate against various Active Directory /other LDAP Servers including but not limited to:
 
@@ -31,22 +31,22 @@ This plugin allows users to authenticate against various Active Directory /other
 **How the Plugin Works:**
 
 Plugin
-[LDAP/Active Directory Login for Intranet Sites Plugin](https://plugins.miniorange.com/step-by-step-guide-for-wordpress-ldap-login-plugin)
-[LDAP/Active Directory login for Intranet Sites Premium Plugin](https://plugins.miniorange.com/guide-to-configure-miniorange-ldap-login-premium-plugin-for-wordpress)
-[LDAP/Active Directory login for Intranet Sites Premium Plugin for Multisite](https://plugins.miniorange.com/guide-to-setup-multisite-ldap-ad-plugin)
-[LDAP/Active Directory login for Cloud/Shared Hosting Plugin](https://plugins.miniorange.com/step-by-step-guide-for-wordpress-ldap-login-cloud)
+[LDAP/Active Directory Login for Intranet Sites Plugin](https://plugins.miniorange.com/step-by-step-guide-for-wordpress-ldap-login-plugin?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)
+[LDAP/Active Directory login for Intranet Sites Premium Plugin](https://plugins.miniorange.com/guide-to-configure-miniorange-ldap-login-premium-plugin-for-wordpress?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)
+[LDAP/Active Directory login for Intranet Sites Premium Plugin for Multisite](https://plugins.miniorange.com/guide-to-setup-multisite-ldap-ad-plugin?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)
+[LDAP/Active Directory login for Cloud/Shared Hosting Plugin](https://plugins.miniorange.com/step-by-step-guide-for-wordpress-ldap-login-cloud?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)
 
 Add Ons
-[Kerberos Single Sign On (SSO)](https://plugins.miniorange.com/guide-to-setup-kerberos-single-sign-sso)
-[Sync User LDAP Directory](https://plugins.miniorange.com/guide-to-configure-miniorange-directory-sync-add-on-for-wordpress)
-[Profile Picture Sync for WordPress and BuddyPress](https://plugins.miniorange.com/configure-miniorange-profile-picture-map-add-on-for-wordpress)
-[Search Staff/Employee from LDAP Active Directory](https://plugins.miniorange.com/setup-active-directory-ldap-users-search-plugin)
-[Password Sync with LDAP Server](https://plugins.miniorange.com/guide-to-setup-password-sync-with-ldap-add-on)
+[Kerberos Single Sign On (SSO)](https://plugins.miniorange.com/guide-to-setup-kerberos-single-sign-sso?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)
+[Sync User LDAP Directory](https://plugins.miniorange.com/guide-to-configure-miniorange-directory-sync-add-on-for-wordpress?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)
+[Profile Picture Sync for WordPress and BuddyPress](https://plugins.miniorange.com/configure-miniorange-profile-picture-map-add-on-for-wordpress?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)
+[Search Staff/Employee from LDAP Active Directory](https://plugins.miniorange.com/setup-active-directory-ldap-users-search-plugin?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)
+[Password Sync with LDAP Server](https://plugins.miniorange.com/guide-to-setup-password-sync-with-ldap-add-on?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)
 
 = Minimum Requirements =
 * Compatible with WordPress version 5.0 or higher
 * Compatible with PHP version 5.2.0 or higher
-* [PHP LDAP extension Enabled](https://faq.miniorange.com/knowledgebase/how-to-enable-php-ldap-extension)
+* [PHP LDAP extension Enabled](https://faq.miniorange.com/knowledgebase/how-to-enable-php-ldap-extension/?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)
 
 **Get a quick overview of our product**
 
@@ -54,33 +54,33 @@ https://www.youtube.com/watch?v=VdAIDLCN-cQ
 
 **Features of the AD Integration/ LDAP Integration Login for Intranet Sites Plugin**
 
-The LDAP/Active Directory Login (AD Login) for Intranet sites plugin includes user management features as well, such as adding users from Active Directory or another LDAP Directory who are not registered in WordPress, WordPress role mapping, LDAP/Active Directory to WordPress attribute mapping, and more. We also provide additional add-ons that enhance the functionality of the basic plugin such as enabling [Kerberos/NTLM SSO Authentication](https://plugins.miniorange.com/kerberos-authentication-support), importing users from Active Directory/LDAP Server to WordPress, creating users in Active Directory/LDAP server when created/registered in the WordPress site, sync users between the Active Directory/LDAP server and WordPress site, sync LDAP/Active Directory Profile Picture thumbnail attribute to WordPress user profile picture, AD integration with third-party plugins and more.
+The LDAP/Active Directory Login for Intranet sites plugin includes user management features as well, such as adding users from Active Directory or another LDAP Directory who are not registered in WordPress, WordPress role mapping, LDAP/Active Directory to WordPress attribute mapping, and more. We also provide additional add-ons that enhance the functionality of the basic plugin such as enabling [Kerberos/NTLM SSO Authentication](https://plugins.miniorange.com/kerberos-authentication-support?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration), importing users from Active Directory/LDAP Server to WordPress, creating users in Active Directory/LDAP server when created/registered in the WordPress site, sync users between the Active Directory/LDAP server and WordPress site, sync LDAP/Active Directory Profile Picture thumbnail attribute to WordPress user profile picture, AD integration with third-party plugins and more.
 
 = Free Version Features:- =
 
-* Perform LDAP Authentication for any user trying to log into the WordPress website whose Active Directory/LDAP credentials are stored in the Active Directory/LDAP server. Additionally, logging in with WordPress credentials is also supported.
-* Upon authentication, keep the WordPress User's profile information in sync with the Active Directory/other LDAP Directories.
-* Automatic User Registration in WordPress: Automatically create WordPress users who are present in the LDAP server/Active Directory upon login.
-* Role Mapping: You can select a default WordPress role and assign it to all the Active Directory/LDAP users while LDAP/AD login (Active Directory Login) is performed.
-* Attribute mapping: Map the LDAP/Active Directory mail attribute to the WordPress user email and sync upon every successful LDAP/Active Directory Login (AD Login).
-* [LDAPS (LDAP Secure Connection) support](https://www.miniorange.com/guide-to-setup-ldaps-on-windows-server): Supports establishing Secure Connection between the WordPress site and Active Directory/LDAP server via LDAPS protocol, this ensures protection against credential theft.
-* Authentication Report: Keep logs of all the Active Directory/LDAP users who try to authenticate on your WordPress website and fail. A lot of the time these are security risks. The LDAP User Authentication report will give you a list of these users, you can also export a CSV of this report.
+* <strong>LDAP/AD Login into WordPress:</strong> Perform LDAP Authentication for any user trying to log into the WordPress website whose Active Directory/LDAP credentials are stored in the Active Directory/LDAP server. Additionally, logging in with WordPress credentials is also supported.
+* <strong>Sync Active Directory User Profiles:</strong> Upon authentication, keep the WordPress User’s profile information in sync with the Active Directory/other LDAP Directories.
+* <strong>Automatic User Registration in WordPress:</strong> Automatically create WordPress users who are present in the LDAP server/Active Directory upon login.
+* <strong>Role Mapping:</strong> You can select a default WordPress role and assign it to all the Active Directory/LDAP users while LDAP/AD login (Active Directory Login) is performed.
+* <strong>Attribute mapping:</strong> Map the LDAP/Active Directory mail attribute to the WordPress user email and sync upon every successful LDAP/Active Directory Login (AD Login).
+* <strong>[LDAPS (LDAP Secure Connection) support](https://www.miniorange.com/guide-to-setup-ldaps-on-windows-server?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration):</strong>Supports establishing Secure Connection between the WordPress site and Active Directory/LDAP server via LDAPS protocol, this ensures protection against credential theft.
+* <strong>Authentication Report:</strong> Keep logs of all the Active Directory/LDAP users who try to authenticate on your WordPress website and fail. A lot of the time these are security risks. The LDAP User Authentication report will give you a list of these users, you can also export a CSV of this report.
 * Automatic fetching of LDAP Organizational Units from LDAP Server/Active Directory while configuring Search Base for LDAP/AD Login (Active Directory Login).
 * Test connection to your Active Directory/other LDAP Directory while configuring LDAP server information in the plugin.
 * Test authentication using credentials stored in your Active Directory/other LDAP Directory after configuring LDAP server information in the plugin.
 * Ability to test against demo Active Directory/other LDAP Directory and demo credentials. You can do this using the demo LDAP Directory credentials from [here](https://www.forumsys.com/2022/05/10/online-ldap-test-server/).
 * Support Integration with hybrid Active Directory infrastructure.
 * Compatible with the latest versions of WordPress and PHP.
-* We provide extensive easy-to-understand [documentation](https://plugins.miniorange.com/wordpress-ldap-setup-guides) as well as [YouTube setup videos](https://www.youtube.com/playlist?list=PL2vweZ-PcNpd3lEzmiLZwL_cAG_Evg2QC) which will assist you while configuring our LDAP Active Directory plugin.
+* We provide extensive easy-to-understand [documentation](https://plugins.miniorange.com/wordpress-ldap-setup-guides?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration) as well as [YouTube setup videos](https://www.youtube.com/playlist?list=PL2vweZ-PcNpd3lEzmiLZwL_cAG_Evg2QC&utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration) which will assist you while configuring our LDAP Active Directory plugin.
 
 
 **You can find out how to configure the (AD Integration) Active Directory Integration / LDAP Integration plugin through the video below**
 
 https://www.youtube.com/watch?v=5DUGgP-Hf-k
 
-This LDAP/Active Directory Login (AD Login) plugin is free to use under the MIT/Expat license. If you wish to use enhanced features, you may purchase our [Premium version](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites). We also provide additional [add-ons](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites#LDAP-intranet-add-ons) that enhance the functionality of the basic WordPress LDAP/AD Login plugin. This will help support further development of our LDAP plugin, and in turn, serve our customers better.
+This LDAP/Active Directory Login (AD Login) plugin is free to use under the MIT/Expat license. If you wish to use enhanced features, you may purchase our [Premium version](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration). We also provide additional [add-ons](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration#Add-Ons) that enhance the functionality of the basic WordPress LDAP/AD Login plugin. This will help support further development of our LDAP plugin, and in turn, serve our customers better.
 
-= [Premium Version Features](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites)=
+= [Premium Version Features](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)=
 
 * Our premium plugin includes additional features, as well as the aforementioned free plugin features. 
 * <strong>Login With Any LDAP Attribute Of Your Choice:</strong> Authenticate users against multiple LDAP/Active Directory username attributes like sAMAccountName, UID, UserPrincipalName, mail, cn, or any other custom LDAP attribute(s) according to your LDAP Active Directory/any other LDAP directory.
@@ -98,31 +98,31 @@ This LDAP/Active Directory Login (AD Login) plugin is free to use under the MIT/
 * <strong>Redirect to Custom URL after Authentication:</strong> Redirect to WordPress Profile page/ Home page/ Custom URL after successful LDAP/Active Directory authentication.
 * <strong>Detailed User Authentication Report:</strong>  Keep track of user's authentication requests for your WordPress site. Get detailed logging information for FAILED LDAP Authentication of individual users.
 * <strong>Support for Import/Export Plugin Configuration:</strong> Export your LDAP plugin configuration from the staging/testing site and import it to the production/live site. This will save you the hassle of reconfiguring the LDAP plugin.
-* <strong>[Multisite Support](https://plugins.miniorange.com/guide-to-setup-multisite-ldap-ad-plugin):</strong> The plugin supports LDAP/AD Login integration for multisite environments as well.
+* <strong>[Multisite Support](https://plugins.miniorange.com/guide-to-setup-multisite-ldap-ad-plugin?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration):</strong> The plugin supports LDAP/AD Login integration for multisite environments as well.
 * <strong>Restrict login based on WordPress roles:</strong> Restrict LDAP/Active Directory login (AD Login) to certain users based on the roles that are assigned on WordPress.
-* Provides seamless AD integration with [third-party plugins](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites#LDAP-intranet-add-ons) such as BuddyBoss, BuddyPress, Ultimate Member, Gravity Forms, Groups, and eMember.
+* Provides seamless AD integration with [third-party plugins](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration#Add-Ons) such as BuddyBoss, BuddyPress, Ultimate Member, Gravity Forms, Groups, and eMember.
 
 **You can find out Active Directory Integration / LDAP Integration Premium Version Features through the video below**
 
 https://www.youtube.com/watch?v=r0pnB2d0QP8
 
-= [Add-ons List](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites#LDAP-intranet-add-ons)=
+= [Add-ons List](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration#Add-Ons)=
 
-* <strong>[Active Directory Single Sign-On (SSO) using Kerberos/NTLM]((https://plugins.miniorange.com/guide-to-setup-kerberos-single-sign-sso)):</strong> Enable Active Directory SSO (auto-login) on your WordPress site for Domain Joined Machines using Kerberos/NTLM SSO protocol. This supports Kerberos SSO authentication for Linux with Apache server, Windows authentication on IIS server, Windows with Apache server, etc. We also support Active Directory SSO solutions using the GSSAPI module as well.
-* <strong>[Sync Users LDAP Directory](https://plugins.miniorange.com/guide-to-configure-miniorange-directory-sync-add-on-for-wordpress):</strong> Sync/Import WordPress users from Active Directory/other LDAP directory. Schedules can be configured for the synchronization to run at a specific time and after a specific time interval. Additionally, you can also enable WordPress to LDAP/Active Directory user sync which would enable you to update/create an LDAP/AD user's profile.
-* <strong>[Sync BuddyPress Extended Profiles](https://plugins.miniorange.com/guide-to-setup-miniorange-ldap-buddypress-integration-add-on):</strong> Update the BuddyPress users extended profiles with Active Directory/LDAP Server attributes upon LDAP/AD login (Active Directory Login).
-* <strong>[Password Sync with Active Directory/LDAP Directory](https://plugins.miniorange.com/guide-to-setup-password-sync-with-ldap-add-on):</strong> Update your Active Directory/other LDAP Directory user password, the WordPress password of LDAP users will be synced to the LDAP server when you update or reset it in WordPress.
-* <strong>[Profile Picture Sync for WordPress and BuddyPress](https://plugins.miniorange.com/configure-miniorange-profile-picture-map-add-on-for-wordpress):</strong> Update your WordPress and BuddyPress profile picture with thumbnail photos stored in your Active Directory/other LDAP Directory or vice-versa.
-* <strong>[Ultimate Member Login and Profile Integration](https://plugins.miniorange.com/guide-to-setup-ultimate-member-login-integration-with-ldap-credentials):</strong> Enable LDAP/AD Login for the Ultimate Member Login form and map Active Directory / other LDAP Directory User Profile attributes with ultimate member profile page.
+* <strong>[Active Directory Single Sign-On (SSO) using Kerberos/NTLM](https://plugins.miniorange.com/guide-to-setup-kerberos-single-sign-sso?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration):</strong> Enable Active Directory SSO (auto-login) on your WordPress site for Domain Joined Machines using Kerberos/NTLM SSO protocol. This supports Kerberos SSO authentication for Linux with Apache server, Windows authentication on IIS server, Windows with Apache server, etc. We also support Active Directory SSO solutions using the GSSAPI module as well.
+* <strong>[Sync Users LDAP Directory](https://plugins.miniorange.com/guide-to-configure-miniorange-directory-sync-add-on-for-wordpress?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration):</strong> Sync/Import WordPress users from Active Directory/other LDAP directory. Schedules can be configured for the synchronization to run at a specific time and after a specific time interval. Additionally, you can also enable WordPress to LDAP/Active Directory user sync which would enable you to update/create an LDAP/AD user's profile.
+* <strong>[Sync BuddyPress Extended Profiles](https://plugins.miniorange.com/guide-to-setup-miniorange-ldap-buddypress-integration-add-on?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration):</strong> Update the BuddyPress users extended profiles with Active Directory/LDAP Server attributes upon LDAP/AD login (Active Directory Login).
+* <strong>[Password Sync with Active Directory/LDAP Directory](https://plugins.miniorange.com/guide-to-setup-password-sync-with-ldap-add-on?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration):</strong> Update your Active Directory/other LDAP Directory user password, the WordPress password of LDAP users will be synced to the LDAP server when you update or reset it in WordPress.
+* <strong>[Profile Picture Sync for WordPress and BuddyPress](https://plugins.miniorange.com/configure-miniorange-profile-picture-map-add-on-for-wordpress?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration):</strong> Update your WordPress and BuddyPress profile picture with thumbnail photos stored in your Active Directory/other LDAP Directory or vice-versa.
+* <strong>[Ultimate Member Login and Profile Integration](https://plugins.miniorange.com/guide-to-setup-ultimate-member-login-integration-with-ldap-credentials?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration):</strong> Enable LDAP/AD Login for the Ultimate Member Login form and map Active Directory / other LDAP Directory User Profile attributes with ultimate member profile page.
 * <strong>Page/Post Restriction:</strong> This allows you to control access to your site's content (pages/posts) based on LDAP groups/WordPress roles.
-* <strong>[Search Staff From Active Directory/other LDAP Directory](https://plugins.miniorange.com/guide-to-setup-miniorange-ldap-search-widget-add-on):</strong> Search and display your Active Directory/other LDAP Directory users on your website page using a search widget and shortcode.
-* <strong>[Third-Party Plugin User Profile Integration](https://plugins.miniorange.com/guide-to-setup-third-party-user-profile-integration-with-ldap-add-on):</strong> Update user profiles created using any third-party plugin with information from your Active Directory/other LDAP Directory stored in WordPress user meta table.
+* <strong>[Search Staff From Active Directory/other LDAP Directory](https://plugins.miniorange.com/guide-to-setup-miniorange-ldap-search-widget-add-on?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration):</strong> Search and display your Active Directory/other LDAP Directory users on your website page using a search widget and shortcode.
+* <strong>[Third-Party Plugin User Profile Integration](https://plugins.miniorange.com/guide-to-setup-third-party-user-profile-integration-with-ldap-add-on?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration):</strong> Update user profiles created using any third-party plugin with information from your Active Directory/other LDAP Directory stored in WordPress user meta table.
 * <strong>Gravity Forms Integration:</strong> Populate Gravity Form fields with information from Active Directory / other LDAP Directory. You can do AD integration with unlimited forms.
-* <strong>[Sync BuddyPress Groups](https://plugins.miniorange.com/guide-to-setup-miniorange-ldap-buddypress-integration-add-on):</strong> Assign BuddyPress groups to users based on LDAP/AD group membership in Active Directory / other LDAP Directory.
+* <strong>[Sync BuddyPress Groups](https://plugins.miniorange.com/guide-to-setup-miniorange-ldap-buddypress-integration-add-on?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration):</strong> Assign BuddyPress groups to users based on LDAP/AD group membership in Active Directory / other LDAP Directory.
 * <strong>MemberPress Plugin Integration:</strong> Login to MemberPress-protected content with Active Directory / other LDAP Directory Credentials.
 * <strong>eMember Plugin Integration:</strong> Login to eMember profiles with Active Directory / other LDAP Directory Credentials.
 * <strong>WP Groups Plugin Integration:</strong> Assign users to WordPress groups created using the Groups plugin based on their LDAP/ Active Directory (AD) group memberships present in the Active Directory / LDAP Server. You can map any number of Active Directory groups with WordPress groups.
-*    With authentication being one of the essential functions of the day, fast and <strong>[priority support](https://www.miniorange.com/support-plans)</strong> (provided in paid versions) ensures that any issues you face on a live production site can be resolved on time.
+*    With authentication being one of the essential functions of the day, fast and <strong>[priority support](https://www.miniorange.com/support-plans?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong> (provided in paid versions) ensures that any issues you face on a live production site can be resolved on time.
 *   <strong>Regular updates</strong> to the premium plugin are compatible with the latest WordPress version. The updates include security and bug fixes. These updates <strong>ensure that you are updated with the latest security fixes</strong>.
 *   Ensure timely updates for <strong>new WordPress/PHP releases</strong> with our premium plugins and compatibility updates to make sure you have adequate support for smooth transitions to new versions of WordPress and PHP.
 *   <strong>Reasonably priced</strong> with various plans tailored to suit your needs.
@@ -130,21 +130,21 @@ https://www.youtube.com/watch?v=r0pnB2d0QP8
 *   High level of <strong>customization</strong> and <strong>add-ons</strong> to support specific requirements.
 
 = Other Use-Cases we support:- =
-* <strong>[miniOrange Active Directory/LDAP Integration for Cloud & Shared Hosting Platforms Plugin](https://plugins.miniorange.com/wordpress-ldap-login-cloud)</strong> supports login to WordPress sites hosted on a shared hosting platform using credentials stored in active directory and LDAP Directory systems in case you are not able to enable <strong>[LDAP Extension](https://faq.miniorange.com/knowledgebase/how-to-enable-php-ldap-extension/)</strong> on your site.
-* <strong> [Search Staff/Employee present in your Active Directory](https://plugins.miniorange.com/wordpress-ldap-directory-search)</strong>: allows you to search and display the users present in your Active Directory / LDAP Server on a WordPress page using a shortcode.
-* <strong>[WordPress Login and User Management Plugin](https://plugins.miniorange.com/wordpress-login-and-user-management-plugin)</strong>: This plugin offers several functionalities, including bulk user management, user redirection based on WordPress roles, user session management, auto-logout users, and the ability to make a page or post private or public based on an ID or URL.
-* miniOrange also supports <Strong>[VPN use cases](https://www.miniorange.com/solutions/vpn-mfa-multi-factor-authentication)</Strong> Log in to your VPN client using Active Directory /other LDAP Directory credentials and <strong>[Multi-Factor Authentication](https://www.miniorange.com/products/multi-factor-authentication-mfa)</strong>.
-* miniOrange supports <Strong>[API Security use cases](https://apisecurity.miniorange.com)</Strong> to protect and secure your APIs using our product <strong>[XecureAPI](https://apiconsole.miniorange.com)</strong> which helps you to enable Authentication methods ( like OAuth, SAML, LDAP, API Key Authentication, JWT Authentication etc ), Rate Limiting, IP restriction and much more on your APIs for complete protection.
-* miniOrange supports <strong>[Single-Sign-On (SSO)](https://www.miniorange.com/products/single-sign-on-sso)</strong> into a plethora of applications and supports various protocols like(<strong>[RADIUS](https://blog.miniorange.com/radius-server-authentication/), [SAML](https://plugins.miniorange.com/wordpress-single-sign-on-sso), [OAuth](https://plugins.miniorange.com/wordpress-sso), [LDAP/LDAPS](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites)</strong>, using various IDPs like <strong>Azure Active Directory, Microsoft On-Premise Active Directory, Octa, ADFS</strong>, etc.
+* <strong>[miniOrange Active Directory/LDAP Integration for Cloud & Shared Hosting Platforms Plugin](https://plugins.miniorange.com/wordpress-ldap-login-cloud?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong> supports login to WordPress sites hosted on a shared hosting platform using credentials stored in active directory and LDAP Directory systems in case you are not able to enable <strong>[LDAP Extension](https://faq.miniorange.com/knowledgebase/how-to-enable-php-ldap-extension/?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong> on your site.
+* <strong> [Search Staff/Employee present in your Active Directory](https://plugins.miniorange.com/wordpress-ldap-directory-search?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong>: allows you to search and display the users present in your Active Directory / LDAP Server on a WordPress page using a shortcode.
+* <strong>[WordPress Login and User Management Plugin](https://plugins.miniorange.com/wordpress-login-and-user-management-plugin?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong>: This plugin offers several functionalities, including bulk user management, user redirection based on WordPress roles, user session management, auto-logout users, and the ability to make a page or post private or public based on an ID or URL.
+* miniOrange also supports <Strong>[VPN use cases](https://www.miniorange.com/iam/solutions/vpn-mfa-multi-factor-authentication?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</Strong> Log in to your VPN client using Active Directory /other LDAP Directory credentials and <strong>[Multi-Factor Authentication](https://www.miniorange.com/products/multi-factor-authentication-mfa?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong>.
+* miniOrange supports <Strong>[API Security use cases](https://apisecurity.miniorange.com/?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</Strong> to protect and secure your APIs using our product <strong>[XecureAPI](https://apiconsole.miniorange.com/account/login?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong> which helps you to enable Authentication methods ( like OAuth, SAML, LDAP, API Key Authentication, JWT Authentication etc ), Rate Limiting, IP restriction and much more on your APIs for complete protection.
+* miniOrange supports <strong>[Single-Sign-On (SSO)](https://www.miniorange.com/products/single-sign-on-sso?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong> into a plethora of applications and supports various protocols like<strong>[RADIUS](https://www.miniorange.com/blog/radius-server-authentication/?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration), [SAML](https://plugins.miniorange.com/wordpress-single-sign-on-sso?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration), [OAuth](https://plugins.miniorange.com/wordpress-sso?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong>, using various IDPs like <strong>Azure Active Directory, Microsoft On-Premise Active Directory, Octa, ADFS</strong>, etc.
 * Contact us at info@xecurify.com to know more.
 
-Integration with other CMSs
-[LDAP/Active Directory Integration for ExpressionEngine](https://plugins.miniorange.com/setup-ldap-ad-integration-for-expressionengine)
-[LDAP/Active Directory Integration for OpenCart](https://plugins.miniorange.com/ldap-authentication-for-opencart)
-[LDAP/Active Directory Integration for Craft CMS](https://plugins.miniorange.com/setup-ldap-ad-integration-for-craft-cms)
+Integration with Different CMSs
+[LDAP/Active Directory Integration for ExpressionEngine](https://plugins.miniorange.com/setup-ldap-ad-integration-for-expressionengine?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)
+[LDAP/Active Directory Integration for OpenCart](https://plugins.miniorange.com/ldap-authentication-for-opencart?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)
+[LDAP/Active Directory Integration for Craft CMS](https://plugins.miniorange.com/setup-ldap-ad-integration-for-craft-cms?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)
 
 = Need support? =
-Please email us at info@xecurify.com or <a href="https://xecurify.com/contact" target="_blank">Contact us</a>.
+For support or troubleshooting help, please email us at info@xecurify.com or [Contact us](https://www.miniorange.com/contact?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration).
 
 == Installation ==
 
@@ -183,9 +183,35 @@ Make sure that if there is a firewall, you `OPEN THE FIREWALL` to allow incoming
 
 == Frequently Asked Questions ==
 
-Click [here](https://faq.miniorange.com/kb/ldap-authentication/) to view our FAQ page.
+=What is the LDAP/Active Directory Integration Login for Intranet Sites Plugin?=
+The LDAP/Active Directory Integration Login for Intranet Sites plugin allows users to authenticate on WordPress using Active Directory/LDAP credentials. It maps directory attributes to WordPress user-profiles and lets administrators assign WordPress roles to LDAP/Active Directory users, ensuring seamless integration.
 
-For support or troubleshooting help please email us at info@xecurify.com or [Contact us](https://miniorange.com/contact).
+=Which LDAP directories are supported?=
+The plugin supports a wide range of directories, including Microsoft Active Directory, Azure AD, Sun AD, OpenLDAP, JumpCloud, FreeIPA, Synology, OpenDS, and many more. This makes it highly versatile for various directory environments.
+
+=What is role mapping in this plugin?=
+Role mapping assigns WordPress roles to LDAP/Active Directory users based on their group memberships or Organizational Units (OUs). This feature ensures users are automatically assigned proper roles after authentication based on their directory information.
+
+=Does the plugin support Single Sign-On (SSO)?=
+Yes, the plugin supports Kerberos/NTLM Single Sign-On (SSO) for domain-joined machines, allowing users to log into WordPress seamlessly without needing to enter their credentials again, provided they are authenticated in Active Directory.
+
+=What is the authentication report feature?=
+The authentication report logs failed login attempts from Active Directory/LDAP users, which can help identify potential security risks. Administrators can also export these reports in CSV format for further analysis or record-keeping.
+
+=Can I authenticate users from multiple LDAP directories?=
+Yes, the premium version supports authentication from multiple LDAP directories and search bases. Administrators can configure multiple directories and set up sequential searches or domain membership-based authentication to support complex directory setups.
+
+=Is the plugin compatible with multisite WordPress environments?=
+Yes, the premium version fully supports WordPress multisite environments, allowing administrators to configure LDAP/Active Directory login integration across multiple sites, and providing centralized authentication management for all subsites within a WordPress network.
+
+=Are Active Directory passwords stored in the WordPress database?=
+No, we do not store Active Directory passwords in WordPress due to security reasons. 
+
+=How can Active Directory be used as an LDAP server?=
+Active Directory inherently supports LDAP as a directory service. To use Active Directory as an LDAP server, you can connect applications or systems using the LDAP protocol for tasks such as authentication, querying users or groups, and managing directory information. Ensure that the correct LDAP ports (usually 389 for standard LDAP or 636 for LDAP over SSL) are open and that your application is configured to communicate with AD using these protocols.
+
+=Does the plugin provide profile mapping and group mapping features?=
+Yes, the plugin provides AD profile mapping as well as group mapping features that help in syncing user profiles as well as groups between LDAP/Active Directory and WordPress.
 
 
 == Screenshots ==
@@ -201,6 +227,10 @@ For support or troubleshooting help please email us at info@xecurify.com or [Con
 9. LDAP Premium Add-ons
 
 == Changelog ==
+
+= 5.1.5 =
+* UI Improvements
+* Readme changes
 
 = 5.1.4 =
 * Active Directory Integration :
@@ -734,6 +764,10 @@ Enhanced Troubleshooting
 * this is the first release.
 
 == Upgrade Notice ==
+
+= 5.1.5 =
+* UI Improvements
+* Readme changes
 
 = 5.1.4 =
 * Active Directory Integration :
