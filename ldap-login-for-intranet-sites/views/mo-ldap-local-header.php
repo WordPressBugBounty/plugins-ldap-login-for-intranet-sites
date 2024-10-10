@@ -155,7 +155,7 @@ if ( ! $utils::is_extension_installed( 'openssl' ) ) {
 						<div class="mo_ldap_local_phone_input_div">
 							<input type="text" class="mo_ldap_pop_up_input_field mo_ldap_local_full_width_input mo_ldap_local_phone_input" name="mo_ldap_local_query_phone" id="mo_ldap_local_query_phone" value="<?php echo esc_attr( get_option( 'mo_ldap_local_admin_phone' ) ); ?>" placeholder="Enter your phone"/>
 						</div>
-						<textarea id="mo_ldap_local_query" name="mo_ldap_local_query" class="mo_ldap_local_contact_us_testarea" class="mo_ldap_pop_up_input_field mo_ldap_local_full_width_input" cols="52" rows="4"  placeholder="Write your query here" required ></textarea>
+						<textarea id="mo_ldap_local_query" name="mo_ldap_local_query" class="mo_ldap_local_contact_us_testarea" class="mo_ldap_pop_up_input_field mo_ldap_local_full_width_input" cols="52" rows="4"  maxlength="500" placeholder="Write your query here" required ></textarea>
 						<div class="mo_ldap_local_horizontal_flex_container mo_ldap_local_send_config_toggle">
 							<input type="checkbox" id="mo_ldap_local_send_config" name="mo_ldap_local_send_config" class="mo_ldap_local_toggle_switch_hide mo_ldap_local_full_width_input" onChange="mo_ldap_local_display_warning()"/>
 							<label for="mo_ldap_local_send_config" class="mo_ldap_local_toggle_switch"></label>
