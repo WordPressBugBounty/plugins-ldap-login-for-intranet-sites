@@ -360,16 +360,16 @@ if ( ! class_exists( 'Mo_Ldap_Local_Utils' ) ) {
 						</ul>
 					</ol>',
 				'How do users present in different Organizational Units (OUs) login into WordPress? <span class="mo_ldap_local_premium_faq">Premium</span>' => '<ol>
-						<li>Support for multiple search bases is present in the <a href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites" target="_blank" rel="noopener">Premium Version</a> of the plugin.</li>
+						<li>Support for multiple search bases is present in the <a href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=ldap%20intranet%20plugin&utm_medium=ldap%20free%20plugin&utm_campaign=ldap%20intranet%20free%20plugin" target="_blank" rel="noopener">Premium Version</a> of the plugin.</li>
 					</ol>',
 				'Some of my users login using their email and the rest using their usernames. How will both of them be able to login?<span class="mo_ldap_local_premium_faq">Premium</span>' => '<ul>
-						<li>Support for multiple username attributes is present in the <a href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites" target="_blank" rel="noopener">Premium version</a> of the plugin.</li>
+						<li>Support for multiple username attributes is present in the <a href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=ldap%20intranet%20plugin&utm_medium=ldap%20free%20plugin&utm_campaign=ldap%20intranet%20free%20plugin" target="_blank" rel="noopener">Premium version</a> of the plugin.</li>
 					</ul>',
 				'How Role Mapping works?<span class="mo_ldap_local_premium_faq">Premium</span>' => '<ul>
-						<li>Support for Advanced Role Mapping is present in the <a href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites" target="_blank" rel="noopener">Premium Version</a> of the plugin.</li>
+						<li>Support for Advanced Role Mapping is present in the <a href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=ldap%20intranet%20plugin&utm_medium=ldap%20free%20plugin&utm_campaign=ldap%20intranet%20free%20plugin" target="_blank" rel="noopener">Premium Version</a> of the plugin.</li>
 					</ul>',
 				'How Role Mapping works if user belongs to multiple groups?<span class="mo_ldap_local_premium_faq">Premium</span>' => '<ul>
-						<li>Support for Advanced Role Mapping is present in the <a href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites" target="_blank" rel="noopener">Premium version</a> of the plugin.</li>
+						<li>Support for Advanced Role Mapping is present in the <a href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=ldap%20intranet%20plugin&utm_medium=ldap%20free%20plugin&utm_campaign=ldap%20intranet%20free%20plugin" target="_blank" rel="noopener">Premium version</a> of the plugin.</li>
 					</ul>',
 			);
 

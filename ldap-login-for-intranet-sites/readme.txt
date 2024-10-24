@@ -5,7 +5,7 @@ Tags: active directory, active directory integration, ldap, ldap authentication,
 Requires at least: 5.0
 Tested up to: 6.6
 Requires PHP: 5.2.0
-Stable tag: 5.1.6
+Stable tag: 5.1.7
 License: MIT/Expat
 License URI: https://docs.miniorange.com/mit-license
 
@@ -169,11 +169,7 @@ Simplify AD/LDAP login and synchronization across your WordPress multisite envir
 = Other Use-Cases we support:- =
 * <strong>[miniOrange Active Directory/LDAP Integration for Cloud & Shared Hosting Platforms Plugin](https://plugins.miniorange.com/wordpress-ldap-login-cloud?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong> supports login to WordPress sites hosted on a shared hosting platform using credentials stored in active directory and LDAP Directory systems in case you are not able to enable <strong>[LDAP Extension](https://faq.miniorange.com/knowledgebase/how-to-enable-php-ldap-extension/?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong> on your site.
 * <strong> [Search Staff/Employee present in your Active Directory](https://plugins.miniorange.com/wordpress-ldap-directory-search?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong>: allows you to search and display the users present in your Active Directory / LDAP Server on a WordPress page using a shortcode.
-* <strong>[WordPress Login and User Management Plugin](https://plugins.miniorange.com/wordpress-login-and-user-management-plugin?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong>: This plugin offers several functionalities, including bulk user management, user redirection based on WordPress roles, user session management, auto-logout users, and the ability to make a page or post private or public based on an ID or URL.
-* miniOrange also supports <Strong>[VPN use cases](https://www.miniorange.com/iam/solutions/vpn-mfa-multi-factor-authentication?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</Strong> Log in to your VPN client using Active Directory /other LDAP Directory credentials and <strong>[Multi-Factor Authentication](https://www.miniorange.com/products/multi-factor-authentication-mfa?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong>.
-* miniOrange supports <Strong>[API Security use cases](https://apisecurity.miniorange.com/?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</Strong> to protect and secure your APIs using our product <strong>[XecureAPI](https://apiconsole.miniorange.com/account/login?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong> which helps you to enable Authentication methods ( like OAuth, SAML, LDAP, API Key Authentication, JWT Authentication etc ), Rate Limiting, IP restriction and much more on your APIs for complete protection.
-* miniOrange supports <strong>[Single-Sign-On (SSO)](https://www.miniorange.com/products/single-sign-on-sso?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong> into a plethora of applications and supports various protocols like<strong>[RADIUS](https://www.miniorange.com/blog/radius-server-authentication/?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration), [SAML](https://plugins.miniorange.com/wordpress-single-sign-on-sso?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration), [OAuth](https://plugins.miniorange.com/wordpress-sso?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong>, using various IDPs like <strong>Azure Active Directory, Microsoft On-Premise Active Directory, Octa, ADFS</strong>, etc.
-* Contact us at info@xecurify.com to know more.
+
 
 Integration with Different CMSs
 [LDAP/Active Directory Integration for ExpressionEngine](https://plugins.miniorange.com/setup-ldap-ad-integration-for-expressionengine?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)
@@ -264,6 +260,9 @@ Yes, the plugin provides AD profile mapping as well as group mapping features th
 9. LDAP Premium Add-ons
 
 == Changelog ==
+
+= 5.1.7 =
+* UI Improvements
 
 = 5.1.6 =
 * Usability Improvements
@@ -805,6 +804,9 @@ Enhanced Troubleshooting
 * this is the first release.
 
 == Upgrade Notice ==
+
+= 5.1.7 =
+* UI Improvements
 
 = 5.1.6 =
 * Usability Improvements

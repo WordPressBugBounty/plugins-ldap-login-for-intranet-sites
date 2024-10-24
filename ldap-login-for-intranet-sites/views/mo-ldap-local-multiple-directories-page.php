@@ -83,10 +83,10 @@
 
 			<br>
 
-			<button class="mo_ldap_local_disabled_button">
+			<button class="mo_ldap_local_disabled_button mo_ldap_local_button_disabled">
 				Test Connection and Save
 			</button>
-			<button class="mo_ldap_troubleshooting_btn mo_ldap_local_md_disabled_btn">
+			<button class="mo_ldap_troubleshooting_btn mo_ldap_local_button_disabled mo_ldap_local_md_disabled_btn">
 				Add New Configuration
 			</button>
 		</div>

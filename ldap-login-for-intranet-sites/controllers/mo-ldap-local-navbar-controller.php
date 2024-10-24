@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</span> Authentication Report
 		</a></div>
 		<div class="mo_ldap_local_nav_premium_section mo_ldap_local_column_flex_container">
-			<div class="mo_ldap_local_premium_title"><a class="mo_ldap_local_unset_link_affect" href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites" target="_blank">Premium</a></div>
+			<div class="mo_ldap_local_premium_title"><a class="mo_ldap_local_unset_link_affect" href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=ldap%20intranet%20plugin&utm_medium=ldap%20free%20plugin&utm_campaign=ldap%20intranet%20free%20plugin" target="_blank">Premium</a></div>
 			<div><a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'advance-sync' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect mo_ldap_local_normal_nav_icons <?php echo strcmp( $active_tab, 'advance-sync' ) === 0 ? 'mo_ldap_local_active_tab' : ''; ?>">
 				<span>
 				<svg width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">

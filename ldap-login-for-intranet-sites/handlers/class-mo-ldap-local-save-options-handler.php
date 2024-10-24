@@ -646,7 +646,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 						$this->utils->show_error_message();
 						return;
 					} elseif ( strpos( $search_base, ';' ) ) {
-							$message = 'You have entered multiple search bases. Multiple Search Bases are supported in the <strong>Premium version</strong> of the plugin. <a rel="noopener" target="_blank" href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites" target="_blank">Click here to upgrade</a>.';
+							$message = 'You have entered multiple search bases. Multiple Search Bases are supported in the <strong>Premium version</strong> of the plugin. <a rel="noopener" target="_blank" href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=ldap%20intranet%20plugin&utm_medium=ldap%20free%20plugin&utm_campaign=ldap%20intranet%20free%20plugin" target="_blank">Click here to upgrade</a>.';
 							update_option( 'mo_ldap_local_message', $message );
 							$this->utils->show_error_message();
 							return;
@@ -674,7 +674,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 								} else {
 									$multiple_username_attributes = explode( ';', $custom_ldap_username_attribute );
 									if ( count( $multiple_username_attributes ) > 1 ) {
-										$message = 'You have entered multiple attributes for "Username Attribute" field. Logging in with multiple attributes are supported in the <strong>Premium version</strong> of the plugin. <a href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites" target="_blank" rel="noopener">Click here to upgrade</a> ';
+										$message = 'You have entered multiple attributes for "Username Attribute" field. Logging in with multiple attributes are supported in the <strong>Premium version</strong> of the plugin. <a href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=ldap%20intranet%20plugin&utm_medium=ldap%20free%20plugin&utm_campaign=ldap%20intranet%20free%20plugin" target="_blank" rel="noopener">Click here to upgrade</a> ';
 										update_option( 'mo_ldap_local_message', $message );
 										$this->utils->show_error_message();
 										return;

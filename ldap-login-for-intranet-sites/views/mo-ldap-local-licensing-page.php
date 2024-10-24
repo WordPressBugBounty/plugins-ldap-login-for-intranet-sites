@@ -373,7 +373,7 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 			</div>
 
 		</div>
-		<div class="mo_ldap_local_more_details_link"><a href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites" target="_blank">More Details</a></div>
+		<div class="mo_ldap_local_more_details_link"><a href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=ldap%20intranet%20plugin&utm_medium=ldap%20free%20plugin&utm_campaign=ldap%20intranet%20free%20plugin" target="_blank">More Details</a></div>
 		<form style="display:none;" id="loginform" action="<?php echo esc_url( MO_LDAP_LOCAL_HOST_NAME ) . '/moas/login'; ?>" target="_blank" method="post">
 			<input type="hidden" value="<?php echo esc_attr( $utils::is_customer_registered() ); ?>" id="mo_customer_registered">
 			<input type="email" name="username" value="<?php echo esc_attr( get_option( 'mo_ldap_local_admin_email' ) ); ?>" />
@@ -503,7 +503,7 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 		</div>
 	</div>
 
-	<div class="mo_ldap_local_more_details_link"><a href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites#PlanComparison" target="_blank">View Detailed Comparison</a></div>
+	<div class="mo_ldap_local_more_details_link"><a href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=ldap%20intranet%20plugin&utm_medium=ldap%20free%20plugin&utm_campaign=ldap%20intranet%20free%20plugin#PlanComparison" target="_blank">View Detailed Comparison</a></div>
 
 	<div id="mo_ldap_local_upgrade_steps" class="mo_ldap_local_how_to_upgrade">
 		<div class="mo_ldap_local_how_to_upgrade_heading">
