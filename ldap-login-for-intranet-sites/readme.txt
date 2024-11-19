@@ -3,9 +3,9 @@ Contributors: miniOrange
 Donate link: https://miniorange.com
 Tags: active directory, active directory integration, ldap, ldap authentication, authentication, ldap authorization, ldaps, ldap directory, sso, kerberos ntlm, active directory login, ad login
 Requires at least: 5.0
-Tested up to: 6.6
+Tested up to: 6.7
 Requires PHP: 5.2.0
-Stable tag: 5.1.7
+Stable tag: 5.1.8
 License: MIT/Expat
 License URI: https://docs.miniorange.com/mit-license
 
@@ -158,7 +158,7 @@ Map LDAP/Active Directory groups and attributes from various LDAP servers to Wor
 
 Sync or import user data from LDAP/Active Directory into WordPress to create a unified and user-friendly experience. With the Advanced Syncing Add-on, you can synchronize user information, including profile pictures, and offer a [self-service password reset](https://plugins.miniorange.com/active-directory-self-service-password-reset-in-wordpress?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration) console directly on your WordPress site. The plugin also supports scheduled syncs, ensuring efficient, consistent, and up-to-date user data management. This automation streamlines user profile updates and enhances overall site administration.
 
-<strong>[Enable Multi-LDAP Directory Support for WordPress Authentication and Synchronization](https://plugins.miniorange.com/wordpress-user-authentication-from-ldap-active-directory?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong>
+<strong>[Enable Multiple LDAP Directories Support for WordPress Authentication and Synchronization](https://plugins.miniorange.com/wordpress-user-authentication-from-ldap-active-directory?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)</strong>
 
 Authenticate, authorize, and synchronize users from multiple LDAP/Active Directories with the miniOrange WordPress LDAP/Active Directory plugin. This powerful feature supports flexible login experiences, allowing users to access your site with credentials from various LDAP servers or domains. Enhance both security and user convenience by centralizing authentication and managing diverse user sources effortlessly.
 
@@ -260,6 +260,11 @@ Yes, the plugin provides AD profile mapping as well as group mapping features th
 9. LDAP Premium Add-ons
 
 == Changelog ==
+
+= 5.1.8 =
+* Minor Bug Fix
+* UI Improvements
+* Compatibility with WordPress 6.7 
 
 = 5.1.7 =
 * UI Improvements
@@ -804,6 +809,11 @@ Enhanced Troubleshooting
 * this is the first release.
 
 == Upgrade Notice ==
+
+= 5.1.8 =
+* Minor Bug Fix
+* UI Improvements
+* Compatibility with WordPress 6.7 
 
 = 5.1.7 =
 * UI Improvements

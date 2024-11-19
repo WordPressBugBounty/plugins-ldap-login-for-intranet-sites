@@ -548,7 +548,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 						let x = document.getElementsByClassName('mo_ldap_local_search_base_div');
 
 						for (i = 0; i < x.length; i++) { 
-							if (!x[i].innerHTML.toLowerCase().includes(input)) {
+							if (!x[i].querySelector('input[name="select_ldap_search_bases[]"]').value.toLowerCase().includes(input)) {
 								x[i].style.display="none";
 							}
 							else {

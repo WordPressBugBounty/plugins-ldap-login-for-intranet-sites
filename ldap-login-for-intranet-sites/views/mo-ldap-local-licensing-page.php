@@ -17,7 +17,7 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 	var selectArray = JSON.parse('<?php echo wp_json_encode( $pricing_list ); ?>');
 	function createSelectOpt(elemId) {
 		var selectPricingArray = selectArray[elemId];
-		var selectElem = '<span id="mo_ldap_local_price_' + elemId + '" class="mo_ldap_local_price">$ ' + selectArray[elemId]["1"] + '</span></div><br><div class="mo_ldap_local_licensing_plan_instances"><div>No. of Intances</div>';
+		var selectElem = '<span id="mo_ldap_local_price_' + elemId + '" class="mo_ldap_local_price">$ ' + selectArray[elemId]["1"] + '</span></div><div class="mo_ldap_local_licensing_plan_instances"><div><b>No. of Intances</b></div>';
 		selectElem += '<select class="mo_ldap_local_standerd_input mo_ldap_select_directory_server mo_ldap_licensing_dropdown" onchange="changePricing(this)" id="' + elemId + '">'
 		jQuery.each(selectPricingArray, function (instances, price) {
 			selectElem = selectElem + '<option value="' + instances + '" data-value="' + instances + '">' + instances + ' </option>';
@@ -27,14 +27,14 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 	}
 	function createSelectWithSubsitesOpt(elemId) {
 		var selectPricingArray = selectArray[elemId];
-		var selectElem = '<span id="mo_ldap_local_price_' + elemId + '" class="mo_ldap_local_price">$ ' + ( parseInt(selectArray[elemId]["1"]) + 60 ) + '</span></div><br><div class="mo_ldap_local_licensing_plan_instances"><div>No. of Intances</div>';
+		var selectElem = '<span id="mo_ldap_local_price_' + elemId + '" class="mo_ldap_local_price">$ ' + ( parseInt(selectArray[elemId]["1"]) + 60 ) + '</span></div><br><div class="mo_ldap_local_licensing_plan_instances"><div><b>No. of Intances</b></div>';
 		selectElem += '<select class="mo_ldap_local_standerd_input mo_ldap_select_directory_server mo_ldap_licensing_dropdown" onchange="changePricing(this)" id="' + elemId + '">'
 		jQuery.each(selectPricingArray, function (instances, price) {
 			selectElem = selectElem + '<option value="' + instances + '" data-value="' + instances + '">' + instances + ' </option>';
 		})
 		selectElem = selectElem + '</select></div>';
 
-		selectElem += '<br><div class="mo_ldap_local_licensing_plan_instances"><div>No. of Subsites</div>'
+		selectElem += '<br><div class="mo_ldap_local_licensing_plan_instances"><div><b>No. of Subsites</b></div>'
 		selectElem += '<select style="padding-right: 23px !important;" class="mo_ldap_local_standerd_input mo_ldap_select_directory_server mo_ldap_licensing_dropdown" onchange="changePricing(this)" id="' + elemId + '" name="' + elemId + '_subsites">'
 		let count = 0;
 		var selectSubsitePricingArray = selectArray['subsite_intances'];
@@ -74,23 +74,24 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 			Upgrade Steps
 			</a>
 		</div>
-		<div id="mo_ldap_local_nav_addons_pricing">
-			<a href="#mo_ldap_local_addons_pricing" class="mo_ldap_local_unset_link_affect mo_ldap_local_nav_elements">
-			Add-Ons
-			</a>
 		</div>
 	</div>
 
 	<div id="mo_ldap_local_pricing_div" class="mo_ldap_local_licensing_body">
 
-		<div>
+		<div class="mo_ldap_local_pricing_div_header">
+			<h2>Licensing Page</h2>
+			<input type="button" class="mo_ldap_local_addons_button" value="Premium Addons" onclick="window.open('https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=ldap%20intranet%20plugin&utm_medium=ldap%20free%20plugin&utm_campaign=ldap%20intranet%20free%20plugin#Add-Ons','_blank');">
+		</div>
+
+		<div class="mo_ldap_local_licensing_page_toogle_switch_outer_div">
 			<div class="mo_ldap_local_licensing_page_toogle_switch" onclick="mo_ldap_local_license_switch()">
 
 				<div id="mo_ldap_local_single_site" class="mo_ldap_local_licensing_page_site <?php echo strcasecmp( $site_type, 'multisite' ) !== 0 ? 'mo_ldap_local_toogle_switch_highlighted' : ''; ?>" >
-					<b>Single Site</b>
+					SINGLE SITE
 				</div>
 				<div id="mo_ldap_local_multi_site" class="mo_ldap_local_licensing_page_site <?php echo strcasecmp( $site_type, 'multisite' ) === 0 ? 'mo_ldap_local_toogle_switch_highlighted' : ''; ?>" >
-					<b>Multi Site</b>
+					MULTI SITE
 				</div>
 
 			</div>
@@ -105,42 +106,34 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 
 
 						</div>
-						<br><br>
 						<script>
 							createSelectOpt('pricing_kerberos');
 						</script>
+						<hr>
 					<div class="mo_ldap_local_licensing_details_about_plan">
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Login using LDAP / AD credentials</div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">Login using AD / any LDAP directory credentials</div>
 						</div>
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Advanced Role + Groups Mapping</div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">Supports Kerberos / NTLM SSO</div>
 						</div>
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Advanced Attribute Mapping</div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">Role mapping based on LDAP group/OU</div>
 						</div>
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Multiple LDAP Directories Support</div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">Attribute mapping</div>
 						</div>
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">LDAP Active Directory Forest Support</div>
-						</div>
-						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Kerberos / NTLM SSO add-on</div>
-						</div>
-						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container"><b>Free Plugin Updates for 1 year</b></div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">LDAP active directory forest support</div>
 						</div>
 					</div>
-					<button class="mo_ldap_next_btn mo_ldap_local_licensing_buy_now_btn" onclick="upgradeform('wp_ldap_ntlm_sso_bundled_plan')">
-						Buy Now
+					<button class="mo_ldap_next_btn mo_ldap_local_licensing_buy_now_btn mo_ldap_upgrade_now_btn" onclick="upgradeform('wp_ldap_ntlm_sso_bundled_plan')">
+						Upgrade Now
 					</button>
 				</div>
 
@@ -149,89 +142,74 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 						<div class="mo_ldap_local_each_plan_heading">
 							Advanced Syncing &  Authentication Plan
 						</div>
-						<br>
-						<br>
 						<script>
 							createSelectOpt('pricing_standard');
 						</script>
+						<hr>
 					<div class="mo_ldap_local_licensing_details_about_plan">
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Everything from the AD Authentication & Kerberos SSO Plan</div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">All Features from the AD Authentication & Kerberos SSO Plan</div>
 						</div>
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Sync Users LDAP Directory Add-On</div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">User Profile Directory Sync</div>
 						</div>
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Password Sync with LDAP Server Add-On</div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">Import AD Profile Picture</div>
 						</div>
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Profile Picture Sync Add-On</div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">Real-time User Provisioning in AD</div>
 						</div>
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">WP Groups Plugin Integration</div>
-						</div>
-
-						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container"><b>Free Plugin Updates for 1 year</b></div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">Group Provisioning</div>
 						</div>
 					</div>
 
-					<button class="mo_ldap_next_btn mo_ldap_local_licensing_buy_now_btn" onclick="upgradeform('wp_ldap_standard_bundled_plan')">
-						Buy Now
+					<button class="mo_ldap_next_btn mo_ldap_local_licensing_buy_now_btn mo_ldap_upgrade_now_btn" onclick="upgradeform('wp_ldap_standard_bundled_plan')">
+						Upgrade Now
 					</button>
 				</div>
 
 				<div class="mo_ldap_local_licensing_plan_container mo_ldap_local_licensing_plan_container4">
+					<div class="mo_ldap_recommended_tag">Recommended</div>
 					<div class="mo_ldap_local_licensing_plan_name">
 						<div class="mo_ldap_local_each_plan_heading">
 							All Inclusive Plan
 
 						</div>
-						<br>
-						<br>
 						<script>
 							createSelectOpt('pricing_enterprise');
 						</script>
-
+						<hr>
 					<div class="mo_ldap_local_licensing_details_about_plan">
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Everything from the Advanced Authentication & Syncing Plan</div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">All Features from the Advanced Syncing & Authentication Plan</div>
 						</div>
 					<div>
-						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-						<div class="mo_ldap_local_licensing_plan_feature_container">Page/Post Restriction Add-On</div>
+						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+						<div class="mo_ldap_local_licensing_plan_feature_container">AD Self-Service Password Reset</div>
 					</div>
 					<div>
-						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-						<div class="mo_ldap_local_licensing_plan_feature_container">WP-CLI Integration Add-On</div>
-					</div>
-					<div>
-						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-						<div class="mo_ldap_local_licensing_plan_feature_container">Search Staff from LDAP Directory Add-On</div>
-					</div>
-					<div>
-						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-						<div class="mo_ldap_local_licensing_plan_feature_container">BuddyPress Profile Integration</div>
-					</div>
-					<div>
-						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
+						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
 						<div class="mo_ldap_local_licensing_plan_feature_container">All Third Party App Integrations</div>
 					</div>
 					<div>
-						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-						<div class="mo_ldap_local_licensing_plan_feature_container"><b>Free Plugin Updates for 1 year</b></div>
+						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+						<div class="mo_ldap_local_licensing_plan_feature_container">Page/Post Restriction Add-On</div>
+					</div>
+					<div>
+						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+						<div class="mo_ldap_local_licensing_plan_feature_container">WP User & Login Management</div>
 					</div>
 					</div>
 
-					<button class="mo_ldap_next_btn mo_ldap_local_licensing_buy_now_btn" onclick="upgradeform('wp_ldap_all_inclusive_bundled_plan')">
-						Buy Now
+					<button class="mo_ldap_next_btn mo_ldap_local_licensing_buy_now_btn mo_ldap_upgrade_now_btn mo_ldap_recommended_plan" onclick="upgradeform('wp_ldap_all_inclusive_bundled_plan')">
+						Upgrade Now
 					</button>
 				</div>
 			</div>
@@ -248,38 +226,31 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 						<script>
 							createSelectWithSubsitesOpt('mulpricing_kerberos');
 						</script>
+						<hr>
 					<div class="mo_ldap_local_licensing_details_about_plan">
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Login using LDAP / AD credentials</div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">Login using AD / any LDAP directory credentials</div>
 						</div>
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Advanced Role + Groups Mapping</div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">Supports Kerberos / NTLM SSO</div>
 						</div>
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Advanced Attribute Mapping</div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">Role mapping based on LDAP group / OU</div>
 						</div>
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Multiple LDAP Directories Support</div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">Attribute mapping</div>
 						</div>
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">LDAP Active Directory Forest Support</div>
-						</div>
-						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Kerberos / NTLM SSO add-on</div>
-						</div>
-						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container"><b>Free Plugin Updates for 1 year</b></div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">LDAP active directory forest support</div>
 						</div>
 					</div>
-					<button class="mo_ldap_next_btn mo_ldap_local_licensing_buy_now_btn" onclick="upgradeform('wp_ldap_ntlm_sso_multisite_bundled_plan')">
-						Buy Now
+					<button class="mo_ldap_next_btn mo_ldap_local_licensing_buy_now_btn mo_ldap_upgrade_now_btn" onclick="upgradeform('wp_ldap_ntlm_sso_multisite_bundled_plan')">
+						Upgrade Now
 					</button>
 				</div>
 
@@ -293,39 +264,36 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 						<script>
 							createSelectWithSubsitesOpt('mulpricing_standard');
 						</script>
+						<hr>
 					<div class="mo_ldap_local_licensing_details_about_plan">
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Everything from the AD Authentication & Kerberos SSO Plan</div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">All Features from the AD Authentication & Kerberos SSO Plan</div>
 						</div>
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Sync Users LDAP Directory Add-On</div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">User Profile Directory Sync</div>
 						</div>
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Password Sync with LDAP Server Add-On</div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">Import AD Profile Picture</div>
 						</div>
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Profile Picture Sync Add-On</div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">Real-time User Provisioning in AD</div>
 						</div>
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">WP Groups Plugin Integration</div>
-						</div>
-
-						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container"><b>Free Plugin Updates for 1 year</b></div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">Group Provisioning</div>
 						</div>
 					</div>
-					<button class="mo_ldap_next_btn mo_ldap_local_licensing_buy_now_btn" onclick="upgradeform('wp_ldap_standard_multisite_bundled_plan')">
-						Buy Now
+					<button class="mo_ldap_next_btn mo_ldap_local_licensing_buy_now_btn mo_ldap_upgrade_now_btn" onclick="upgradeform('wp_ldap_standard_multisite_bundled_plan')">
+						Upgrade Now
 					</button>
 				</div>
 
 				<div class="mo_ldap_local_licensing_plan_container mo_ldap_local_licensing_plan_container4">
+				<div class="mo_ldap_recommended_tag">Recommended</div>
 					<div class="mo_ldap_local_licensing_plan_name">
 						<div class="mo_ldap_local_each_plan_heading">
 							Multisite All Inclusive Plan
@@ -335,39 +303,31 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 						<script>
 							createSelectWithSubsitesOpt('mulpricing_enterprise');
 						</script>
-
+						<hr>
 					<div class="mo_ldap_local_licensing_details_about_plan">
 						<div>
-							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-							<div class="mo_ldap_local_licensing_plan_feature_container">Everything from the Advanced Authentication & Syncing Plan</div>
+							<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+							<div class="mo_ldap_local_licensing_plan_feature_container">All Features from the Advanced Syncing & Authentication Plan</div>
 						</div>
 					<div>
-						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-						<div class="mo_ldap_local_licensing_plan_feature_container">Page/Post Restriction Add-On</div>
+						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+						<div class="mo_ldap_local_licensing_plan_feature_container">AD Self-Service Password Reset</div>
 					</div>
 					<div>
-						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-						<div class="mo_ldap_local_licensing_plan_feature_container">WP-CLI Integration Add-On</div>
-					</div>
-					<div>
-						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-						<div class="mo_ldap_local_licensing_plan_feature_container">Search Staff from LDAP Directory Add-On</div>
-					</div>
-					<div>
-						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-						<div class="mo_ldap_local_licensing_plan_feature_container">BuddyPress Profile Integration</div>
-					</div>
-					<div>
-						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
+						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
 						<div class="mo_ldap_local_licensing_plan_feature_container">All Third Party App Integrations</div>
 					</div>
 					<div>
-						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="12px" width="12px"></span>
-						<div class="mo_ldap_local_licensing_plan_feature_container"><b>Free Plugin Updates for 1 year</b></div>
+						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+						<div class="mo_ldap_local_licensing_plan_feature_container">Page/Post Restriction Add-On</div>
+					</div>
+					<div>
+						<span class="mo_ldap_local_licensing_bullets"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'tick.svg' ); ?>" height="17px" width="17px"></span>
+						<div class="mo_ldap_local_licensing_plan_feature_container">WP User & Login Management</div>
 					</div>
 					</div>
-					<button class="mo_ldap_next_btn mo_ldap_local_licensing_buy_now_btn" onclick="upgradeform('wp_ldap_all_inclusive_multisite_bundled_plan')">
-						Buy Now
+					<button class="mo_ldap_next_btn mo_ldap_local_licensing_buy_now_btn mo_ldap_upgrade_now_btn mo_ldap_recommended_plan" onclick="upgradeform('wp_ldap_all_inclusive_multisite_bundled_plan')">
+						Upgrade Now
 					</button>
 				</div>
 			</div>
@@ -385,17 +345,17 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 		<div class="mo_ldap_local_contact_us_1">
 			<p class="mo_ldap_local_contact_us_1_para"> Are you not able to choose your plan? </p>
 
-			<button class="mo_ldap_save_user_mapping" data-id="mo_ldap_local_contact_us_box" onclick="mo_ldap_local_popup_card_clicked(this, '')">
+			<button class="mo_ldap_save_user_mapping mo_ldap_licensing_page_contac_us" data-id="mo_ldap_local_contact_us_box" onclick="mo_ldap_local_popup_card_clicked(this, '')">
 				<b>Contact Us</b>
 			</button>
 		</div>
-
+		<div class = "mo_ldap_local_contact_us_vertical_line"></div>
 		<div class="mo_ldap_local_contact_us_2">
 			<p class="mo_ldap_local_contact_us_2_para"> Know more about WordPress instance, Subsites & Multisites Network </p>
 			<br>
 			<a target="_blank" rel="noopener" href="https://faq.miniorange.com/knowledgebase/what-is-an-instance" ><b style="color:#0076E1; font-size:15px;">Click Here</b></a>
 		</div>
-
+		<div class = "mo_ldap_local_contact_us_vertical_line"></div>
 		<div class="mo_ldap_local_contact_us_3">
 			<div class="mo_ldap_local_contact_us_3_text">
 				Watch Premium Features Video
@@ -413,23 +373,23 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 
 	<div id="mo_ldap_local_feature_comparison" class="mo_ldap_local_licensing_feature_comparison">
 		<div class="mo_ldap_local_licensing_feature_comparison_heading">
-			<div style="color:#0076E1; display:inline-block;">FEATURES</div> COMPARISON
+			FEATURES COMPARISON
 		</div>
 
 		<div class="mo_ldap_local_licensing_feature_comparison_table">
 			<div class="mo_ldap_local_licensing_feature_comparison_table_header">
-				<div class="mo_ldap_local_licensing_feature_comparison_col1"><b>Add-Ons List</b></div>
-				<div class="mo_ldap_local_licensing_feature_comparison_col2"><b>AD Authentication & Kerberos SSO Plan</b></div>
-				<div class="mo_ldap_local_licensing_feature_comparison_col2"><b>Advanced Syncing & Authentication Plan</b></div>
-				<div class="mo_ldap_local_licensing_feature_comparison_col2"><b>All Inclusive Plan</b></div>
+				<div class="mo_ldap_local_licensing_feature_comparison_col1">Add-Ons List</div>
+				<div class="mo_ldap_local_licensing_feature_comparison_col2">AD Authentication & Kerberos SSO Plan</div>
+				<div class="mo_ldap_local_licensing_feature_comparison_col2">Advanced Syncing & Authentication Plan</div>
+				<div class="mo_ldap_local_licensing_feature_comparison_col2">All Inclusive Plan</div>
 			</div>
 
 			<div class="mo_ldap_local_license_features_row1" onclick="displayFeatures(this)">
 				<div class="mo_ldap_local_licensing_feature_comparison_table_row">
-					<div class="mo_ldap_local_licensing_feature_comparison_col1"><span><img class="mo_ldap_local_dropdown_arrow mo_ldap_local_reverse_rotate" src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'down.svg' ); ?>" height="15px" width="15px"></span>Kerberos / NTLM SSO</div>
-					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'yes.svg' ); ?>" height="20px" width="20px"></span></div>
-					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'yes.svg' ); ?>" height="20px" width="20px"></span></div>
-					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'yes.svg' ); ?>" height="20px" width="20px"></span></div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col1"><span><img class="mo_ldap_local_dropdown_arrow mo_ldap_local_reverse_rotate" src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'down.svg' ); ?>" height="12px" width="12px"></span>Kerberos / NTLM SSO</div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'yes.svg' ); ?>" height="14px" width="14px"></span></div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'yes.svg' ); ?>" height="14px" width="14px"></span></div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'yes.svg' ); ?>" height="14px" width="14px"></span></div>
 				</div>
 				<div class="mo_ldap_local_feature_details">
 					<ul>
@@ -439,10 +399,10 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 			</div>
 			<div class="mo_ldap_local_license_features_row2" onclick="displayFeatures(this)">
 				<div class="mo_ldap_local_licensing_feature_comparison_table_row">
-					<div class="mo_ldap_local_licensing_feature_comparison_col1"><span><img class="mo_ldap_local_dropdown_arrow mo_ldap_local_reverse_rotate" src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'down.svg' ); ?>" height="15px" width="15px"></span>LDAP/Active Directory to WordPress Data Sync</div>
-					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'no.svg' ); ?>" height="20px" width="20px"></span></div>
-					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'yes.svg' ); ?>" height="20px" width="20px"></span></div>
-					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'yes.svg' ); ?>" height="20px" width="20px"></span></div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col1"><span><img class="mo_ldap_local_dropdown_arrow mo_ldap_local_reverse_rotate" src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'down.svg' ); ?>" height="12px" width="12px"></span>LDAP/Active Directory to WordPress Data Sync</div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'no.svg' ); ?>" height="12px" width="12px"></span></div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'yes.svg' ); ?>" height="14px" width="14px"></span></div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'yes.svg' ); ?>" height="14px" width="14px"></span></div>
 				</div>
 				<div class="mo_ldap_local_feature_details ">
 					<ul>
@@ -454,10 +414,10 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 			</div>
 			<div class="mo_ldap_local_license_features_row1" onclick="displayFeatures(this)">
 				<div class="mo_ldap_local_licensing_feature_comparison_table_row">
-					<div class="mo_ldap_local_licensing_feature_comparison_col1"><span><img class="mo_ldap_local_dropdown_arrow mo_ldap_local_reverse_rotate" src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'down.svg' ); ?>" height="15px" width="15px"></span>Restrict Pages/Posts</div>
-					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'no.svg' ); ?>" height="20px" width="20px"></span></div>
-					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'no.svg' ); ?>" height="20px" width="20px"></span></div>
-					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'yes.svg' ); ?>" height="20px" width="20px"></span></div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col1"><span><img class="mo_ldap_local_dropdown_arrow mo_ldap_local_reverse_rotate" src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'down.svg' ); ?>" height="12px" width="12px"></span>Restrict Pages/Posts</div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'no.svg' ); ?>" height="12px" width="12px"></span></div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'no.svg' ); ?>" height="12px" width="12px"></span></div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'yes.svg' ); ?>" height="14px" width="14px"></span></div>
 				</div>
 				<div class="mo_ldap_local_feature_details">
 					<ul>
@@ -467,10 +427,10 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 			</div>
 			<div class="mo_ldap_local_license_features_row2" onclick="displayFeatures(this)">
 				<div class="mo_ldap_local_licensing_feature_comparison_table_row">
-					<div class="mo_ldap_local_licensing_feature_comparison_col1"><span><img class="mo_ldap_local_dropdown_arrow mo_ldap_local_reverse_rotate" src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'down.svg' ); ?>" height="15px" width="15px"></span>Third-Party Plugin Integrations</div>
-					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'no.svg' ); ?>" height="20px" width="20px"></span></div>
-					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'no.svg' ); ?>" height="20px" width="20px"></span></div>
-					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'yes.svg' ); ?>" height="20px" width="20px"></span></div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col1"><span><img class="mo_ldap_local_dropdown_arrow mo_ldap_local_reverse_rotate" src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'down.svg' ); ?>" height="12px" width="12px"></span>Third-Party Plugin Integrations</div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'no.svg' ); ?>" height="12px" width="12px"></span></div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'no.svg' ); ?>" height="12px" width="12px"></span></div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'yes.svg' ); ?>" height="14px" width="14px"></span></div>
 				</div>
 				<div class="mo_ldap_local_feature_details">
 					<ul>
@@ -484,10 +444,10 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 			</div>
 			<div class="mo_ldap_local_license_features_row1" onclick="displayFeatures(this)">
 				<div class="mo_ldap_local_licensing_feature_comparison_table_row">
-					<div class="mo_ldap_local_licensing_feature_comparison_col1"><span><img class="mo_ldap_local_dropdown_arrow mo_ldap_local_reverse_rotate" src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'down.svg' ); ?>" height="15px" width="15px"></span>LMS Integrations</div>
-					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'no.svg' ); ?>" height="20px" width="20px"></span></div>
-					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'no.svg' ); ?>" height="20px" width="20px"></span></div>
-					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'yes.svg' ); ?>" height="20px" width="20px"></span></div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col1"><span><img class="mo_ldap_local_dropdown_arrow mo_ldap_local_reverse_rotate" src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'down.svg' ); ?>" height="12px" width="12px"></span>LMS Integrations</div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'no.svg' ); ?>" height="12px" width="12px"></span></div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'no.svg' ); ?>" height="12px" width="12px"></span></div>
+					<div class="mo_ldap_local_licensing_feature_comparison_col2"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'yes.svg' ); ?>" height="14px" width="14px"></span></div>
 				</div>
 				<div class="mo_ldap_local_feature_details">
 					<ul>
@@ -507,19 +467,22 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 
 	<div id="mo_ldap_local_upgrade_steps" class="mo_ldap_local_how_to_upgrade">
 		<div class="mo_ldap_local_how_to_upgrade_heading">
-			HOW TO UPGRADE <div style="color:#FBBC04; display:inline-block;">TO PREMIUM</div>
+			HOW TO UPGRADE TO PREMIUM
 		</div>
-
+		<hr>
 		<div class="mo_ldap_local_how_to_upgrade_container">			
 			<div class="mo_ldap_local_upgrade_steps">
 				<div>
 					<div class="mo_ldap_local_upgrade_step">1 </div>
-					<div class="mo_ldap_local_upgrade_step_description">Click on Buy Now button for required premium plan and you will be redirected to miniOrange login console.</div>
+					<div class="mo_ldap_local_upgrade_step_description">Click on Upgrade Now button for required premium plan and you will be redirected to miniOrange login console.</div>
 				</div>
 				<div>
 					<div class="mo_ldap_local_upgrade_step">5 </div>
 					<div class="mo_ldap_local_upgrade_step_description">From the WordPress admin dashboard, delete the free plugin currently installed.</div>
 				</div>
+				<div class="mo_ldap_vertical_line_sepertor"></div>
+				<div class="mo_ldap_vertical_line_sepertor"></div>
+
 				<div>
 					<div class="mo_ldap_local_upgrade_step">2 </div>
 					<div class="mo_ldap_local_upgrade_step_description">Enter your username and password with which you have created an account with us. After that you will be redirected to payment page.</div>
@@ -528,6 +491,10 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 					<div class="mo_ldap_local_upgrade_step">6 </div>
 					<div class="mo_ldap_local_upgrade_step_description">Unzip the downloaded premium plugin and extract the files.</div>
 				</div>
+
+				<div class="mo_ldap_vertical_line_sepertor"></div>
+				<div class="mo_ldap_vertical_line_sepertor"></div>
+
 				<div>
 					<div class="mo_ldap_local_upgrade_step">3 </div>
 					<div class="mo_ldap_local_upgrade_step_description">Enter your card details and proceed for payment. On successful payment completion, the premium plugin(s) and add-on(s) will be available to download.</div>
@@ -536,6 +503,10 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 					<div class="mo_ldap_local_upgrade_step">7 </div>
 					<div class="mo_ldap_local_upgrade_step_description">Upload the extracted files using FTP to path /wp-content/plugins/. Alternately, go to Add New → Upload Plugin in the plugin's section to install the .zip file directly.</div>
 				</div>
+
+				<div class="mo_ldap_vertical_line_sepertor"></div>
+				<div class="mo_ldap_vertical_line_sepertor"></div>
+
 				<div>
 					<div class="mo_ldap_local_upgrade_step">4 </div>
 					<div class="mo_ldap_local_upgrade_step_description">Download the premium plugin(s) and add-on(s) from Plugin Releases and Downloads section.</div>
@@ -548,90 +519,17 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 
 
 			<div class="mo_ldap_local_upgrade_steps_note">
-				Note: The premium plans are available in the miniOrange dashboard. Please don't update the premium plugin from the WordPress Marketplace. 
+				<b>Note:</b> The premium plans are available in the miniOrange dashboard. Please don't update the premium plugin from the WordPress Marketplace. 
 				We'll notify you via email whenever a newer version of the plugin is available in the miniOrange dashboard.
 			</div>
 		</div>
 	</div>
 
-
-	<div id="mo_ldap_local_addons_pricing" class="mo_ldap_local_licensing_page_addons">
-		<div class="mo_ldap_local_addons_header">
-			<div class="mo_ldap_local_addons_heading">
-				<div style="color:#0076E1; display:inline;">PREMIUM</div> ADD-ONS
-			</div>
-			<div id="mo_ldap_local_addons_navbar" class="mo_ldap_local_addons_buttons">
-				<div data-id="mo_ldap_local_premium_add_ons" class="mo_ldap_troubleshooting_btn mo-ldap-upgrade-now-btn mo_ldap_local_btn2_tem">
-					Premium Add-ons
-				</div>
-				<div data-id="mo_ldap_local_premium_thirdparty_add_ons" class="mo_ldap_troubleshooting_btn mo_ldap_local_btn2_tem">
-					Premium Add-ons for Third-Party Plugins
-				</div>
-			</div>
-			<div>
-				<div id="mo_ldap_local_premium_add_ons" class="mo_ldap_local_all_addons">
-					<?php foreach ( $addon_array_recommended as $addon ) { ?>
-						<div class="mo_ldap_local_each_addon mo_ldap_local_each_addon_licensing_page ">
-							<div class="mo_ldap_local_addon_box_head">
-								<div class="mo_ldap_local_all_addons_heading">
-									<?php echo esc_html( $addon['addonName'] ); ?>
-								</div>
-								<p class="mo_ldap_local_addons_para mo_ldap_local_addons_desc">
-									<?php echo esc_html( $addon['addonDescription'] ); ?>
-								</p>
-							</div>
-							<div class="mo_ldap_local_all_addons_link">
-								<div class="mo_ldap_local_all_addons_each_link mo_ldap_local_all_addons_each_link_licensing_page">
-									<a href="<?php echo esc_url( $addon['addonGuide'] ); ?>" class="mo_ldap_local_unset_link_affect mo_ldap_local_horizontal_flex_container"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'setup.svg' ); ?>" height="15px" width="15px"></span>Setup Guide</a>
-								</div>
-								<div class="mo_ldap_local_all_addons_each_link mo_ldap_local_all_addons_each_link_licensing_page">
-									<a href="<?php echo esc_url( $addon['addonVideo'] ); ?>" class="mo_ldap_local_unset_link_affect mo_ldap_local_horizontal_flex_container"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'videolink.svg' ); ?>" height="15px" width="15px"></span>Setup Video</a>
-								</div>
-							</div>
-
-							<button class="mo_ldap_troubleshooting_btn mo_ldap_addon_contact_us_btn" data-id="mo_ldap_local_contact_us_box" onclick="mo_ldap_local_popup_card_clicked(this, 'I am interested in <?php echo esc_js( $addon['addonName'] ); ?> Add-on and want to know more about it.')">
-								Contact Us
-							</button>
-						</div>
-					<?php } ?>
-				</div>
-
-				<div id="mo_ldap_local_premium_thirdparty_add_ons" class="mo_ldap_local_all_addons mo_ldap_d_none">
-					<?php foreach ( $addon_array_third_party as $addon ) { ?>
-						<div class="mo_ldap_local_each_addon mo_ldap_local_each_addon_licensing_page">
-							<div class="mo_ldap_local_addon_box_head">
-								<div class="mo_ldap_local_all_addons_heading">
-									<?php echo esc_html( $addon['addonName'] ); ?>
-								</div>
-								<p class="mo_ldap_local_addons_para mo_ldap_local_addons_desc">
-									<?php echo esc_html( $addon['addonDescription'] ); ?>
-								</p>
-							</div>
-							<div class="mo_ldap_local_all_addons_link">
-								<div class="mo_ldap_local_all_addons_each_link mo_ldap_local_all_addons_each_link_licensing_page">
-									<a href="<?php echo esc_url( $addon['addonGuide'] ); ?>" class="mo_ldap_local_unset_link_affect mo_ldap_local_horizontal_flex_container"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'setup.svg' ); ?>" height="15px" width="15px"></span>Setup Guide</a>
-								</div>
-								<div class="mo_ldap_local_all_addons_each_link mo_ldap_local_all_addons_each_link_licensing_page">
-									<a href="<?php echo esc_url( $addon['addonVideo'] ); ?>" class="mo_ldap_local_unset_link_affect mo_ldap_local_horizontal_flex_container"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'videolink.svg' ); ?>" height="15px" width="15px"></span>Setup Video</a>
-								</div>
-							</div>
-
-							<button class="mo_ldap_troubleshooting_btn mo_ldap_addon_contact_us_btn" data-id="mo_ldap_local_contact_us_box" onclick="mo_ldap_local_popup_card_clicked(this, 'I am interested in <?php echo esc_js( $addon['addonName'] ); ?> Add-on and want to know more about it.')">
-								Contact Us
-							</button>
-						</div>
-					<?php } ?>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
 	<div class="mo_ldap_local_supported_payment_methods">
 		<div class="mo_ldap_local_supported_payment_methods_heading">
-			Supported <div style="color:#0076E1; display:inline-block;">Payment Methods </div>
+			Supported Payment Methods 	
 		</div>
-
+		<hr>
 		<div class="mo_ldap_local_supported_payment_methods_cards">
 
 			<div class="mo_ldap_local_supported_payment_methods_card">
@@ -667,9 +565,9 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 
 	<div class="mo_ldap_local_customer_reviews">
 		<div class="mo_ldap_local_customer_reviews_header">
-			WHAT OUR <div style="color:#0076E1; display:inline-block;">CUSTOMERS SAY</div>
+			WHAT OUR CUSTOMERS SAY
 		</div>
-
+		<hr>
 		<div class="mo_ldap_local_review_cards">
 			<div class="mo_ldap_local_review_card">
 				<div class="mo_ldap_local_review_card_header">
@@ -740,19 +638,19 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 
 	<div class="mo_ldap_local_return_policy">
 		<div class="return_policy_header">
-			<div style="color:#0076E1; display:inline-block;">RETURN</div> 
-			POLICY
+			RETURN POLICY
 		</div>
+		<hr>	
 		<div class="mo_ldap_local_return_pol_content_div">
 			<div class="return_policy_box">
 				If the premium plugin you purchased is not working as advertised and you’ve attempted to resolve any feature issues with our support team, which couldn't get resolved, we will refund the whole amount within 10 days of the purchase.
 			</div>
 			<br>
 			<div class="return_policy_description">
-				Note that this policy does not cover the following cases:
+				<b>Note that this policy does not cover the following cases:</b>
 					<br><br>
 					1. Change of mind or change in requirements after purchase.
-					<br>
+					<br><br>
 					2. Infrastructure issues not allowing the functionality to work.
 				</div>
 				<div class="mo_ldap_local_upgrade_steps_note return_policy_note">

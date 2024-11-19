@@ -33,7 +33,7 @@
 				<div id="mo_ldap_local_absolute_documentation_box">
 					<div class="mo_ldap_local_documentation_box">
 						<div><a href="https://plugins.miniorange.com/step-by-step-guide-for-wordpress-ldap-login-plugin" target="_blank" class="mo_ldap_local_unset_link_affect"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'doc.svg' ); ?>" height="20px" width="20px"></span><div>Setup LDAP/AD Plugin</div></a></div>
-						<div><a href="https://www.youtube.com/watch?v=5DUGgP-Hf-k" target="_blank" class="mo_ldap_local_unset_link_affect"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'video.svg' ); ?>" height="20px" width="20px"></span><div>LDAP/AD Plugin Setup</div></a></div>
+						<div><a href="https://www.youtube.com/watch?v=jGhUxqkXgwc" target="_blank" class="mo_ldap_local_unset_link_affect"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'video.svg' ); ?>" height="20px" width="20px"></span><div>LDAP/AD Plugin Setup</div></a></div>
 						<div><a href="https://www.miniorange.com/guide-to-setup-ldaps-on-windows-server" target="_blank" class="mo_ldap_local_unset_link_affect"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'doc.svg' ); ?>" height="20px" width="20px"></span><div>Setup LDAPS connection</div></a></div>
 						<div><a href="https://youtu.be/r0pnB2d0QP8" target="_blank" class="mo_ldap_local_unset_link_affect"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'video.svg' ); ?>" height="20px" width="20px"></span><div>Premium Plugin Features</div></a></div>
 					</div>
