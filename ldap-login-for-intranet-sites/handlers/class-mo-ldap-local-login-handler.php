@@ -126,57 +126,55 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login_Handler' ) ) {
 
 					wp_update_user( $user_data );
 					return $user;
-				} else {
+				} elseif ( ! get_option( 'mo_ldap_local_register_user' ) ) {
 
-					if ( ! get_option( 'mo_ldap_local_register_user' ) ) {
 						$this->utils->mo_ldap_report_update( $username, 'ERROR', '<strong>Login Error:</strong> Your Administrator has not enabled Auto Registration. Please contact your Administrator.' );
 						$error = new WP_Error();
 						$error->add( 'registration_disabled_error', __( '<strong>ERROR</strong>: Your Administrator has not enabled Auto Registration. Please contact your Administrator.' ) );
 						return $error;
-					} else {
-						$user_password      = wp_generate_password( 10, false );
-						$profile_attributes = $auth_response->profile_attributes_list;
+				} else {
+					$user_password      = wp_generate_password( 10, false );
+					$profile_attributes = $auth_response->profile_attributes_list;
 
-						$email = ! empty( $profile_attributes['mail'] ) ? $profile_attributes['mail'] : '';
-						if ( empty( $profile_attributes['mail'] ) && ! empty( $mo_ldap_local_ldap_email_domain ) ) {
-							if ( in_array( $mo_ldap_local_ldap_username_attribute, $username_list_array, true ) || in_array( $custom_ldap_username_attribute, $username_list_array, true ) ) {
-								$email = $username . '@' . $mo_ldap_local_ldap_email_domain;
-							}
+					$email = ! empty( $profile_attributes['mail'] ) ? $profile_attributes['mail'] : '';
+					if ( empty( $profile_attributes['mail'] ) && ! empty( $mo_ldap_local_ldap_email_domain ) ) {
+						if ( in_array( $mo_ldap_local_ldap_username_attribute, $username_list_array, true ) || in_array( $custom_ldap_username_attribute, $username_list_array, true ) ) {
+							$email = $username . '@' . $mo_ldap_local_ldap_email_domain;
+						}
+					}
+
+					$userdata = array(
+						'user_login' => $username,
+						'user_email' => $email,
+						'user_pass'  => $user_password,
+					);
+					$user_id  = wp_insert_user( $userdata );
+
+					if ( ! is_wp_error( $user_id ) ) {
+						$user = get_user_by( 'login', $username );
+
+						update_user_meta( $user->ID, 'mo_ldap_user_dn', $auth_response->user_dn, false );
+
+						if ( get_option( 'mo_ldap_local_enable_role_mapping' ) ) {
+							$new_registered_user  = true;
+							$mo_ldap_role_mapping = new Mo_Ldap_Local_Role_Mapping_Handler();
+							$mo_ldap_role_mapping->mo_ldap_local_update_role_mapping( $user->ID, $new_registered_user );
 						}
 
-						$userdata = array(
-							'user_login' => $username,
-							'user_email' => $email,
-							'user_pass'  => $user_password,
-						);
-						$user_id  = wp_insert_user( $userdata );
-
-						if ( ! is_wp_error( $user_id ) ) {
-							$user = get_user_by( 'login', $username );
-
-							update_user_meta( $user->ID, 'mo_ldap_user_dn', $auth_response->user_dn, false );
-
-							if ( get_option( 'mo_ldap_local_enable_role_mapping' ) ) {
-								$new_registered_user  = true;
-								$mo_ldap_role_mapping = new Mo_Ldap_Local_Role_Mapping_Handler();
-								$mo_ldap_role_mapping->mo_ldap_local_update_role_mapping( $user->ID, $new_registered_user );
-							}
-
-							return $user;
+						return $user;
+					} else {
+						$error_string       = $user_id->get_error_message();
+						$email_exists_error = 'Sorry, that email address is already used!';
+						if ( email_exists( $email ) && strcasecmp( $error_string, $email_exists_error ) === 0 ) {
+							$error = new WP_Error();
+							$this->utils->mo_ldap_report_update( $username, $auth_response->status_message, '<strong>Login Error:</strong> There was an error registering your account. The email is already registered, please choose another one and try again.' );
+							$error->add( 'registration_error', __( '<strong>ERROR</strong>: There was an error registering your account. The email is already registered, please choose another one and try again.' ) );
+							return $error;
 						} else {
-							$error_string       = $user_id->get_error_message();
-							$email_exists_error = 'Sorry, that email address is already used!';
-							if ( email_exists( $email ) && strcasecmp( $error_string, $email_exists_error ) === 0 ) {
-								$error = new WP_Error();
-								$this->utils->mo_ldap_report_update( $username, $auth_response->status_message, '<strong>Login Error:</strong> There was an error registering your account. The email is already registered, please choose another one and try again.' );
-								$error->add( 'registration_error', __( '<strong>ERROR</strong>: There was an error registering your account. The email is already registered, please choose another one and try again.' ) );
-								return $error;
-							} else {
-								$error = new WP_Error();
-								$this->utils->mo_ldap_report_update( $username, $auth_response->status_message, '<strong>Login Error:</strong> There was an error registering your account. Please try again.' );
-								$error->add( 'registration_error', __( '<strong>ERROR</strong>: There was an error registering your account. Please try again.' ) );
-								return $error;
-							}
+							$error = new WP_Error();
+							$this->utils->mo_ldap_report_update( $username, $auth_response->status_message, '<strong>Login Error:</strong> There was an error registering your account. Please try again.' );
+							$error->add( 'registration_error', __( '<strong>ERROR</strong>: There was an error registering your account. Please try again.' ) );
+							return $error;
 						}
 					}
 				}
@@ -206,6 +204,5 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login_Handler' ) ) {
 				return $error;
 			}
 		}
-
 	}
 }

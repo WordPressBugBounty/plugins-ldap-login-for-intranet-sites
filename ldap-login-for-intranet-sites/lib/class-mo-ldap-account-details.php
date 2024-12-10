@@ -18,6 +18,7 @@ if ( ! class_exists( 'MO_LDAP_Account_Details' ) ) {
 	 * MO_LDAP_Account_Details
 	 */
 	class MO_LDAP_Account_Details extends MO_LDAP_Basic_Enum {
+		const CUSTOMER_TOKEN    = 'mo_ldap_local_customer_token';
 		const ADMIN_CUSTOMER_ID = 'mo_ldap_local_admin_customer_key';
 		const ADMIN_API_KEY     = 'mo_ldap_local_admin_api_key';
 	}

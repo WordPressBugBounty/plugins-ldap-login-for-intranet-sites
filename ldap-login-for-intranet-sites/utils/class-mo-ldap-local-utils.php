@@ -390,11 +390,9 @@ if ( ! class_exists( 'Mo_Ldap_Local_Utils' ) ) {
 
 			if ( $mo_ldap_local_user_auth_logs_cache ) {
 				$result = $mo_ldap_local_user_auth_logs_cache;
-			} else {
-				if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) ) ) === $table_name ) { //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, - Fetching data from a custom table.
-					$result = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}user_report ORDER BY time DESC", 'ARRAY_A' ); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, - Fetching data from a custom table.
-					wp_cache_set( 'mo_ldap_local_user_auth_logs', $result );
-				}
+			} elseif ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) ) ) === $table_name ) { //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, - Fetching data from a custom table.
+				$result = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}user_report ORDER BY time DESC", 'ARRAY_A' ); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, - Fetching data from a custom table.
+				wp_cache_set( 'mo_ldap_local_user_auth_logs', $result );
 			}
 			return $result;
 		}

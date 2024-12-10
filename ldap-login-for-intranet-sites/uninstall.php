@@ -35,6 +35,17 @@ if ( empty( get_option( 'en_save_config' ) ) || strcasecmp( get_option( 'en_save
 	delete_option( 'mo_ldap_local_search_filter' );
 	delete_option( 'mo_ldap_local_username_attribute' );
 	delete_option( 'Filter_search' );
+	delete_option( 'mo_ldap_local_current_plugin_version' );
+	delete_option( 'mo_ldap_local_email_attribute' );
+	delete_option( 'mo_ldap_local_directory_server' );
+	delete_option( 'mo_ldap_local_ldap_protocol' );
+	delete_option( 'mo_ldap_local_ldap_server_address' );
+	delete_option( 'mo_ldap_local_ldap_port_number' );
+	delete_option( 'mo_ldap_local_email_domain' );
+	delete_option( 'mo_ldap_local_admin_company' );
+	delete_option( 'mo_ldap_local_ldaps_port_number' );
+	delete_option( 'custom_ldap_username_attribute' );
+
 
 	$role_mapping_count = get_option( 'mo_ldap_local_role_mapping_count' );
 	for ( $i = 1;$i <= $role_mapping_count;$i++ ) {

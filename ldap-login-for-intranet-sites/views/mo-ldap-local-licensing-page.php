@@ -132,7 +132,7 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 							<div class="mo_ldap_local_licensing_plan_feature_container">LDAP active directory forest support</div>
 						</div>
 					</div>
-					<button class="mo_ldap_next_btn mo_ldap_local_licensing_buy_now_btn mo_ldap_upgrade_now_btn" onclick="upgradeform('wp_ldap_ntlm_sso_bundled_plan')">
+					<button class="mo_ldap_next_btn mo_ldap_local_licensing_buy_now_btn mo_ldap_upgrade_now_btn" onclick="upgradeform('wp_ldap_intranet_premium_plan')">
 						Upgrade Now
 					</button>
 				</div>

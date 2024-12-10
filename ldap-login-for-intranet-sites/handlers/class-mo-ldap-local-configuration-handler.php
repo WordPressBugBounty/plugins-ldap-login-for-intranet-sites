@@ -91,6 +91,10 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 				@ldap_bind( $ldapconn, $ldap_bind_dn, $ldap_bind_password ); //phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- Used to silense LDAP error; hanlded them below using Mo_Ldap_Local_Auth_Response_Helper class
 				$error_no = ldap_errno( $ldapconn );
 				$err      = ldap_error( $ldapconn );
+				if ( '' === $ldap_bind_password ) {
+					$err = 'Invalid credentials';
+				}
+
 				if ( -1 === $error_no ) {
 					$auth_response                 = new Mo_Ldap_Local_Auth_Response_Helper();
 					$auth_response->status         = false;
@@ -149,7 +153,6 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 				$auth_response->user_dn        = '';
 				return $auth_response;
 			}
-
 		}
 
 		/**
@@ -420,6 +423,9 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 				$ldapconn = $this->get_connection();
 				if ( $ldapconn ) {
 					@ldap_bind( $ldapconn, $ldap_bind_dn, $ldap_bind_password ); //phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- Used to silense LDAP error; hanlded them below using Mo_Ldap_Local_Auth_Response_Helper class
+					if ( '' === $ldap_bind_password ) {
+						delete_option( 'mo_ldap_local_service_account_status' );
+					}
 					$check_ldap_conn = get_option( 'mo_ldap_local_service_account_status' );
 					?>
 				<style>
@@ -577,11 +583,12 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 							<form method="post" action="">
 							<div class="mo_ldap_local_overflow_container">
 								<?php
-								$previous_search_bases = $this->utils::decrypt( get_option( 'mo_ldap_local_search_base' ) );
-								$search_base_list      = array();
-								$result                = ldap_read( $ldapconn, '', '(objectclass=*)', array( 'namingContexts' ) );
-								$data                  = ldap_get_entries( $ldapconn, $result );
-								$count                 = $data[0]['namingcontexts']['count'];
+								$previous_search_bases     = $this->utils::decrypt( get_option( 'mo_ldap_local_search_base' ) );
+								$search_base_list          = array();
+								$result                    = ldap_read( $ldapconn, '', '(objectclass=*)', array( 'namingContexts' ) );
+								$data                      = ldap_get_entries( $ldapconn, $result );
+								$count                     = $data[0]['namingcontexts']['count'];
+								$current_search_base_count = 0;
 								for ( $i = 0; $i < $count; $i++ ) {
 									if ( 0 === $i ) {
 										$base_dn = $data[0]['namingcontexts'][ $i ];
@@ -594,6 +601,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 										echo "<div class='mo_ldap_local_search_base_div'><div><input type='radio' id='mo_ldap_local_searchbase_" . esc_attr( $i ) . "' class='select_search_bases' name='select_ldap_search_bases[]' value='" . esc_attr( $valuetext ) . "'><label for='mo_ldap_local_searchbase_" . esc_attr( $i ) . "'>" . esc_html( $valuetext ) . '</label></div></div>';
 										array_push( $search_base_list, $data[0]['namingcontexts'][ $i ] );
 									}
+									$current_search_base_count++;
 								}
 								$filter      = '(|(objectclass=organizationalUnit)(&(objectClass=top)(cn=users)))';
 								$search_attr = array( 'dn', 'ou' );
@@ -602,12 +610,13 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 								for ( $i = 0; $i < $info['count']; $i++ ) {
 									$textvalue = $info[ $i ]['dn'];
 									if ( ( strcasecmp( $textvalue, $previous_search_bases ) ) === 0 ) {
-										echo "<div class='mo_ldap_local_search_base_div'><div><input type='radio' id='mo_ldap_local_searchbase_" . esc_attr( $i ) . "' class='select_search_bases' name='select_ldap_search_bases[]' value='" . esc_attr( $textvalue ) . "' checked><label for='mo_ldap_local_searchbase_" . esc_attr( $i ) . "'>" . esc_html( $textvalue ) . '</label></div></div>';
+										echo "<div class='mo_ldap_local_search_base_div'><div><input type='radio' id='mo_ldap_local_searchbase_" . esc_attr( $current_search_base_count ) . "' class='select_search_bases' name='select_ldap_search_bases[]' value='" . esc_attr( $textvalue ) . "' checked><label for='mo_ldap_local_searchbase_" . esc_attr( $current_search_base_count ) . "'>" . esc_html( $textvalue ) . '</label></div></div>';
 										array_push( $search_base_list, $info[ $i ]['dn'] );
 									} else {
-										echo "<div class='mo_ldap_local_search_base_div'><div><input type='radio' id='mo_ldap_local_searchbase_" . esc_attr( $i ) . "' class='select_search_bases' name='select_ldap_search_bases[]' value='" . esc_attr( $textvalue ) . "'><label for='mo_ldap_local_searchbase_" . esc_attr( $i ) . "'>" . esc_html( $textvalue ) . '</label></div></div>';
+										echo "<div class='mo_ldap_local_search_base_div'><div><input type='radio' id='mo_ldap_local_searchbase_" . esc_attr( $current_search_base_count ) . "' class='select_search_bases' name='select_ldap_search_bases[]' value='" . esc_attr( $textvalue ) . "'><label for='mo_ldap_local_searchbase_" . esc_attr( $current_search_base_count ) . "'>" . esc_html( $textvalue ) . '</label></div></div>';
 										array_push( $search_base_list, $info[ $i ]['dn'] );
 									}
+									$current_search_base_count++;
 								}
 								?>
 							</div>
@@ -780,6 +789,9 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 					}
 					$count_search_bases = count( $search_bases );
 					$bind               = @ldap_bind( $ldapconn, $ldap_bind_dn, $ldap_bind_password ); //phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- Used to silense LDAP error; hanlded them below using Mo_Ldap_Local_Auth_Response_Helper class
+					if ( '' === $ldap_bind_password ) {
+						$bind = false;
+					}
 					if ( $bind ) {
 
 						for ( $i = 0; $i < $count_search_bases; $i++ ) {
@@ -1049,6 +1061,10 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 					}
 					$count_search_bases = count( $search_bases );
 					$bind               = @ldap_bind( $ldapconn, $ldap_bind_dn, $ldap_bind_password ); //phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- Used to silense LDAP error; hanlded them below using Mo_Ldap_Local_Auth_Response_Helper class
+
+					if ( '' === $ldap_bind_password ) {
+						$bind = false;
+					}
 					if ( $bind ) {
 
 						for ( $i = 0; $i < $count_search_bases; $i++ ) {

@@ -228,6 +228,5 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login' ) ) {
 				wp_enqueue_script( 'mo_ldap_local_admin_plugin_script' );
 			}
 		}
-
 	}
 }

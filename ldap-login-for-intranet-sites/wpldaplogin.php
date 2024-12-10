@@ -14,7 +14,7 @@
  * Plugin URI: https://miniorange.com
  * Description: Active Directory Integration for Intranet Sites plugin provides login to WordPress using credentials stored in your Active Directory / other LDAP Directory.
  * Author: miniOrange
- * Version: 5.1.8
+ * Version: 5.2.0
  * Author URI: https://miniorange.com
  */
 

@@ -97,11 +97,11 @@
 				</div>
 			</div>
 			<?php
-		$log_user_reporting = get_option( 'mo_ldap_local_user_report_log' );
-		$user_logs_empty    = $utils::mo_ldap_is_user_logs_empty();
+			$log_user_reporting = get_option( 'mo_ldap_local_user_report_log' );
+			$user_logs_empty    = $utils::mo_ldap_is_user_logs_empty();
 
-		if ( strcasecmp( $log_user_reporting, '1' ) === 0 && ! $user_logs_empty ) {
-			?>
+			if ( strcasecmp( $log_user_reporting, '1' ) === 0 && ! $user_logs_empty ) {
+				?>
 			<div class="mo_ldap_local_auth_report_config mo_ldap_local_log_requests mo_ldap_local_auth_report_position">
 				<form method="post" action="" name="mo_ldap_local_authentication_report">
 					<?php wp_nonce_field( 'mo_ldap_authentication_report' ); ?>
@@ -152,13 +152,13 @@
 				</tbody>
 			</table>
 		</div>
-			<?php
-		} elseif ( strcasecmp( $log_user_reporting, '1' ) === 0 && $user_logs_empty ) {
-			?>
+				<?php
+			} elseif ( strcasecmp( $log_user_reporting, '1' ) === 0 && $user_logs_empty ) {
+				?>
 			</div>
-			<?php
-			echo '<p class="mo_ldap_local_normal_font"> No audit logs are available currently. <p>';
-		}
-		?>
+				<?php
+				echo '<p class="mo_ldap_local_normal_font"> No audit logs are available currently. <p>';
+			}
+			?>
 	</div>
 </div>

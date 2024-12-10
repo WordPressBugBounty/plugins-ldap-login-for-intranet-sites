@@ -122,7 +122,6 @@ if ( ! class_exists( 'MO_LDAP_License_Plans_Pricing' ) ) {
 				'15' => '200',
 				'20' => '240',
 			);
-
 		}
 	}
 }
