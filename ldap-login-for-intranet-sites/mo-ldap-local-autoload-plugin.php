@@ -18,7 +18,7 @@ define( 'MO_LDAP_LOCAL_CONTROLLERS', MO_LDAP_LOCAL_DIR . 'controllers/' );
 define( 'MO_LDAP_LOCAL_LIB', MO_LDAP_LOCAL_DIR . 'lib/' );
 define( 'MO_LDAP_LOCAL_LOGO_URL', MO_LDAP_LOCAL_URL . 'includes/images/logo.png' );
 define( 'MO_LDAP_LOCAL_INCLUDES', MO_LDAP_LOCAL_URL . 'includes/' );
-define( 'MO_LDAP_LOCAL_VERSION', '5.2.0' );
+define( 'MO_LDAP_LOCAL_VERSION', '5.2.1' );
 define(
 	'TAB_LDAP_CLASS_NAMES',
 	maybe_serialize(

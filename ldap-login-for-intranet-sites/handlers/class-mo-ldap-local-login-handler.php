@@ -64,11 +64,11 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login_Handler' ) ) {
 				$error = new WP_Error();
 
 				if ( empty( $username ) ) {
-					$error->add( 'empty_username', __( '<strong>ERROR</strong>: Email field is empty.' ) );
+					$error->add( 'empty_username', __( '<strong>ERROR</strong>: Email field is empty.', 'ldap-login-for-intranet-sites' ) );
 				}
 
 				if ( empty( $password ) ) {
-					$error->add( 'empty_password', __( '<strong>ERROR</strong>: Password field is empty.' ) );
+					$error->add( 'empty_password', __( '<strong>ERROR</strong>: Password field is empty.', 'ldap-login-for-intranet-sites' ) );
 				}
 				return $error;
 			}
@@ -99,7 +99,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login_Handler' ) ) {
 					if ( empty( $user ) ) {
 						$this->utils->mo_ldap_report_update( $username, 'ERROR', '<strong>Login Error:</strong> Invalid Username/Password combination' );
 						$error = new WP_Error();
-						$error->add( 'error_fetching_user', __( '<strong>ERROR</strong>: Invalid Username/Password combination.' ) );
+						$error->add( 'error_fetching_user', __( '<strong>ERROR</strong>: Invalid Username/Password combination.', 'ldap-login-for-intranet-sites' ) );
 						return $error;
 					}
 
@@ -130,7 +130,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login_Handler' ) ) {
 
 						$this->utils->mo_ldap_report_update( $username, 'ERROR', '<strong>Login Error:</strong> Your Administrator has not enabled Auto Registration. Please contact your Administrator.' );
 						$error = new WP_Error();
-						$error->add( 'registration_disabled_error', __( '<strong>ERROR</strong>: Your Administrator has not enabled Auto Registration. Please contact your Administrator.' ) );
+						$error->add( 'registration_disabled_error', __( '<strong>ERROR</strong>: Your Administrator has not enabled Auto Registration. Please contact your Administrator.', 'ldap-login-for-intranet-sites' ) );
 						return $error;
 				} else {
 					$user_password      = wp_generate_password( 10, false );
@@ -168,12 +168,12 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login_Handler' ) ) {
 						if ( email_exists( $email ) && strcasecmp( $error_string, $email_exists_error ) === 0 ) {
 							$error = new WP_Error();
 							$this->utils->mo_ldap_report_update( $username, $auth_response->status_message, '<strong>Login Error:</strong> There was an error registering your account. The email is already registered, please choose another one and try again.' );
-							$error->add( 'registration_error', __( '<strong>ERROR</strong>: There was an error registering your account. The email is already registered, please choose another one and try again.' ) );
+							$error->add( 'registration_error', __( '<strong>ERROR</strong>: There was an error registering your account. The email is already registered, please choose another one and try again.', 'ldap-login-for-intranet-sites' ) );
 							return $error;
 						} else {
 							$error = new WP_Error();
 							$this->utils->mo_ldap_report_update( $username, $auth_response->status_message, '<strong>Login Error:</strong> There was an error registering your account. Please try again.' );
-							$error->add( 'registration_error', __( '<strong>ERROR</strong>: There was an error registering your account. Please try again.' ) );
+							$error->add( 'registration_error', __( '<strong>ERROR</strong>: There was an error registering your account. Please try again.', 'ldap-login-for-intranet-sites' ) );
 							return $error;
 						}
 					}
@@ -181,26 +181,26 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login_Handler' ) ) {
 			} elseif ( strcasecmp( $auth_response->status_message, 'LDAP_USER_BIND_ERROR' ) === 0 || strcasecmp( $auth_response->status_message, 'LDAP_USER_NOT_EXIST' ) === 0 ) {
 				$this->utils->mo_ldap_report_update( $username, $auth_response->status_message, '<strong>Login Error:</strong> Invalid username or password entered.' );
 				$error = new WP_Error();
-				$error->add( 'LDAP_USER_BIND_ERROR', __( '<strong>ERROR</strong>: Invalid username or password entered.' ) );
+				$error->add( 'LDAP_USER_BIND_ERROR', __( '<strong>ERROR</strong>: Invalid username or password entered.', 'ldap-login-for-intranet-sites' ) );
 				return $error;
 			} elseif ( strcasecmp( $auth_response->status_message, 'LDAP_ERROR' ) === 0 ) {
 				$this->utils->mo_ldap_report_update( $username, $auth_response->status_message, '<strong>Login Error:</strong> <a target="_blank" rel="noopener" href="http://php.net/manual/en/ldap.installation.php">PHP LDAP extension</a> is not installed or disabled. Please enable it.' );
 				$error = new WP_Error();
-				$error->add( 'LDAP_ERROR', __( '<strong>ERROR</strong>: <a target="_blank" rel="noopener" href="http://php.net/manual/en/ldap.installation.php">PHP LDAP extension</a> is not installed or disabled. Please enable it.' ) );
+				$error->add( 'LDAP_ERROR', __( '<strong>ERROR</strong>: <a target="_blank" rel="noopener" href="http://php.net/manual/en/ldap.installation.php">PHP LDAP extension</a> is not installed or disabled. Please enable it.', 'ldap-login-for-intranet-sites' ) );
 				return $error;
 			} elseif ( strcasecmp( $auth_response->status_message, 'OPENSSL_ERROR' ) === 0 ) {
 				$this->utils->mo_ldap_report_update( $username, $auth_response->status_message, '<strong>Login Error:</strong> <a target="_blank" rel="noopener" href="http://php.net/manual/en/openssl.installation.php">PHP OpenSSL extension</a> is not installed or disabled.' );
 				$error = new WP_Error();
-				$error->add( 'OPENSSL_ERROR', __( '<strong>ERROR</strong>: <a target="_blank" rel="noopener" href="http://php.net/manual/en/openssl.installation.php">PHP OpenSSL extension</a> is not installed or disabled.' ) );
+				$error->add( 'OPENSSL_ERROR', __( '<strong>ERROR</strong>: <a target="_blank" rel="noopener" href="http://php.net/manual/en/openssl.installation.php">PHP OpenSSL extension</a> is not installed or disabled.', 'ldap-login-for-intranet-sites' ) );
 				return $error;
 			} elseif ( strcasecmp( $auth_response->status_message, 'LDAP_PING_ERROR' ) === 0 ) {
 				$this->utils->mo_ldap_report_update( $username, $auth_response->status_message, '<strong>Login Error: </strong> LDAP server is not responding ' );
 				$error = new WP_Error();
-				$error->add( 'LDAP_PING_ERROR', __( '<strong>ERROR</strong>:LDAP server is not reachable. Fallback to local WordPress authentication is not supported.' ) );
+				$error->add( 'LDAP_PING_ERROR', __( '<strong>ERROR</strong>:LDAP server is not reachable. Fallback to local WordPress authentication is not supported.', 'ldap-login-for-intranet-sites' ) );
 			} else {
 				$error = new WP_Error();
 				$this->utils->mo_ldap_report_update( $username, $auth_response->status_message, '<strong>Login Error:</strong> Unknown error occurred during authentication. Please contact your administrator.' );
-				$error->add( 'UNKNOWN_ERROR', __( '<strong>ERROR</strong>: Unknown error occurred during authentication. Please contact your administrator.' ) );
+				$error->add( 'UNKNOWN_ERROR', __( '<strong>ERROR</strong>: Unknown error occurred during authentication. Please contact your administrator.', 'ldap-login-for-intranet-sites' ) );
 				return $error;
 			}
 		}

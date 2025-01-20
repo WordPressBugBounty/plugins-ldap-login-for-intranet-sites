@@ -113,8 +113,8 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login' ) ) {
 			if ( is_plugin_active( MO_LDAP_LOCAL_PLUGIN_NAME ) ) {
 				$links = array_merge(
 					array(
-						'<a href="' . esc_url( admin_url( '?page=mo_ldap_local_login' ) ) . '">' . __( 'Settings', 'mo_ldap_local_login' ) . '</a>',
-						'<a href="' . esc_url( admin_url( '?page=mo_ldap_local_login&tab=pricing' ) ) . '">' . __( 'Upgrade to Premium', 'mo_ldap_local_login&tab=pricing' ) . '</a>',
+						'<a href="' . esc_url( admin_url( '?page=mo_ldap_local_login' ) ) . '">' . __( 'Settings', 'ldap-login-for-intranet-sites' ) . '</a>',
+						'<a href="' . esc_url( admin_url( '?page=mo_ldap_local_login&tab=pricing' ) ) . '">' . __( 'Upgrade to Premium', 'ldap-login-for-intranet-sites' ) . '</a>',
 					),
 					$links
 				);

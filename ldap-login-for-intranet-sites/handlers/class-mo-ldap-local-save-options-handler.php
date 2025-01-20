@@ -201,7 +201,14 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 		 * @return void
 		 */
 		private function miniorange_ldap_authentication_report() {
-			global $wpdb;
+			global $wpdb, $wp_filesystem;
+
+			if ( ! function_exists( 'WP_Filesystem' ) || ! WP_Filesystem() ) {
+				update_option( 'mo_ldap_local_message', 'Unable to initialize WP_Filesystem. This may be due to file permissions or server configuration. Check your WordPress file system settings and try again.' );
+				$this->utils->show_error_message();
+				return;
+			}
+
 			$wp_user_reports_cache = wp_cache_get( 'mo_ldap_user_report_cache' );
 			if ( $wp_user_reports_cache ) {
 				$user_reports = $wp_user_reports_cache;
@@ -210,25 +217,47 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 				wp_cache_set( 'mo_ldap_user_report_cache', $user_reports );
 			}
 
-			$csv_file = fopen( 'php://output', 'w' );
-
-			if ( ! empty( $user_reports ) ) {
-				$fields = array( 'ID', 'USERNAME', 'TIME', 'LDAP STATUS', 'LDAP ERROR' );
-				fputcsv( $csv_file, $fields );
-				foreach ( $user_reports as $user_report ) {
-					$line_data = array( $user_report->id, $user_report->user_name, $user_report->time, $user_report->ldap_status, sanitize_text_field( $user_report->ldap_error ) );
-					fputcsv( $csv_file, $line_data );
-				}
-			} else {
-				$message = 'No Logs Available';
-				update_option( 'mo_ldap_local_message', $message );
+			$temp_file = wp_tempnam();
+			if ( ! $temp_file ) {
+				update_option( 'mo_ldap_local_message', 'Unable to create a temporary file for the report.' );
 				$this->utils->show_error_message();
 				return;
 			}
 
-			fclose( $csv_file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fclose -- This file should not be saved locally.
+			$csv_content = '';
+
+			if ( ! empty( $user_reports ) ) {
+				$fields       = array( 'ID', 'USERNAME', 'TIME', 'LDAP STATUS', 'LDAP ERROR' );
+				$csv_content .= implode( ',', $fields ) . "\n";
+
+				foreach ( $user_reports as $user_report ) {
+					$line_data    = array(
+						$user_report->id,
+						$user_report->user_name,
+						$user_report->time,
+						$user_report->ldap_status,
+						sanitize_text_field( $user_report->ldap_error ),
+					);
+					$csv_content .= implode( ',', $line_data ) . "\n";
+				}
+			} else {
+				update_option( 'mo_ldap_local_message', 'No Logs Available' );
+				$this->utils->show_error_message();
+				return;
+			}
+
+			if ( ! $wp_filesystem->put_contents( $temp_file, $csv_content, FS_CHMOD_FILE ) ) {
+				update_option( 'mo_ldap_local_message', 'Failed to write the report to the file.' );
+				$this->utils->show_error_message();
+				return;
+			}
+
 			header( 'Content-Type: text/csv' );
 			header( 'Content-Disposition: attachment; filename=ldap-authentication-report.csv' );
+
+			echo esc_html( $wp_filesystem->get_contents( $temp_file ) );
+
+			$wp_filesystem->delete( $temp_file );
 
 			exit;
 		}
@@ -265,7 +294,28 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 			$file_tmp  = isset( $_FILES['mo_ldap_import_file']['tmp_name'] ) ? $_FILES['mo_ldap_import_file']['tmp_name'] : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- no need to sanitize the file.	
 			$file_ext  = strtolower( pathinfo( $file_name, PATHINFO_EXTENSION ) );
 			if ( 'json' === $file_ext ) {
-				$file_json_content   = file_get_contents( $file_tmp );
+				$file_json_content = '';
+				if ( ! function_exists( 'WP_Filesystem' ) || ! WP_Filesystem() ) {
+					update_option( 'mo_ldap_local_message', 'Unable to initialize WP_Filesystem. This may be due to file permissions or server configuration. Check your WordPress file system settings and try again.' );
+					$this->utils->show_error_message();
+					return;
+				}
+				global $wp_filesystem;
+				
+				if ( $wp_filesystem->is_readable( $file_tmp ) ) {
+					$file_json_content = $wp_filesystem->get_contents( $file_tmp );
+				
+					if ( $file_json_content === false ) {
+						update_option( 'mo_ldap_local_message', 'Error reading the uploaded file. Please try again.' );
+						$this->utils->show_error_message();
+						return;
+					}
+				} else {
+					update_option( 'mo_ldap_local_message', 'The uploaded file is not readable.' );
+					$this->utils->show_error_message();
+					return;
+				}				
+
 				$configuration_array = json_decode( $file_json_content, true );
 				if ( array_key_exists( 'ldap_Login', $configuration_array ) || array_key_exists( 'ldap_config', $configuration_array ) ) {
 
@@ -697,7 +747,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 						if ( isset( $response['statusCode'] ) && strcasecmp( $response['statusCode'], 'BIND_SUCCESS' ) === 0 ) {
 							add_option( 'mo_ldap_local_save_config_status', 'VALID', '', 'no' );
 							update_option( 'mo_ldap_local_message', $response['statusMessage'] );
-							set_transient( 'mo_ldap_local_is_config_success', __( 'Configuration Successfull.', 'text-domain' ), 30 );
+							set_transient( 'mo_ldap_local_is_config_success', __( 'Configuration Successfull.', 'ldap-login-for-intranet-sites' ), 30 );
 							wp_redirect( admin_url( 'admin.php?page=mo_ldap_local_login&step=2' ) );
 						} elseif ( isset( $response['statusCode'] ) && strcasecmp( $response['statusCode'], 'BIND_ERROR' ) === 0 ) {
 							$this->utils->mo_ldap_report_update( self::LDAPCONN, 'ERROR', '<strong>Test Connection Error: </strong>' . $response['statusMessage'] );
@@ -796,7 +846,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 						add_option( 'mo_ldap_local_message', $message, '', 'no' );
 						add_option( 'mo_ldap_local_user_mapping_status', 'VALID', '', 'no' );
 						update_option( 'import_flag', 1 );
-						set_transient( 'mo_ldap_local_is_config_success', __( 'Configuration Successfull.', 'text-domain' ), 30 );
+						set_transient( 'mo_ldap_local_is_config_success', __( 'Configuration Successfull.', 'ldap-login-for-intranet-sites' ), 30 );
 						wp_redirect( admin_url( 'admin.php?page=mo_ldap_local_login&step=3' ) );
 					}
 				} elseif ( strcmp( $post_option, 'mo_ldap_save_attribute_config' ) === 0 && check_admin_referer( 'mo_ldap_save_attribute_config' ) ) {
@@ -1140,7 +1190,9 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 					deactivate_plugins( MO_LDAP_LOCAL_PLUGIN_NAME );
 					update_option( 'mo_ldap_local_message', 'Plugin deactivated successfully.' );
 					$this->deactivate_error_message();
-					Header('Location: '.$_SERVER['PHP_SELF']);
+					if ( isset( $_SERVER['PHP_SELF'] ) ) {
+						Header( 'Location: ' . sanitize_url( wp_unslash( $_SERVER['PHP_SELF'] ) ) );
+					}
 				}
 				if ( strcasecmp( $post_option, 'mo_ldap_hide_msg' ) === 0 && check_admin_referer( 'mo_ldap_hide_msg' ) ) {
 					update_option( 'mo_ldap_local_multisite_message', 'true' );

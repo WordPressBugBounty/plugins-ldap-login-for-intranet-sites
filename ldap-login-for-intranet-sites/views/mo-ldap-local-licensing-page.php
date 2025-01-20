@@ -365,7 +365,7 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 
 			<div class="mo_ldap_local_contact_us_3_link">
 				<a target="_blank" rel="noopener" href="https://www.youtube.com/embed/r0pnB2d0QP8" >
-					<img width="230" height="110" src="https://img.youtube.com/vi/r0pnB2d0QP8/hqdefault.jpg" alt="Video Thumbnail">
+					<img width="230" height="110" src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'thumbnail.jpg' ); ?>" alt="Video Thumbnail">
 				</a>
 			</div>
 		</div>

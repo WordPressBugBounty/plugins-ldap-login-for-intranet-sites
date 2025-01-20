@@ -4,8 +4,8 @@ Donate link: https://miniorange.com
 Tags: active directory, active directory integration, ldap, ldap authentication, authentication, ldap authorization, ldaps, ldap directory, sso, kerberos ntlm, active directory login, ad login
 Requires at least: 5.0
 Tested up to: 6.7
-Requires PHP: 5.2.0
-Stable tag: 5.2.0
+Requires PHP: 5.6.0
+Stable tag: 5.2.1
 License: MIT/Expat
 License URI: https://docs.miniorange.com/mit-license
 
@@ -45,7 +45,7 @@ Add Ons
 
 = Minimum Requirements =
 * Compatible with WordPress version 5.0 or higher
-* Compatible with PHP version 5.2.0 or higher
+* Compatible with PHP version 5.6.0 or higher
 * [PHP LDAP extension Enabled](https://faq.miniorange.com/knowledgebase/how-to-enable-php-ldap-extension/?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)
 
 **Get a quick overview of our product**
@@ -196,7 +196,7 @@ Step-2: Search for "extension=php_openssl.dll" in the php.ini file. Uncomment th
 
 II. To install Active Directory Integration/LDAP Integration the minimum requirements are:
 1. **WordPress version 5.0**
-2. **PHP version 5.2.0**
+2. **PHP version 5.6.0**
 
 = From your WordPress dashboard =
 1. Visit `Plugins > Add New`.
@@ -260,6 +260,9 @@ Yes, the plugin provides AD profile mapping as well as group mapping features th
 9. LDAP Premium Add-ons
 
 == Changelog ==
+
+= 5.2.1 =
+* Minor Security Fixes
 
 = 5.2.0 =
 * Minor Bug Fix for Active Directory Search Base Selection
@@ -813,6 +816,9 @@ Enhanced Troubleshooting
 * this is the first release.
 
 == Upgrade Notice ==
+
+= 5.2.1 =
+* Minor Security Fixes
 
 = 5.2.0 =
 * Minor Bug Fix for Active Directory Search Base Selection
