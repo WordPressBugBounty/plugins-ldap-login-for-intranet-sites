@@ -301,11 +301,11 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 					return;
 				}
 				global $wp_filesystem;
-				
+
 				if ( $wp_filesystem->is_readable( $file_tmp ) ) {
 					$file_json_content = $wp_filesystem->get_contents( $file_tmp );
-				
-					if ( $file_json_content === false ) {
+
+					if ( false === $file_json_content ) {
 						update_option( 'mo_ldap_local_message', 'Error reading the uploaded file. Please try again.' );
 						$this->utils->show_error_message();
 						return;
@@ -314,7 +314,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 					update_option( 'mo_ldap_local_message', 'The uploaded file is not readable.' );
 					$this->utils->show_error_message();
 					return;
-				}				
+				}
 
 				$configuration_array = json_decode( $file_json_content, true );
 				if ( array_key_exists( 'ldap_Login', $configuration_array ) || array_key_exists( 'ldap_config', $configuration_array ) ) {
@@ -396,6 +396,14 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 					if ( $this->utils->decrypt( $ldap_dn_password ) === false || $this->utils->decrypt( $ldap_dn_password ) === '' ) {
 						delete_option( 'mo_ldap_local_server_password' );
 					}
+
+					$ldap_username_attribute = ! empty( get_option( 'mo_ldap_local_username_attribute' ) ) ? get_option( 'mo_ldap_local_username_attribute' ) : 'samaccountname';
+					if ( 'custom_ldap_attribute' === $ldap_username_attribute ) {
+						$ldap_username_attribute = get_option( 'custom_ldap_username_attribute' );
+					}
+
+					$ldap_search_filter = '(&(' . $ldap_username_attribute . '=?)(|(objectClass=person)(objectClass=user)))';
+					update_option( 'mo_ldap_local_search_filter', $this->utils->encrypt( $ldap_search_filter ) );
 
 					$mo_ldap_config = new Mo_Ldap_Local_Configuration_Handler();
 					$content        = $mo_ldap_config->test_connection();
@@ -832,7 +840,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 									}
 								}
 							}
-							$generated_search_filter = '(&(objectClass=*)(' . $ldap_username_attribute . '=?))';
+							$generated_search_filter = '(&(' . $ldap_username_attribute . '=?)' . '(|(objectClass=person)(objectClass=user)))';
 							update_option( 'Filter_search', $ldap_username_attribute );
 							update_option( 'mo_ldap_local_search_filter', $this->utils::encrypt( $generated_search_filter ) );
 						}
