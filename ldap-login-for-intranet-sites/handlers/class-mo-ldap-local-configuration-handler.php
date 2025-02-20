@@ -782,6 +782,40 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 				$attr            = array( $email_attribute );
 				$ldapconn        = $this->get_connection();
 
+				if( empty( $search_bases ) || empty( $search_filter ) ) {
+					?>
+					<div class="mo_ldap_local_attr_map_container">
+						<div style="text-align: center; color: #fff; padding: 18px;font-weight: 600;">
+							<span style="font-size: 1.5rem;">Attribute Mapping Test:</span>
+						</div>
+						<div class='mo_ldap_local_test_result'>
+							<div style="justify-content: center;gap: 12px;display: flex;">
+								<div style="align-self: center;">
+									Status: Test Failed
+								</div>
+								<div>
+									<svg viewBox="0 0 512 512" height="25px" width="25px" fill="#fff">
+										<path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"/>
+									</svg>
+								</div>
+							</div>
+							<hr style="width: 85%;">
+							<div class="mo_ldap_local_user_info">
+								<div>
+									Please Check:
+									<br>
+									&bull; If you have successfully saved your LDAP User Mapping configuration.
+								</div>
+							</div>
+						</div>
+						<div style="text-align: center;">
+							<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
+						</div>
+					</div>
+					<?php
+					exit();
+				}
+
 				if ( $ldapconn ) {
 
 					if ( get_option( 'mo_ldap_local_use_tls' ) ) {
@@ -1051,6 +1085,40 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 				$search_filter      = get_option( 'mo_ldap_local_search_filter' ) ? $this->utils::decrypt( get_option( 'mo_ldap_local_search_filter' ) ) : '';
 				$search_filter      = str_replace( '?', $username, $search_filter );
 				$default_role       = ! empty( get_option( 'mo_ldap_local_mapping_value_default' ) ) ? get_option( 'mo_ldap_local_mapping_value_default' ) : get_option( 'default_role' );
+
+				if( empty( $search_bases ) || empty( $search_filter ) ) {
+					?>
+					<div class="mo_ldap_local_attr_map_container">
+						<div style="text-align: center; color: #fff; padding: 18px;font-weight: 600;">
+							<span style="font-size: 1.5rem;">Role Mapping Test:</span>
+						</div>
+						<div class='mo_ldap_local_test_result'>
+							<div style="justify-content: center;gap: 12px;display: flex;">
+								<div style="align-self: center;">
+									Status: Test Failed
+								</div>
+								<div>
+									<svg viewBox="0 0 512 512" height="25px" width="25px" fill="#fff">
+										<path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"/>
+									</svg>
+								</div>
+							</div>
+							<hr style="width: 85%;">
+							<div class="mo_ldap_local_user_info">
+								<div>
+									Please Check:
+									<br>
+									&bull; If you have successfully saved your LDAP User Mapping configuration.
+								</div>
+							</div>
+						</div>
+						<div style="text-align: center;">
+							<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
+						</div>
+					</div>
+					<?php
+					exit();
+				}
 
 				$ldapconn = $this->get_connection();
 
