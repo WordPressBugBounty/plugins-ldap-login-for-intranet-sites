@@ -5,7 +5,7 @@ Tags: active directory, active directory integration, ldap, ldap authentication,
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 5.6.0
-Stable tag: 5.2.3
+Stable tag: 5.2.4
 License: MIT/Expat
 License URI: https://docs.miniorange.com/mit-license
 
@@ -260,6 +260,9 @@ Yes, the plugin provides AD profile mapping as well as group mapping features th
 9. LDAP Premium Add-ons
 
 == Changelog ==
+
+= 5.2.4 =
+* Object class compatibility for FreeIPA
 
 = 5.2.3 =
 * Usability Improvements
@@ -822,6 +825,9 @@ Enhanced Troubleshooting
 * this is the first release.
 
 == Upgrade Notice ==
+
+= 5.2.4 =
+* Object class compatibility for FreeIPA
 
 = 5.2.3 =
 * Usability Improvements

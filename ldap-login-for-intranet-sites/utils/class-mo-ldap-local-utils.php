@@ -351,11 +351,11 @@ if ( ! class_exists( 'Mo_Ldap_Local_Utils' ) ) {
 						<li>The following are some commonly used Search Filters. You will need to use a search filter which uses the attributes specific to your LDAP environment. Confirm from your LDAP administrator.</li>
 						<ul>
 							<table aria-hidden="true">
-								<tr><td style="width:50%">common name</td><td>(&(objectClass=person)(<strong>cn</strong>=?))</td></tr>
-								<tr><td>email</td><td>(&(objectClass=person)(<strong>mail</strong>=?))</td></tr>
-								<tr><td>logon name</td><td>(&(objectClass=person)(<strong>sAMAccountName</strong>=?))<br/>(&(objectClass=person)(<strong>userPrincipalName</strong>=?))</td></tr>
-								<tr><td>custom attribute where you store your WordPress usernames use</td> <td>(&(objectClass=person)(<strong>customAttribute</strong>=?))</td></tr>
-								<tr><td>if you store WordPress usernames in multiple attributes(eg: some users login using email and others using their username)</td><td>(&(objectClass=person)(<strong>|</strong>(<strong>cn=?</strong>)(<strong>mail=?</strong>)))</td></tr>
+								<tr><td style="width:50%">common name</td><td>(&(|(objectClass=person)(objectClass=user)(objectClass=posixAccount))(<strong>cn</strong>=?))</td></tr>
+								<tr><td>email</td><td>(&(|(objectClass=person)(objectClass=user)(objectClass=posixAccount))(<strong>mail</strong>=?))</td></tr>
+								<tr><td>logon name</td><td>(&(|(objectClass=person)(objectClass=user)(objectClass=posixAccount))(<strong>sAMAccountName</strong>=?))<br/>(&(objectClass=person)(<strong>userPrincipalName</strong>=?))</td></tr>
+								<tr><td>custom attribute where you store your WordPress usernames use</td> <td>(&(|(objectClass=person)(objectClass=user)(objectClass=posixAccount))(<strong>customAttribute</strong>=?))</td></tr>
+								<tr><td>if you store WordPress usernames in multiple attributes(eg: some users login using email and others using their username)</td><td>(&(|(objectClass=person)(objectClass=user)(objectClass=posixAccount))(<strong>|</strong>(<strong>cn=?</strong>)(<strong>mail=?</strong>)))</td></tr>
 							</table>
 						</ul>
 					</ol>',

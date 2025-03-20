@@ -83,13 +83,18 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login' ) ) {
 		private function mo_ldap_local_update_plugin_version() {
 			$version_in_db = ! empty( get_option( 'mo_ldap_local_current_plugin_version' ) ) ? get_option( 'mo_ldap_local_current_plugin_version' ) : '';
 
-			if ( version_compare( $version_in_db, '5.2.1', '<=' ) ) {
+			if ( version_compare( $version_in_db, '5.2.3', '<=' ) ) {
 				$ldap_username_attribute = ! empty( get_option( 'mo_ldap_local_username_attribute' ) ) ? get_option( 'mo_ldap_local_username_attribute' ) : 'samaccountname';
 				if ( 'custom_ldap_attribute' === $ldap_username_attribute ) {
 					$ldap_username_attribute = get_option( 'custom_ldap_username_attribute' );
 				}
 
-				$ldap_search_filter = '(&(' . $ldap_username_attribute . '=?)(|(objectClass=person)(objectClass=user)))';
+				$directory_server_value = get_option( 'mo_ldap_directory_server_value' );
+				if ( strcmp( $directory_server_value, 'freeipa' ) === 0 ) {
+					$ldap_search_filter = '(&(' . $ldap_username_attribute . '=?)(|(objectClass=person)(objectClass=user)(objectClass=posixAccount)))';
+				} else {
+					$ldap_search_filter = '(&(' . $ldap_username_attribute . '=?)(|(objectClass=person)(objectClass=user)))';
+				}
 				update_option( 'mo_ldap_local_search_filter', $this->util->encrypt( $ldap_search_filter ) );
 			}
 
@@ -236,6 +241,14 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login' ) ) {
 				wp_enqueue_script( 'mo_ldap_local_admin_datatable_script', MO_LDAP_LOCAL_INCLUDES . 'js/mo_ldap_local_datatable.min.js', array(), MO_LDAP_LOCAL_VERSION, false );
 				wp_register_script( 'mo_ldap_local_admin_plugin_script', MO_LDAP_LOCAL_INCLUDES . 'js/mo_ldap_local_plugin_script.min.js', array( 'jquery' ), MO_LDAP_LOCAL_VERSION, true );
 				wp_enqueue_script( 'mo_ldap_local_admin_plugin_script' );
+				$directory_server_value   = ! empty( get_option( 'mo_ldap_directory_server_value' ) ) ? get_option( 'mo_ldap_directory_server_value' ) : '';
+				wp_localize_script(
+					'mo_ldap_local_admin_plugin_script',
+					'mo_ldap_local_object',
+					array(
+						'mo_ldap_directory_server_value'  => $directory_server_value,
+					)
+				);
 			}
 		}
 	}

@@ -402,7 +402,12 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 						$ldap_username_attribute = get_option( 'custom_ldap_username_attribute' );
 					}
 
-					$ldap_search_filter = '(&(' . $ldap_username_attribute . '=?)(|(objectClass=person)(objectClass=user)))';
+					$directory_server_value = get_option( 'mo_ldap_directory_server_value' );
+					if ( strcmp( $directory_server_value, 'freeipa' ) === 0 ) {
+						$ldap_search_filter = '(&(' . $ldap_username_attribute . '=?)(|(objectClass=person)(objectClass=user)(objectClass=posixAccount)))';
+					} else {
+						$ldap_search_filter = '(&(' . $ldap_username_attribute . '=?)(|(objectClass=person)(objectClass=user)))';
+					}
 					update_option( 'mo_ldap_local_search_filter', $this->utils->encrypt( $ldap_search_filter ) );
 
 					$mo_ldap_config = new Mo_Ldap_Local_Configuration_Handler();
@@ -840,7 +845,11 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 									}
 								}
 							}
-							$generated_search_filter = '(&(' . $ldap_username_attribute . '=?)' . '(|(objectClass=person)(objectClass=user)))';
+							if ( strcmp( $directory_server_value, 'freeipa' ) === 0 ) {
+								$generated_search_filter = '(&(' . $ldap_username_attribute . '=?)(|(objectClass=person)(objectClass=user)(objectClass=posixAccount)))';
+							} else {
+								$generated_search_filter = '(&(' . $ldap_username_attribute . '=?)(|(objectClass=person)(objectClass=user)))';
+							}
 							update_option( 'Filter_search', $ldap_username_attribute );
 							update_option( 'mo_ldap_local_search_filter', $this->utils::encrypt( $generated_search_filter ) );
 						}
