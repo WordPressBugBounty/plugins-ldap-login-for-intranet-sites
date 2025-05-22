@@ -3,11 +3,11 @@ Contributors: miniOrange
 Donate link: https://miniorange.com
 Tags: active directory, active directory integration, ldap, ldap authentication, authentication, ldap authorization, ldaps, ldap directory, sso, kerberos ntlm, active directory login, ad login
 Requires at least: 5.0
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 5.6.0
-Stable tag: 5.2.4
-License: MIT/Expat
-License URI: https://docs.miniorange.com/mit-license
+Stable tag: 5.2.5
+License: Expat
+License URI: https://plugins.miniorange.com/mit-license
 
 Active Directory Integration/LDAP Integration enables login & sync in WordPress with Active Directory/LDAP Directory credentials, 24/7 ACTIVE SUPPORT
 
@@ -88,7 +88,7 @@ Effortlessly enable Single Sign-On (SSO) within your Active Directory-secured in
 
 https://www.youtube.com/watch?v=5DUGgP-Hf-k
 
-This LDAP/Active Directory Login (AD Login) plugin is free to use under the MIT/Expat license. If you wish to use enhanced features, you may purchase our [Premium version](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration). We also provide additional [add-ons](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration#Add-Ons) that enhance the functionality of the basic WordPress LDAP/AD Login plugin. This will help support further development of our LDAP plugin, and in turn, serve our customers better.
+This LDAP/Active Directory Login (AD Login) plugin is free to use under the Expat license. If you wish to use enhanced features, you may purchase our [Premium version](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration). We also provide additional [add-ons](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration#Add-Ons) that enhance the functionality of the basic WordPress LDAP/AD Login plugin. This will help support further development of our LDAP plugin, and in turn, serve our customers better.
 
 = [Premium Version Features](https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration)=
 
@@ -260,6 +260,10 @@ Yes, the plugin provides AD profile mapping as well as group mapping features th
 9. LDAP Premium Add-ons
 
 == Changelog ==
+
+= 5.2.5 =
+* Minor Bug Fix
+* Compatibility with WordPress 6.8
 
 = 5.2.4 =
 * Object class compatibility for FreeIPA
@@ -825,6 +829,10 @@ Enhanced Troubleshooting
 * this is the first release.
 
 == Upgrade Notice ==
+
+= 5.2.5 =
+* Minor Bug Fix
+* Compatibility with WordPress 6.8
 
 = 5.2.4 =
 * Object class compatibility for FreeIPA

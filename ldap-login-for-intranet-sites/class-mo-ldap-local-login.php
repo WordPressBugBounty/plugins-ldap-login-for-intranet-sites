@@ -182,6 +182,8 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login' ) ) {
 			delete_option( 'mo_ldap_local_admin_api_key' );
 			delete_option( 'mo_ldap_local_customer_token' );
 			delete_option( 'mo_ldap_local_message' );
+			delete_option( 'mo_ldap_local_service_account_status' );
+			delete_option( 'mo_ldap_local_user_mapping_status' );
 		}
 
 		/**

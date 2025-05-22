@@ -821,13 +821,13 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 					} else {
 						$ldap_username_attribute        = isset( $_POST['ldap_username_attribute'] ) ? sanitize_text_field( wp_unslash( $_POST['ldap_username_attribute'] ) ) : '';
 						$custom_ldap_username_attribute = isset( $_POST['custom_ldap_username_attribute'] ) ? sanitize_text_field( wp_unslash( $_POST['custom_ldap_username_attribute'] ) ) : '';
+						$directory_server_value = get_option( 'mo_ldap_directory_server_value' );
 
 						if ( ! $this->utils::check_empty_or_null( $ldap_username_attribute ) ) {
 							update_option( 'mo_ldap_local_username_attribute', $ldap_username_attribute );
 							if ( strcasecmp( $ldap_username_attribute, 'custom_ldap_attribute' ) === 0 ) {
 								update_option( 'custom_ldap_username_attribute', $custom_ldap_username_attribute );
 								if ( $this->utils::check_empty_or_null( $custom_ldap_username_attribute ) ) {
-									$directory_server_value = get_option( 'mo_ldap_directory_server_value' );
 									if ( strcmp( $directory_server_value, 'openldap' ) === 0 || strcmp( $directory_server_value, 'freeipa' ) === 0 ) {
 										$ldap_username_attribute = 'uid';
 									} else {
