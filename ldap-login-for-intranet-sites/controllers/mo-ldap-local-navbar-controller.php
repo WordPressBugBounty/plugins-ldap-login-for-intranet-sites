@@ -20,6 +20,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</svg>
 			</span> Configuration
 		</a></div>
+		<div><a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'advance-sync' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect mo_ldap_local_normal_nav_icons <?php echo strcmp( $active_tab, 'advance-sync' ) === 0 ? 'mo_ldap_local_active_tab' : ''; ?>">
+			<span>
+			<svg width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M22.8217 18.5301C30.3824 11.9787 40.055 8.37866 50.0593 8.39262C73.0718 8.39262 91.7259 27.0468 91.7259 50.0593H83.3926C83.3931 43.5244 81.4728 37.1335 77.8704 31.6812C74.2679 26.2289 69.1423 21.9558 63.1308 19.3931C57.1194 16.8305 50.4872 16.0914 44.0591 17.2677C37.6309 18.444 31.6903 21.4839 26.9759 26.0093L22.8217 18.5301ZM77.2968 81.5885C69.7361 88.14 60.0635 91.74 50.0593 91.726C27.0468 91.726 8.39258 73.0719 8.39258 50.0593H16.7259C16.7254 56.5942 18.6457 62.9852 22.2481 68.4375C25.8506 73.8897 30.9762 78.1629 36.9877 80.7255C42.9991 83.2882 49.6313 84.0273 56.0594 82.851C62.4876 81.6746 68.4282 78.6348 73.1426 74.1094L77.2968 81.5885Z"  fill="<?php echo strcmp( $active_tab, 'advance-sync' ) === 0 ? '#087ae2' : '#000000'; ?>"/>
+				<path d="M74 50L87 74V50H74Z" fill="<?php echo strcmp( $active_tab, 'advance-sync' ) === 0 ? '#087ae2' : '#000000'; ?>"/>
+				<path d="M100 50L87 74V50H100Z" fill="<?php echo strcmp( $active_tab, 'advance-sync' ) === 0 ? '#087ae2' : '#000000'; ?>"/>
+				<path d="M0 51L13 27V51H0Z" fill="<?php echo strcmp( $active_tab, 'advance-sync' ) === 0 ? '#087ae2' : '#000000'; ?>"/>
+				<path d="M26 51L13 27V51H26Z"  fill="<?php echo strcmp( $active_tab, 'advance-sync' ) === 0 ? '#087ae2' : '#000000'; ?>"/>
+			</svg>
+			</span>	Advanced Sync
+			</a></div>
 		<div><a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'import-export' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect mo_ldap_local_normal_nav_icons <?php echo strcmp( $active_tab, 'import-export' ) === 0 ? 'mo_ldap_local_active_tab' : ''; ?>">
 			<span>
 				<svg width="25" height="30" viewBox="0 0 34 24" fill="<?php echo strcmp( $active_tab, 'import-export' ) === 0 ? '#087ae2' : '#000000'; ?>" >
@@ -38,21 +49,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="<?php echo strcmp( $active_tab, 'users-report' ) === 0 ? '#087ae2' : '#000000'; ?>">
 					<path d="M21 11C21 16.55 17.16 21.74 12 23C6.84 21.74 3 16.55 3 11V5L12 1L21 5V11ZM12 21C15.75 20 19 15.54 19 11.22V6.3L12 3.18L5 6.3V11.22C5 15.54 8.25 20 12 21ZM10 17L6 13L7.41 11.59L10 14.17L16.59 7.58L18 9"/>
 				</svg>
-			</span> Authentication Report
+			</span> Reports
 		</a></div>
 		<div class="mo_ldap_local_nav_premium_section mo_ldap_local_column_flex_container">
 			<div class="mo_ldap_local_premium_title"><a class="mo_ldap_local_unset_link_affect" href="https://plugins.miniorange.com/wordpress-ldap-login-intranet-sites?utm_source=ldap%20intranet%20plugin&utm_medium=ldap%20free%20plugin&utm_campaign=ldap%20intranet%20free%20plugin" target="_blank">Premium</a></div>
-			<div><a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'advance-sync' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect mo_ldap_local_normal_nav_icons <?php echo strcmp( $active_tab, 'advance-sync' ) === 0 ? 'mo_ldap_local_active_tab' : ''; ?>">
-				<span>
-				<svg width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M22.8217 18.5301C30.3824 11.9787 40.055 8.37866 50.0593 8.39262C73.0718 8.39262 91.7259 27.0468 91.7259 50.0593H83.3926C83.3931 43.5244 81.4728 37.1335 77.8704 31.6812C74.2679 26.2289 69.1423 21.9558 63.1308 19.3931C57.1194 16.8305 50.4872 16.0914 44.0591 17.2677C37.6309 18.444 31.6903 21.4839 26.9759 26.0093L22.8217 18.5301ZM77.2968 81.5885C69.7361 88.14 60.0635 91.74 50.0593 91.726C27.0468 91.726 8.39258 73.0719 8.39258 50.0593H16.7259C16.7254 56.5942 18.6457 62.9852 22.2481 68.4375C25.8506 73.8897 30.9762 78.1629 36.9877 80.7255C42.9991 83.2882 49.6313 84.0273 56.0594 82.851C62.4876 81.6746 68.4282 78.6348 73.1426 74.1094L77.2968 81.5885Z"  fill="<?php echo strcmp( $active_tab, 'advance-sync' ) === 0 ? '#087ae2' : '#000000'; ?>"/>
-					<path d="M74 50L87 74V50H74Z" fill="<?php echo strcmp( $active_tab, 'advance-sync' ) === 0 ? '#087ae2' : '#000000'; ?>"/>
-					<path d="M100 50L87 74V50H100Z" fill="<?php echo strcmp( $active_tab, 'advance-sync' ) === 0 ? '#087ae2' : '#000000'; ?>"/>
-					<path d="M0 51L13 27V51H0Z" fill="<?php echo strcmp( $active_tab, 'advance-sync' ) === 0 ? '#087ae2' : '#000000'; ?>"/>
-					<path d="M26 51L13 27V51H26Z"  fill="<?php echo strcmp( $active_tab, 'advance-sync' ) === 0 ? '#087ae2' : '#000000'; ?>"/>
-				</svg>
-				</span>	Advance Sync
-			</a></div>
 			<div><a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'multiple-directories' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect mo_ldap_local_normal_nav_icons <?php echo strcmp( $active_tab, 'multiple-directories' ) === 0 ? 'mo_ldap_local_active_tab' : ''; ?>">
 				<span>
 				<svg width="24" height="24" viewBox="0 0 24 24" fill="none">

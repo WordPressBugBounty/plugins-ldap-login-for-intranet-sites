@@ -4,3 +4,8 @@
  *
  * @package miniOrange_LDAP_AD_Integration
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+

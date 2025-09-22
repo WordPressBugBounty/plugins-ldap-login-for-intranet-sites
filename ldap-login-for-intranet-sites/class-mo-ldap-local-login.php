@@ -16,15 +16,17 @@ require_once 'handlers' . DIRECTORY_SEPARATOR . 'class-mo-ldap-local-configurati
 require_once 'handlers' . DIRECTORY_SEPARATOR . 'class-mo-ldap-local-customer-setup-handler.php';
 require_once 'handlers' . DIRECTORY_SEPARATOR . 'class-mo-ldap-local-user-profile-handler.php';
 require_once 'handlers' . DIRECTORY_SEPARATOR . 'class-mo-ldap-local-login-handler.php';
+require_once 'handlers' . DIRECTORY_SEPARATOR . 'class-mo-ldap-local-user-handler.php';
 
 require_once 'helpers' . DIRECTORY_SEPARATOR . 'class-mo-ldap-license-plans-pricing.php';
 require_once 'helpers' . DIRECTORY_SEPARATOR . 'class-mo-ldap-local-auth-response-helper.php';
-
+require_once 'helpers' . DIRECTORY_SEPARATOR . 'Directories' . DIRECTORY_SEPARATOR . 'class-directory-factory.php';
 
 use MO_LDAP\Utils\Mo_Ldap_Local_Utils;
 use MO_LDAP\Utils\MO_LDAP_Local_Addon_List_Content;
 use MO_LDAP\Utils\MO_LDAP_Local_Data_Store;
 
+use MO_LDAP\Handlers\Mo_Ldap_Local_User_Handler;
 use MO_LDAP\Handlers\Mo_Ldap_Local_Save_Options_Handler;
 use MO_LDAP\Handlers\Mo_Ldap_Local_User_Profile_Handler;
 use MO_LDAP\Handlers\Mo_Ldap_Local_Login_Handler;
@@ -73,6 +75,10 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login' ) ) {
 			if ( strcmp( get_option( 'mo_ldap_local_enable_login' ), '1' ) === 0 ) {
 				$mo_ldap_local_login = new Mo_Ldap_Local_Login_Handler();
 			}
+			$local_add_user = get_option( 'mo_ldap_local_enable_ldap_add' );
+			if ( '1' === $local_add_user ) {
+				$mo_ldap_local_user = new Mo_Ldap_Local_User_Handler();
+			}
 		}
 
 		/**
@@ -98,6 +104,8 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login' ) ) {
 				update_option( 'mo_ldap_local_search_filter', $this->util->encrypt( $ldap_search_filter ) );
 			}
 
+			$this->mo_ldap_local_create_sync_table();
+
 			if ( version_compare( $version_in_db, MO_LDAP_LOCAL_VERSION ) !== 0 ) {
 				update_option( 'mo_ldap_local_current_plugin_version', MO_LDAP_LOCAL_VERSION );
 			}
@@ -117,7 +125,27 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login' ) ) {
 			add_action( 'admin_footer', array( $this, 'mo_ldap_local_feedback_request' ) );
 			add_filter( 'plugin_action_links_' . MO_LDAP_LOCAL_PLUGIN_NAME, array( $this, 'mo_ldap_local_links' ) );
 		}
+		/**
+		 * Function mo_ldap_local_create_sync_table : creates a table to store a wp to ldap sync reports
+		 *
+		 * @return void
+		 */
+		public function mo_ldap_local_create_sync_table() {
+			global $wpdb;
+			$charset_collate = $wpdb->get_charset_collate();
 
+			$sql = "CREATE TABLE IF NOT EXISTS `{$wpdb->base_prefix}wptoldap_sync_reports` (
+	    	      id int NOT NULL AUTO_INCREMENT,
+		      user_id bigint(20) UNSIGNED NOT NULL,
+		      username varchar(255) NOT NULL,
+		      additional_info varchar(250) NOT NULL,
+		      sync_status varchar(250) NOT NULL,
+		      PRIMARY KEY  (id)
+	        ) $charset_collate;";
+
+			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+			dbDelta( $sql );
+		}
 		/**
 		 * Function mo_ldap_local_links : Returns URL links used in plugin menu
 		 *
@@ -165,6 +193,8 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login' ) ) {
 			if ( empty( $email_attr ) ) {
 				update_option( 'mo_ldap_local_email_attribute', 'mail' );
 			}
+
+			$this->mo_ldap_local_create_sync_table();
 			ob_clean();
 		}
 
@@ -176,14 +206,16 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login' ) ) {
 		public function mo_ldap_local_deactivate() {
 			delete_option( 'mo_ldap_local_admin_email' );
 			delete_option( 'mo_ldap_local_host_name' );
-			delete_option( 'mo_ldap_local_password' );
 			delete_option( 'mo_ldap_local_admin_phone' );
 			delete_option( 'mo_ldap_local_admin_customer_key' );
 			delete_option( 'mo_ldap_local_admin_api_key' );
-			delete_option( 'mo_ldap_local_customer_token' );
 			delete_option( 'mo_ldap_local_message' );
-			delete_option( 'mo_ldap_local_service_account_status' );
-			delete_option( 'mo_ldap_local_user_mapping_status' );
+			if ( empty( get_option( 'en_save_config' ) ) || strcasecmp( get_option( 'en_save_config' ), '0' ) === 0 ) {
+				delete_option( 'mo_ldap_local_customer_token' );
+				delete_option( 'mo_ldap_local_service_account_status' );
+				delete_option( 'mo_ldap_local_user_mapping_status' );
+				delete_option( 'mo_ldap_local_enable_ldap_add' );
+			}
 		}
 
 		/**
@@ -243,12 +275,12 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login' ) ) {
 				wp_enqueue_script( 'mo_ldap_local_admin_datatable_script', MO_LDAP_LOCAL_INCLUDES . 'js/mo_ldap_local_datatable.min.js', array(), MO_LDAP_LOCAL_VERSION, false );
 				wp_register_script( 'mo_ldap_local_admin_plugin_script', MO_LDAP_LOCAL_INCLUDES . 'js/mo_ldap_local_plugin_script.min.js', array( 'jquery' ), MO_LDAP_LOCAL_VERSION, true );
 				wp_enqueue_script( 'mo_ldap_local_admin_plugin_script' );
-				$directory_server_value   = ! empty( get_option( 'mo_ldap_directory_server_value' ) ) ? get_option( 'mo_ldap_directory_server_value' ) : '';
+				$directory_server_value = ! empty( get_option( 'mo_ldap_directory_server_value' ) ) ? get_option( 'mo_ldap_directory_server_value' ) : '';
 				wp_localize_script(
 					'mo_ldap_local_admin_plugin_script',
 					'mo_ldap_local_object',
 					array(
-						'mo_ldap_directory_server_value'  => $directory_server_value,
+						'mo_ldap_directory_server_value' => $directory_server_value,
 					)
 				);
 			}

@@ -476,7 +476,15 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 					}
 
 					.mo_ldap_local_search_field_container {
-						padding: 5% 10% 2% 10%;	
+						padding: 2% 10%;
+					}
+
+					.mo_ldap_local_show_search_base_main_container{
+						gap: 10px;
+						display: flex;
+						flex-direction: column;
+						height: -webkit-fill-available;
+						justify-content: space-evenly;
 					}
 
 					.mo_ldap_local_show_search_base_container {
@@ -546,6 +554,24 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 						border: none;
 					}
 
+					.mo_ldap_local_search_base_label {
+						display: flex;
+						align-items: center;
+						gap: 8px;
+						width: 100%;
+						white-space: nowrap;
+						overflow: hidden;
+					}
+					.mo_ldap_local_ou_value {
+						display: inline-block;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						max-width: calc(100% - 32px); 
+						vertical-align: middle;
+						cursor: pointer;
+					}
+
 				</style>
 				<script>
 					function mo_ldap_local_search_search_base() {
@@ -566,7 +592,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 					<?php
 					if ( 'VALID' === $check_ldap_conn ) {
 						?>
-						<div class="mo_ldap_local_show_search_base_container">
+						<div class="mo_ldap_local_show_search_base_container mo_ldap_local_show_search_base_main_container">
 							<div class="mo_ldap_local_search_field_container">
 								<div class="mo_ldap_local_search_bases_container">
 										<input type="search" placeholder="Search" id="mo_ldap_local_search_bar" class="mo_ldap_local_search_field" onkeyup="mo_ldap_local_search_search_base()"/>
@@ -577,7 +603,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 										</button>
 								</div>
 							</div>
-							<div style="text-align: center; color: #fff; padding: 18px;font-weight: 600;">
+							<div style="text-align: center; color: #fff; font-weight: 600;">
 								<span>Select your Search Base DN from the below Search bases list</span>
 							</div>
 							<form method="post" action="">
@@ -595,10 +621,10 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 									}
 									$valuetext = $data[0]['namingcontexts'][ $i ];
 									if ( strcasecmp( $valuetext, $previous_search_bases ) === 0 ) {
-										echo "<div class='mo_ldap_local_search_base_div'><div><input type='radio' id='mo_ldap_local_searchbase_" . esc_attr( $i ) . "' class='select_search_bases' name='select_ldap_search_bases[]' value='" . esc_attr( $valuetext ) . "' checked><label for='mo_ldap_local_searchbase_" . esc_attr( $i ) . "'>" . esc_html( $valuetext ) . '</label></div></div>';
+										echo '<div class="mo_ldap_local_search_base_div"><label class="mo_ldap_local_search_base_label"><input type="radio" id="mo_ldap_local_searchbase_' . esc_attr( $i ) . '" class="select_search_bases" name="select_ldap_search_bases[]" value="' . esc_attr( $valuetext ) . '" checked><span class="mo_ldap_local_ou_value" title="' . esc_attr( $valuetext ) . '">' . esc_html( $valuetext ) . '</span></label></div>';
 										array_push( $search_base_list, $data[0]['namingcontexts'][ $i ] );
 									} else {
-										echo "<div class='mo_ldap_local_search_base_div'><div><input type='radio' id='mo_ldap_local_searchbase_" . esc_attr( $i ) . "' class='select_search_bases' name='select_ldap_search_bases[]' value='" . esc_attr( $valuetext ) . "'><label for='mo_ldap_local_searchbase_" . esc_attr( $i ) . "'>" . esc_html( $valuetext ) . '</label></div></div>';
+										echo '<div class="mo_ldap_local_search_base_div"><label class="mo_ldap_local_search_base_label"><input type="radio" id="mo_ldap_local_searchbase_' . esc_attr( $i ) . '" class="select_search_bases" name="select_ldap_search_bases[]" value="' . esc_attr( $valuetext ) . '"><span class="mo_ldap_local_ou_value" title="' . esc_attr( $valuetext ) . '">' . esc_html( $valuetext ) . '</span></label></div>';
 										array_push( $search_base_list, $data[0]['namingcontexts'][ $i ] );
 									}
 									$current_search_base_count++;
@@ -610,10 +636,10 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 								for ( $i = 0; $i < $info['count']; $i++ ) {
 									$textvalue = $info[ $i ]['dn'];
 									if ( ( strcasecmp( $textvalue, $previous_search_bases ) ) === 0 ) {
-										echo "<div class='mo_ldap_local_search_base_div'><div><input type='radio' id='mo_ldap_local_searchbase_" . esc_attr( $current_search_base_count ) . "' class='select_search_bases' name='select_ldap_search_bases[]' value='" . esc_attr( $textvalue ) . "' checked><label for='mo_ldap_local_searchbase_" . esc_attr( $current_search_base_count ) . "'>" . esc_html( $textvalue ) . '</label></div></div>';
+										echo '<div class="mo_ldap_local_search_base_div"><label class="mo_ldap_local_search_base_label"><input type="radio" id="mo_ldap_local_searchbase_' . esc_attr( $current_search_base_count ) . '" class="select_search_bases" name="select_ldap_search_bases[]" value="' . esc_attr( $textvalue ) . '" checked><span class="mo_ldap_local_ou_value" title="' . esc_attr( $textvalue ) . '">' . esc_html( $textvalue ) . '</span></label></div>';
 										array_push( $search_base_list, $info[ $i ]['dn'] );
 									} else {
-										echo "<div class='mo_ldap_local_search_base_div'><div><input type='radio' id='mo_ldap_local_searchbase_" . esc_attr( $current_search_base_count ) . "' class='select_search_bases' name='select_ldap_search_bases[]' value='" . esc_attr( $textvalue ) . "'><label for='mo_ldap_local_searchbase_" . esc_attr( $current_search_base_count ) . "'>" . esc_html( $textvalue ) . '</label></div></div>';
+										echo '<div class="mo_ldap_local_search_base_div"><label class="mo_ldap_local_search_base_label"><input type="radio" id="mo_ldap_local_searchbase_' . esc_attr( $current_search_base_count ) . '" class="select_search_bases" name="select_ldap_search_bases[]" value="' . esc_attr( $textvalue ) . '"><span class="mo_ldap_local_ou_value" title="' . esc_attr( $textvalue ) . '">' . esc_html( $textvalue ) . '</span></label></div>';
 										array_push( $search_base_list, $info[ $i ]['dn'] );
 									}
 									$current_search_base_count++;
@@ -782,7 +808,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 				$attr            = array( $email_attribute );
 				$ldapconn        = $this->get_connection();
 
-				if( empty( $search_bases ) || empty( $search_filter ) ) {
+				if ( empty( $search_bases ) || empty( $search_filter ) ) {
 					?>
 					<div class="mo_ldap_local_attr_map_container">
 						<div style="text-align: center; color: #fff; padding: 18px;font-weight: 600;">
@@ -1086,7 +1112,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 				$search_filter      = str_replace( '?', $username, $search_filter );
 				$default_role       = ! empty( get_option( 'mo_ldap_local_mapping_value_default' ) ) ? get_option( 'mo_ldap_local_mapping_value_default' ) : get_option( 'default_role' );
 
-				if( empty( $search_bases ) || empty( $search_filter ) ) {
+				if ( empty( $search_bases ) || empty( $search_filter ) ) {
 					?>
 					<div class="mo_ldap_local_attr_map_container">
 						<div style="text-align: center; color: #fff; padding: 18px;font-weight: 600;">

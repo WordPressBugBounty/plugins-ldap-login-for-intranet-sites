@@ -13,11 +13,11 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 if ( empty( get_option( 'en_save_config' ) ) || strcasecmp( get_option( 'en_save_config' ), '0' ) === 0 ) {
 	delete_option( 'mo_ldap_local_register_user' );
 	delete_option( 'mo_ldap_local_enable_admin_wp_login' );
+	delete_option( 'mo_ldap_local_enable_ldap_add' );
 	delete_option( 'mo_ldap_local_anonymous_bind' );
 	delete_option( 'mo_ldap_local_anonymous_bind' );
 	delete_option( 'mo_ldap_local_admin_email' );
 	delete_option( 'mo_ldap_local_host_name' );
-	delete_option( 'mo_ldap_local_password' );
 	delete_option( 'mo_ldap_local_new_registration' );
 	delete_option( 'mo_ldap_local_admin_phone' );
 	delete_option( 'mo_ldap_local_verify_customer' );
@@ -78,6 +78,7 @@ if ( empty( get_option( 'en_save_config' ) ) || strcasecmp( get_option( 'en_save
 
 	global $wpdb;
 	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}user_report" );//phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange,  - Fetching data from a custom table.
+	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->base_prefix}wptoldap_sync_reports" );//phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange,  - Fetching data from a custom table.
 	wp_cache_delete( 'mo_ldap_user_report_cache' );
 	wp_cache_delete( 'mo_ldap_user_report_count_cache' );
 	wp_cache_delete( 'wp_user_reports_pagination_cache' );

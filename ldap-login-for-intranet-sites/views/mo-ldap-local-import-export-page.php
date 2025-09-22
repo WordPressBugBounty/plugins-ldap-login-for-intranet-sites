@@ -6,6 +6,10 @@
  * @subpackage views
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 <div class="mo_ldap_local_imp_exp_outer">
 

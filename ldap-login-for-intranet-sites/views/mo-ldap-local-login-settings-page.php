@@ -6,6 +6,10 @@
  * @subpackage views
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 <div class="mo_ldap_login_settings_outer mo_ldap_outer_box">
 
@@ -27,6 +31,9 @@
 					?>
 					class="mo_ldap_local_unset_link_affect">
 					<button type="button" class="mo_ldap_back_btn">Back</button>
+				</a>
+				<a href="<?php echo esc_url( admin_url( 'admin.php?page=mo_ldap_local_login&tab=advance-sync' ) ); ?>" class="mo_ldap_local_unset_link_affect">
+					<button type="button" class="mo_ldap_configure_btn">Configure Sync</button>
 				</a>
 			</div>
 		</div>
@@ -73,6 +80,7 @@
 				</label>
 			</div>
 		</form>
+		<br>
 	</div>
 
 

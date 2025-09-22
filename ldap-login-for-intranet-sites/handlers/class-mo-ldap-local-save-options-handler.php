@@ -293,7 +293,24 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 			$file_name = isset( $_FILES['mo_ldap_import_file']['name'] ) ? $_FILES['mo_ldap_import_file']['name'] : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- no need to sanitize the file.
 			$file_tmp  = isset( $_FILES['mo_ldap_import_file']['tmp_name'] ) ? $_FILES['mo_ldap_import_file']['tmp_name'] : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- no need to sanitize the file.	
 			$file_ext  = strtolower( pathinfo( $file_name, PATHINFO_EXTENSION ) );
-			if ( 'json' === $file_ext ) {
+
+			$mime_type = '';
+			if ( function_exists( 'finfo_open' ) && ! empty( $file_tmp ) ) {
+				$finfo = finfo_open( FILEINFO_MIME_TYPE );
+				if ( $finfo ) {
+					$mime_type = finfo_file( $finfo, $file_tmp );
+					finfo_close( $finfo );
+				}
+			}
+
+			$max_size = 2 * 1024 * 1024;
+			if ( ! empty( $file_tmp ) && filesize( $file_tmp ) > $max_size ) {
+				update_option( 'mo_ldap_local_message', 'File size exceeds the maximum allowed size of 2MB.' );
+				$this->utils->show_error_message();
+				return;
+			}
+
+			if ( 'json' === $file_ext && 'application/json' === $mime_type ) {
 				$file_json_content = '';
 				if ( ! function_exists( 'WP_Filesystem' ) || ! WP_Filesystem() ) {
 					update_option( 'mo_ldap_local_message', 'Unable to initialize WP_Filesystem. This may be due to file permissions or server configuration. Check your WordPress file system settings and try again.' );
@@ -317,6 +334,11 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 				}
 
 				$configuration_array = json_decode( $file_json_content, true );
+				if ( ! is_array( $configuration_array ) || json_last_error() !== JSON_ERROR_NONE ) {
+					update_option( 'mo_ldap_local_message', 'Invalid JSON file: Incorrect file uploaded! Please upload the file that was exported from this plugin' );
+					$this->utils->show_error_message();
+					return;
+				}
 				if ( array_key_exists( 'ldap_Login', $configuration_array ) || array_key_exists( 'ldap_config', $configuration_array ) ) {
 
 					$class_object_options = call_user_func( 'MO_LDAP_Config_Details::get_constants' );
@@ -353,7 +375,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 						foreach ( $class_object as $key => $option ) {
 							$key = strtolower( $key );
 							if ( array_key_exists( $key, $class_array ) ) {
-								$value = ! empty( sanitize_text_field( $class_array[ $key ] ) ) ? sanitize_text_field( $class_array[ $key ] ) : $class_array[ $key ];
+								$value = sanitize_text_field( $class_array[ $key ] );
 								if ( 'mo_ldap_local_server_url' === $option || 'mo_ldap_local_ldap_server_address' === $option || 'mo_ldap_local_server_dn' === $option || 'mo_ldap_local_search_base' === $option || 'mo_ldap_local_search_filter' === $option || 'mo_ldap_local_username_attribute' === $option ) {
 									if ( 'mo_ldap_local_username_attribute' === $option ) {
 										$predefine_usr_attr = array( 'samaccountname', 'mail', 'userprincipalname', 'uid', 'cn' );
@@ -473,11 +495,12 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 		/**
 		 * Function create_customer : To register customer with miniOrange
 		 *
+		 * @param  mixed $password : Password.
 		 * @return array
 		 */
-		public function create_customer() {
+		public function create_customer( $password ) {
 			$customer     = new Mo_Ldap_Local_Customer_Setup_Handler();
-			$customer_key = $customer->create_customer();
+			$customer_key = $customer->create_customer( $password );
 
 			$response = array();
 
@@ -485,7 +508,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 				$customer_key = json_decode( $customer_key, true );
 
 				if ( strcasecmp( $customer_key['status'], 'CUSTOMER_USERNAME_ALREADY_EXISTS' ) === 0 ) {
-					$api_response = $this->get_current_customer();
+					$api_response = $this->get_current_customer( $password );
 					if ( $api_response ) {
 						$response['status'] = 'SUCCESS';
 					} else {
@@ -495,8 +518,10 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 					$this->save_success_customer_config( $customer_key['id'], $customer_key['apiKey'], $customer_key['token'], 'Thanks for registering with the miniOrange.' );
 					$response['status'] = 'SUCCESS';
 					return $response;
+				} elseif ( strcasecmp( $customer_key['status'], 'ERROR' ) ) {
+					$response['status']  = 'ERROR';
+					$response['message'] = 'An error occurred during the registration process. Please try again later.';
 				}
-				update_option( 'mo_ldap_local_password', '' );
 				return $response;
 			}
 		}
@@ -504,11 +529,12 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 		/**
 		 * Function get_current_customer : Get current customer info.
 		 *
+		 * @param  mixed $password : Password.
 		 * @return mixed
 		 */
-		public function get_current_customer() {
+		public function get_current_customer( $password ) {
 			$customer = new Mo_Ldap_Local_Customer_Setup_Handler();
-			$content  = $customer->get_customer_key();
+			$content  = $customer->get_customer_key( $password );
 
 			$response = array();
 
@@ -516,7 +542,6 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 				$customer_key = json_decode( $content, true );
 				if ( json_last_error() === JSON_ERROR_NONE ) {
 					$this->save_success_customer_config( $customer_key['id'], $customer_key['apiKey'], $customer_key['token'], 'Your account has been retrieved successfully.' );
-					update_option( 'mo_ldap_local_password', '' );
 					$response['status'] = 'SUCCESS';
 				} else {
 					update_option( 'mo_ldap_local_message', 'You already have an account with miniOrange. Please enter a valid password.' );
@@ -538,7 +563,6 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 			update_option( 'mo_ldap_local_admin_customer_key', $id );
 			update_option( 'mo_ldap_local_admin_api_key', $api_key );
 			update_option( 'mo_ldap_local_admin_token', $token );
-			update_option( 'mo_ldap_local_password', '' );
 			update_option( 'mo_ldap_local_message', $message );
 			delete_option( 'mo_ldap_local_verify_customer' );
 			delete_option( 'mo_ldap_local_new_registration' );
@@ -598,15 +622,14 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 					update_option( 'mo_ldap_local_admin_email', $email );
 
 					if ( strcmp( $password, $confirm_password ) === 0 ) {
-						update_option( 'mo_ldap_local_password', $password );
 						$customer = new Mo_Ldap_Local_Customer_Setup_Handler();
-						$content  = $customer->check_customer();
+						$content  = $customer->check_customer( $password );
 
 						if ( ! empty( $content ) ) {
 							$content = json_decode( $content, true );
 
 							if ( strcasecmp( $content['status'], 'CUSTOMER_NOT_FOUND' ) === 0 ) {
-								$content = $this->create_customer();
+								$content = $this->create_customer( $password );
 								if ( is_array( $content ) && array_key_exists( 'status', $content ) && strcasecmp( $content['status'], 'SUCCESS' ) === 0 ) {
 									$pricing_url      = add_query_arg( array( 'tab' => 'pricing' ), $request_uri );
 									$message          = 'Your account has been created successfully. <a rel="noopener" target="_blank" href="' . esc_url( $pricing_url ) . '">Click here to see our Premium Plans</a> ';
@@ -617,9 +640,13 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 									update_option( 'mo_ldap_local_message', $message );
 									$this->utils->show_success_message();
 									return;
+								} elseif ( strcasecmp( $content['status'], 'ERROR' ) === 0 ) {
+									$message = $content['message'];
+									update_option( 'mo_ldap_local_message', $message );
+									$this->utils->show_error_message();
 								}
 							} else {
-								$response = $this->get_current_customer();
+								$response = $this->get_current_customer( $password );
 								if ( is_array( $response ) && array_key_exists( 'status', $response ) && strcasecmp( $response['status'], 'SUCCESS' ) === 0 ) {
 									$pricing_url = add_query_arg( array( 'tab' => 'pricing' ), $request_uri );
 									$message     = 'Your account has been retrieved successfully. <a rel="noopener" target="_blank" href="' . esc_url( $pricing_url ) . '">Click here to see our Premium Plans</a> ';
@@ -646,10 +673,9 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 					}
 
 					update_option( 'mo_ldap_local_admin_email', $email );
-					update_option( 'mo_ldap_local_password', $password );
 
 					$customer = new Mo_Ldap_Local_Customer_Setup_Handler();
-					$content  = $customer->get_customer_key();
+					$content  = $customer->get_customer_key( $password );
 
 					if ( ! is_null( $content ) ) {
 						$customer_key = json_decode( $content, true );
@@ -660,7 +686,6 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 							update_option( 'mo_ldap_local_message', $message );
 							$this->utils->show_error_message();
 						}
-						update_option( 'mo_ldap_local_password', '' );
 					}
 				} elseif ( strcmp( $post_option, 'mo_ldap_local_enable' ) === 0 && check_admin_referer( 'mo_ldap_local_enable' ) ) {
 					$enable_ldap_login = ( isset( $_POST['enable_ldap_login'] ) && strcmp( sanitize_text_field( wp_unslash( $_POST['enable_ldap_login'] ) ), 1 ) === 0 ) ? 1 : 0;
@@ -695,6 +720,16 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 						$this->utils->show_success_message();
 					} else {
 						update_option( 'mo_ldap_local_message', 'Auto Registering users has been disabled.' );
+						$this->utils->show_error_message();
+					}
+				} elseif ( strcmp( $post_option, 'mo_ldap_local_enable_ldap_add' ) === 0 && check_admin_referer( 'mo_ldap_local_enable_ldap_add' ) ) {
+					$enable_sync_user_wptoldap = ( isset( $_POST['mo_ldap_local_enable_ldap_add'] ) && strcmp( sanitize_text_field( wp_unslash( $_POST['mo_ldap_local_enable_ldap_add'] ) ), 1 ) === 0 ) ? 1 : 0;
+					update_option( 'mo_ldap_local_enable_ldap_add', $enable_sync_user_wptoldap );
+					if ( get_option( 'mo_ldap_local_enable_ldap_add' ) ) {
+						update_option( 'mo_ldap_local_message', 'Adding new users to the LDAP directory when they register in WordPress has been enabled.' );
+						$this->utils->show_success_message();
+					} else {
+						update_option( 'mo_ldap_local_message', 'Adding new users to the LDAP directory when they register in WordPress has been disabled.' );
 						$this->utils->show_error_message();
 					}
 				} elseif ( strcmp( $post_option, 'mo_ldap_local_save_config' ) === 0 && check_admin_referer( 'mo_ldap_local_save_config' ) ) {
@@ -761,7 +796,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 							add_option( 'mo_ldap_local_save_config_status', 'VALID', '', 'no' );
 							update_option( 'mo_ldap_local_message', $response['statusMessage'] );
 							set_transient( 'mo_ldap_local_is_config_success', __( 'Configuration Successfull.', 'ldap-login-for-intranet-sites' ), 30 );
-							wp_redirect( admin_url( 'admin.php?page=mo_ldap_local_login&step=2' ) );
+							wp_safe_redirect( admin_url( 'admin.php?page=mo_ldap_local_login&step=2' ) );
 						} elseif ( isset( $response['statusCode'] ) && strcasecmp( $response['statusCode'], 'BIND_ERROR' ) === 0 ) {
 							$this->utils->mo_ldap_report_update( self::LDAPCONN, 'ERROR', '<strong>Test Connection Error: </strong>' . $response['statusMessage'] );
 							update_option( 'mo_ldap_local_message', $response['statusMessage'] );
@@ -821,7 +856,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 					} else {
 						$ldap_username_attribute        = isset( $_POST['ldap_username_attribute'] ) ? sanitize_text_field( wp_unslash( $_POST['ldap_username_attribute'] ) ) : '';
 						$custom_ldap_username_attribute = isset( $_POST['custom_ldap_username_attribute'] ) ? sanitize_text_field( wp_unslash( $_POST['custom_ldap_username_attribute'] ) ) : '';
-						$directory_server_value = get_option( 'mo_ldap_directory_server_value' );
+						$directory_server_value         = get_option( 'mo_ldap_directory_server_value' );
 
 						if ( ! $this->utils::check_empty_or_null( $ldap_username_attribute ) ) {
 							update_option( 'mo_ldap_local_username_attribute', $ldap_username_attribute );
@@ -864,7 +899,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 						add_option( 'mo_ldap_local_user_mapping_status', 'VALID', '', 'no' );
 						update_option( 'import_flag', 1 );
 						set_transient( 'mo_ldap_local_is_config_success', __( 'Configuration Successfull.', 'ldap-login-for-intranet-sites' ), 30 );
-						wp_redirect( admin_url( 'admin.php?page=mo_ldap_local_login&step=3' ) );
+						wp_safe_redirect( admin_url( 'admin.php?page=mo_ldap_local_login&step=3' ) );
 					}
 				} elseif ( strcmp( $post_option, 'mo_ldap_save_attribute_config' ) === 0 && check_admin_referer( 'mo_ldap_save_attribute_config' ) ) {
 					$email_attribute         = isset( $_POST['mo_ldap_email_attribute'] ) ? sanitize_text_field( wp_unslash( $_POST['mo_ldap_email_attribute'] ) ) : '';
@@ -1009,7 +1044,9 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 						update_option( 'mo_ldap_local_message', 'LDAP Configuration not set. Please configure LDAP Connection settings.' );
 						$this->utils->show_error_message();
 					}
-				} elseif ( strcasecmp( $post_option, 'mo_ldap_import' ) === 0 && check_admin_referer( 'mo_ldap_import' ) ) {
+				} elseif ( strcasecmp( $post_option, 'mo_ldap_import' ) === 0 && check_admin_referer( 'mo_ldap_import' )
+					&& current_user_can( 'manage_options' )
+				) {
 					$this->mo_ldap_import_configuration();
 				} elseif ( strcasecmp( $post_option, 'mo_ldap_authentication_report' ) === 0 && check_admin_referer( 'mo_ldap_authentication_report' ) ) {
 
@@ -1074,7 +1111,6 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 				} elseif ( strcasecmp( $post_option, 'change_miniorange_account' ) === 0 && check_admin_referer( 'change_miniorange_account' ) ) {
 					delete_option( 'mo_ldap_local_admin_customer_key' );
 					delete_option( 'mo_ldap_local_admin_api_key' );
-					delete_option( 'mo_ldap_local_password', '' );
 					delete_option( 'mo_ldap_local_message' );
 					delete_option( 'mo_ldap_local_verify_customer' );
 					delete_option( 'mo_ldap_local_new_registration' );
@@ -1208,7 +1244,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 					update_option( 'mo_ldap_local_message', 'Plugin deactivated successfully.' );
 					$this->deactivate_error_message();
 					if ( isset( $_SERVER['PHP_SELF'] ) ) {
-						Header( 'Location: ' . sanitize_url( wp_unslash( $_SERVER['PHP_SELF'] ) ) );
+						Header( 'Location: ' . esc_url_raw( wp_unslash( $_SERVER['PHP_SELF'] ) ) );
 					}
 				}
 				if ( strcasecmp( $post_option, 'mo_ldap_hide_msg' ) === 0 && check_admin_referer( 'mo_ldap_hide_msg' ) ) {

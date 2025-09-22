@@ -5,7 +5,7 @@ Tags: active directory, active directory integration, ldap, ldap authentication,
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 5.6.0
-Stable tag: 5.2.5
+Stable tag: 5.3.0
 License: Expat
 License URI: https://plugins.miniorange.com/mit-license
 
@@ -75,6 +75,7 @@ Effortlessly enable Single Sign-On (SSO) within your Active Directory-secured in
 * <strong>Attribute mapping:</strong> Map the LDAP/Active Directory mail attribute to the WordPress user email and sync upon every successful LDAP/Active Directory Login (AD Login).
 * <strong>[LDAPS (LDAP Secure Connection) support](https://www.miniorange.com/guide-to-setup-ldaps-on-windows-server?utm_source=wordpress%20readme&utm_medium=marketplace&utm_campaign=Active%20Directory%20Integration%20/%20LDAP%20Integration):</strong>Supports establishing Secure Connection between the WordPress site and Active Directory/LDAP server via LDAPS protocol, this ensures protection against credential theft.
 * <strong>Authentication Report:</strong> Keep logs of all the Active Directory/LDAP users who try to authenticate on your WordPress website and fail. A lot of the time these are security risks. The LDAP User Authentication report will give you a list of these users, you can also export a CSV of this report.
+* <strong>Automatic LDAP/AD User Creation upon new WordPress Registration:</strong> Add newly registered WordPress users to the LDAP/Active Directory automatically, keeping your LDAP directory in sync with user registrations from the WordPress site.
 * Automatic fetching of LDAP Organizational Units from LDAP Server/Active Directory while configuring Search Base for LDAP/AD Login (Active Directory Login).
 * Test connection to your Active Directory/other LDAP Directory while configuring LDAP server information in the plugin.
 * Test authentication using credentials stored in your Active Directory/other LDAP Directory after configuring LDAP server information in the plugin.
@@ -260,6 +261,11 @@ Yes, the plugin provides AD profile mapping as well as group mapping features th
 9. LDAP Premium Add-ons
 
 == Changelog ==
+
+= 5.3.0 =
+* Added support for automatic LDAP/AD user creation when new users register on WordPress
+* Security fixes in Import configuration
+* PHPCS fixes
 
 = 5.2.5 =
 * Minor Bug Fix
@@ -829,6 +835,11 @@ Enhanced Troubleshooting
 * this is the first release.
 
 == Upgrade Notice ==
+
+= 5.3.0 =
+* Added support for automatic LDAP/AD user creation when new users register on WordPress
+* Security fixes in Import configuration 
+* PHPCS fixes
 
 = 5.2.5 =
 * Minor Bug Fix

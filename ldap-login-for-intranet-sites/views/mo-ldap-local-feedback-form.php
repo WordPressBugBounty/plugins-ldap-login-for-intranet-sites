@@ -6,6 +6,10 @@
  * @subpackage views
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 wp_enqueue_script( 'utils' );
 wp_enqueue_style( 'mo_ldap_admin_plugins_page_style', MO_LDAP_LOCAL_INCLUDES . 'css/mo_ldap_local_plugin_style.min.css', array(), MO_LDAP_LOCAL_VERSION );
 ?>

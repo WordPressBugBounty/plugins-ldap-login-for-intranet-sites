@@ -6,6 +6,10 @@
  * @subpackage views
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $addon_array_recommended = maybe_unserialize( MO_LDAP_RECOMMENDED_ADDONS );
 $addon_array_third_party = maybe_unserialize( MO_LDAP_THIRD_PARTY_INTEGRATION_ADDONS );
 ?>

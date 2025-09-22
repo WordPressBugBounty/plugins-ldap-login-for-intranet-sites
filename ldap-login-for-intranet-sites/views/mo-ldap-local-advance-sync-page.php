@@ -6,24 +6,43 @@
  * @subpackage views
  */
 
-$current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['subtab'] ) ) : 'directory_sync'; //phpcs:ignore WordPress.Security.NonceVerification.Recommended, - Reading GET parameter from the URL for checking the sub-tab name, doesn't require nonce verification.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+$current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['subtab'] ) ) : 'wp-to-ldap-directory_sync'; //phpcs:ignore WordPress.Security.NonceVerification.Recommended, - Reading GET parameter from the URL for checking the sub-tab name, doesn't require nonce verification.
 ?>
 
 <div class="mo_ldap_local_horizontal_flex_container mo_ldap_local_subtab_container">
-	<div class="<?php echo strcmp( $current_subtab, 'directory_sync' ) === 0 ? 'mo_ldap_local_active_subtab' : ''; ?>">
+	<div class="<?php echo strcmp( $current_subtab, 'wp-to-ldap-directory_sync' ) === 0 ? 'mo_ldap_local_active_subtab' : ''; ?>">
 		<a href="
 		<?php
 		echo esc_url(
 			add_query_arg(
 				array(
 					'tab'    => 'advance-sync',
-					'subtab' => 'directory_sync',
+					'subtab' => 'wp-to-ldap-directory_sync',
 				),
 				$filtered_current_page_url
 			)
 		);
 		?>
-		" class="mo_ldap_local_unset_link_affect">Sync Users LDAP Directory</a>
+		" class="mo_ldap_local_unset_link_affect">WordPress to LDAP Sync</a>
+	</div>
+	<div class="<?php echo strcmp( $current_subtab, 'ldap-to-wp-directory_sync' ) === 0 ? 'mo_ldap_local_active_subtab' : ''; ?>">
+		<a href="
+		<?php
+		echo esc_url(
+			add_query_arg(
+				array(
+					'tab'    => 'advance-sync',
+					'subtab' => 'ldap-to-wp-directory_sync',
+				),
+				$filtered_current_page_url
+			)
+		);
+		?>
+		" class="mo_ldap_local_unset_link_affect">LDAP to WordPress Sync</a>
 	</div>
 	<div class="<?php echo strcmp( $current_subtab, 'password_sync' ) === 0 ? 'mo_ldap_local_active_subtab' : ''; ?>">
 		<a href="
@@ -59,8 +78,91 @@ $current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['su
 <hr class="mo_ldap_hr">
 
 <?php
-if ( strcasecmp( $current_subtab, 'directory_sync' ) === 0 ) {
+if ( strcasecmp( $current_subtab, 'wp-to-ldap-directory_sync' ) === 0 ) {
+	?>
+	<div style="margin-left: 5%;">
+		<br>
+		<form name="enable_sync_user_form" id="enable_sync_user_form" method="post" action="">
+			<?php wp_nonce_field( 'mo_ldap_local_enable_ldap_add' ); ?>
+			<input type="hidden" name="option" value="mo_ldap_local_enable_ldap_add" />
+			<div>
+				<?php
+				$protocol       = get_option( 'mo_ldap_local_ldap_protocol' );
+				$is_ldaps       = 'ldaps' === $protocol;
+				$is_disabled    = $is_ldaps ? '' : 'disabled';
+				$is_checked     = $is_ldaps && ( strcasecmp( get_option( 'mo_ldap_local_enable_ldap_add' ), '1' ) === 0 ) ? 'checked' : '';
+				$mo_ldap_cursor = $is_ldaps ? '' : 'mo_ldap_cursor_not_allowed';
+				?>
+				<input type="checkbox"
+					id="mo_ldap_local_enable_ldap_add"
+					class="mo_ldap_local_toggle_switch_hide"
+					name="mo_ldap_local_enable_ldap_add"
+					value="1"
+					<?php echo esc_attr( $is_checked ); ?>
+					<?php echo esc_attr( $is_disabled ); ?> />
+				<?php if ( ! $is_ldaps ) : ?>
+					<p style="width: 90%; color:red; font-size: 14px;"><b>NOTE: LDAPS connection required. Please configure it to enable the below feature.</b></p>
+				<?php endif; ?>
+				<label for="mo_ldap_local_enable_ldap_add"
+					class="
+					<?php
+					echo $is_ldaps ? 'mo_ldap_local_toggle_switch ' : '';
+					echo esc_attr( $mo_ldap_cursor );
+					?>
+				">
+				</label>
+				<label for="mo_ldap_local_enable_ldap_add" class="mo_ldap_local_d_inline mo_ldap_input_label_text">
+					Add new user in LDAP when registered in WordPress
+				</label>
+			</div>
+		</form>
+	</div>
+	<div class="mo_ldap_local_outer mo_ldap_local_premium_box">
+		<div style="top: 22%; height: 50%; right: 0;" class="mo_ldap_local_premium_role_mapping_banner mo_ldap_d_none">
+			<div>
+				<h1>Premium Plan</h1>
+			</div>
+			<div style="font-size: 16px;">This is available in premium version of the plugin</div>
+			<div class="">
+				<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
+					<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'arrow.svg' ); ?>" height="10px" width="20px"></span> Upgrade Today
+				</a>
+			</div>
+		</div>
+		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
+			<div class="mo_ldap_local_premium_feature_btn">
+				<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="20px" width="20px"></span> Premium Feature
+			</div>
+		</a>
+		<div class="mo_ldap_local_premium_feature_box">
+			<div class="mo_ldap_local_imp_exp_headings">
+				WordPress to LDAP Sync
+			</div>
+			<div class="mo_ldap_local_md_search_conditions">
+				<label class="mo_ldap_local_toggle_switch"></label>
+				Delete user in LDAP when deleted in WordPress
+			</div>
+			<br>
 
+			<div class="mo_ldap_local_md_search_conditions">
+				<label class="mo_ldap_local_toggle_switch"></label>
+				Update user profile in LDAP when updated in WordPress
+			</div>
+			<br>
+
+			<div class="mo_ldap_local_md_search_conditions">
+				<label class="mo_ldap_local_toggle_switch"></label>
+				Add/Remove user to/from groups in LDAP server when respective user role changed in WordPress
+			</div>
+			<br>
+
+			<button style="cursor: no-drop;" class="mo_ldap_local_disabled_button">
+				Sync WordPress Users
+			</button>
+		</div>
+	</div>
+	<?php
+} elseif ( strcasecmp( $current_subtab, 'ldap-to-wp-directory_sync' ) === 0 ) {
 	?>
 	<div class="mo_ldap_local_outer mo_ldap_local_premium_box">
 		<div style="top: 15%; height: 80%; right: 0;" class="mo_ldap_local_premium_role_mapping_banner mo_ldap_d_none">
@@ -122,39 +224,6 @@ if ( strcasecmp( $current_subtab, 'directory_sync' ) === 0 ) {
 
 			<button style="cursor: no-drop;" class="mo_ldap_troubleshooting_btn mo_ldap_local_md_disabled_btn">
 				Sync Users Now
-			</button>
-
-			<br>
-			<br>
-			<div class="mo_ldap_local_imp_exp_headings">
-				WordPress to LDAP Sync
-			</div>
-			<div class="mo_ldap_local_md_search_conditions">
-				<div class="mo_ldap_local_md_dearch_conditions_box"></div>
-				Add new user in LDAP when registered in WordPress	
-			</div>
-			<br>
-
-			<div class="mo_ldap_local_md_search_conditions">
-				<div class="mo_ldap_local_md_dearch_conditions_box"></div>
-				Delete user in LDAP when deleted in WordPress	
-			</div>
-			<br>
-
-			<div class="mo_ldap_local_md_search_conditions">
-				<div class="mo_ldap_local_md_dearch_conditions_box"></div>
-				Update user profile in LDAP when updated in WordPress
-			</div>
-			<br>
-
-			<div class="mo_ldap_local_md_search_conditions">
-				<div class="mo_ldap_local_md_dearch_conditions_box"></div>
-				Add/Remove user to/from groups in LDAP server when respective user role changed in WordPress
-			</div>
-			<br>
-
-			<button style="cursor: no-drop;" class="mo_ldap_local_disabled_button">
-				Sync WordPress Users
 			</button>
 		</div>
 	</div>

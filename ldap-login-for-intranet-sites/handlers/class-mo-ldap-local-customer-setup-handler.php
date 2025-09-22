@@ -37,14 +37,15 @@ if ( ! class_exists( 'Mo_Ldap_Local_Customer_Setup_Handler' ) ) {
 		/**
 		 * Function create_customer : Register customer in miniOrange
 		 *
+		 * @param  mixed $password : Password.
 		 * @return string
 		 */
-		public function create_customer() {
+		public function create_customer( $password ) {
 
 			$url = MO_LDAP_LOCAL_HOST_NAME . '/moas/rest/customer/add';
 
 			$email    = esc_attr( get_option( 'mo_ldap_local_admin_email' ) );
-			$password = esc_attr( get_option( 'mo_ldap_local_password' ) );
+			$password = $password;
 
 			$fields       = array(
 				'areaOfInterest' => 'WP LDAP for Intranet',
@@ -78,13 +79,14 @@ if ( ! class_exists( 'Mo_Ldap_Local_Customer_Setup_Handler' ) ) {
 		/**
 		 * Function get_customer_key : Get customer key from miniOrange
 		 *
+		 * @param  mixed $password : Password.
 		 * @return string
 		 */
-		public function get_customer_key() {
+		public function get_customer_key( $password ) {
 
 			$url      = MO_LDAP_LOCAL_HOST_NAME . '/moas/rest/customer/key';
 			$email    = sanitize_email( get_option( 'mo_ldap_local_admin_email' ) );
-			$password = get_option( 'mo_ldap_local_password' );
+			$password = $password;
 
 			$fields       = array(
 				'email'    => $email,

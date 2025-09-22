@@ -6,6 +6,10 @@
  * @subpackage views
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $directory_server_value   = ! empty( get_option( 'mo_ldap_directory_server_value' ) ) ? get_option( 'mo_ldap_directory_server_value' ) : '';
 $server_url               = ( get_option( 'mo_ldap_local_server_url' ) ? $utils::decrypt( get_option( 'mo_ldap_local_server_url' ) ) : '' );
 $ldap_server_protocol     = ( get_option( 'mo_ldap_local_ldap_protocol' ) ? get_option( 'mo_ldap_local_ldap_protocol' ) : 'ldap' );
@@ -456,7 +460,7 @@ if ( strcasecmp( $active_step, '1' ) === 0 ) {
 				</div>
 
 				<div id="mo_ldap_username_attr_container" class="mo_ldap_custom_search_filter_parent" style="position:relative;">
-					<div class="mo_ldap_input_label_text mo_ldap_local_username_attribute_label" style="">Username Attribute: <span style="color:red;">*</span></div>
+					<div class="mo_ldap_input_label_text mo_ldap_local_username_attribute_label" >Username Attribute: <span style="color:red;">*</span></div>
 					<div class="mo_ldap_username_attr_option_container">
 					<div id="mo_ldap_search_filter_ldap" class="mo_ldap_username_attr_option_container_inner">	   
 						<div class="mo_ldap_multiselect_user">

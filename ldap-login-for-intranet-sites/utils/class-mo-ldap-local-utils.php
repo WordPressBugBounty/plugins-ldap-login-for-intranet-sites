@@ -90,6 +90,31 @@ if ( ! class_exists( 'Mo_Ldap_Local_Utils' ) ) {
 		}
 
 		/**
+		 * Generates a hashed password using the specified algorithm.
+		 *
+		 * @param string $input The plain text password to be hashed.
+		 * @param string $algo  The algorithm to use for hashing (e.g., 'sha256', 'sha1', 'md5').
+		 *
+		 * @return string Returns the hashed password if the algorithm is supported, otherwise null.
+		 */
+		public static function get_hashed_password( $input, $algo ) {
+			$directory_server_value = get_option( 'mo_ldap_directory_server_value' );
+			if ( 'ssha' === $algo ) {
+				return self::hash_ssha( $input );
+			} elseif ( 'md5' === $algo ) {
+				return self::hash_md5( $input );
+			} elseif ( 'plaintext' === $algo && 'msad' === $directory_server_value ) {
+				$new_pass     = '';
+				$new_password = '"' . $input . '"';
+				if ( function_exists( 'iconv' ) ) {
+					$new_pass = iconv( 'UTF-8', 'UTF-16LE', $new_password );
+				}
+				return $new_pass;
+			} else {
+				return $input;
+			}
+		}
+		/**
 		 * Function generate_random_string : Used to form a random string
 		 *
 		 * @param  int $length : Lenngth of the randomo strength requested.

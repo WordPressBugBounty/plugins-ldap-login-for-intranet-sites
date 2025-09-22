@@ -20,6 +20,7 @@ if ( ! class_exists( 'MO_LDAP_Config_Details' ) ) {
 		const LDAP_LOGIN_ENABLE             = 'mo_ldap_local_enable_login';
 		const AUTH_ADMIN_BOTH_LDAP_WP       = 'mo_ldap_local_enable_admin_wp_login';
 		const AUTO_REGISTERING              = 'mo_ldap_local_register_user';
+		const ADD_USER_TO_LDAP              = 'mo_ldap_local_enable_ldap_add';
 		const DIRECTORY_SERVER_VALUE        = 'mo_ldap_directory_server_value';
 		const CUSTOM_DIRECTORY_SERVER_VALUE = 'mo_ldap_directory_server_custom_value';
 		const SERVER_URL                    = 'mo_ldap_local_server_url';

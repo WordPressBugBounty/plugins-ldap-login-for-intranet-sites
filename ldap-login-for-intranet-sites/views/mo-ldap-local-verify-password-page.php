@@ -6,6 +6,10 @@
  * @subpackage views
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 <div class="mo_ldap_local_account_box">
 	<div style="padding-left: 30px;">
@@ -35,7 +39,7 @@
 				</div>
 				<div class="trial_page_input_email">
 					<label class="mo_ldap_local_label mo_ldap_input_label_text" for="mo_ldap_local_register_password">Password</label>
-					<input style="width:100%;" id="mo_ldap_local_register_password" class="mo_ldap_pop_up_input_field" required type="password" name="password" placeholder="Choose your password (Min. length 6)" minlength="6" pattern="^[(\w)*(!@#$.%^&*-_)*]+$" title="Minimum 6 characters should be present. Maximum 15 characters should be present. Only following symbols (!@#.$%^&*) should be present."/>
+					<input style="width:100%;" id="mo_ldap_local_register_password" class="mo_ldap_pop_up_input_field" required type="password" name="password" placeholder="Enter your password (Min. length 6)" minlength="6" pattern="^[(\w)*(!@#$.%^&*-_)*]+$" title="Minimum 6 characters should be present. Maximum 15 characters should be present. Only following symbols (!@#.$%^&*) should be present."/>
 				</div>
 				<div style="text-align: center;">
 					<input type="submit" name="submit" style="margin-left: 5%;" value="Login" class="mo_ldap_local_reg_button mo_ldap_save_user_mapping mo_ldap_save_user_mapping_temp"/>

@@ -147,13 +147,13 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login_Handler' ) ) {
 						'user_login' => $username,
 						'user_email' => $email,
 						'user_pass'  => $user_password,
+						'meta_input' => array( 'mo_ldap_user_dn' => $auth_response->user_dn ),
 					);
-					$user_id  = wp_insert_user( $userdata );
+
+					$user_id = wp_insert_user( $userdata );
 
 					if ( ! is_wp_error( $user_id ) ) {
 						$user = get_user_by( 'login', $username );
-
-						update_user_meta( $user->ID, 'mo_ldap_user_dn', $auth_response->user_dn, false );
 
 						if ( get_option( 'mo_ldap_local_enable_role_mapping' ) ) {
 							$new_registered_user  = true;
