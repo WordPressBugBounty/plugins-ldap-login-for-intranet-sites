@@ -5,7 +5,7 @@ Tags: active directory, active directory integration, ldap, ldap authentication,
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 5.6.0
-Stable tag: 5.3.0
+Stable tag: 5.3.1
 License: Expat
 License URI: https://plugins.miniorange.com/mit-license
 
@@ -261,6 +261,9 @@ Yes, the plugin provides AD profile mapping as well as group mapping features th
 9. LDAP Premium Add-ons
 
 == Changelog ==
+
+= 5.3.1 =
+* Feature to select LDAP/AD Search Base for WordPress to LDAP/AD sync
 
 = 5.3.0 =
 * Added support for automatic LDAP/AD user creation when new users register on WordPress
@@ -835,6 +838,9 @@ Enhanced Troubleshooting
 * this is the first release.
 
 == Upgrade Notice ==
+
+= 5.3.1 =
+* Feature to select LDAP/AD Search Base for WordPress to LDAP/AD sync
 
 = 5.3.0 =
 * Added support for automatic LDAP/AD user creation when new users register on WordPress

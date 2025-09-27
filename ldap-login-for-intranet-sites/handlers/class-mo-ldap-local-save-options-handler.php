@@ -70,7 +70,10 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 					$mo_ldap_config->test_attribute_configuration( $username );
 				} elseif ( strcasecmp( sanitize_text_field( wp_unslash( $_REQUEST['option'] ) ), 'searchbaselist' ) === 0 && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'searchbaselist_nonce' ) ) {
 					$mo_ldap_config = new Mo_Ldap_Local_Configuration_Handler();
-					$mo_ldap_config->show_search_bases_list();
+					$mo_ldap_config->show_search_bases_list( 'config' );
+				} elseif ( strcasecmp( sanitize_text_field( wp_unslash( $_REQUEST['option'] ) ), 'wp_to_ldap_searchbaselist' ) === 0 && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'wp_to_ldap_searchbaselist_nonce' ) ) {
+					$mo_ldap_config = new Mo_Ldap_Local_Configuration_Handler();
+					$mo_ldap_config->show_search_bases_list( 'wp_to_ldap' );
 				} elseif ( null !== $_REQUEST['option'] && strcasecmp( sanitize_text_field( wp_unslash( $_REQUEST['option'] ) ), 'testrolemapconfig' ) === 0 && isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'testrolemapconfig_nonce' ) ) {
 					$username       = isset( $_REQUEST['user'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['user'] ) ) : '';
 					$mo_ldap_config = new Mo_Ldap_Local_Configuration_Handler();
@@ -376,7 +379,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 							$key = strtolower( $key );
 							if ( array_key_exists( $key, $class_array ) ) {
 								$value = sanitize_text_field( $class_array[ $key ] );
-								if ( 'mo_ldap_local_server_url' === $option || 'mo_ldap_local_ldap_server_address' === $option || 'mo_ldap_local_server_dn' === $option || 'mo_ldap_local_search_base' === $option || 'mo_ldap_local_search_filter' === $option || 'mo_ldap_local_username_attribute' === $option ) {
+								if ( 'mo_ldap_local_server_url' === $option || 'mo_ldap_local_ldap_server_address' === $option || 'mo_ldap_local_server_dn' === $option || 'mo_ldap_local_search_base' === $option || 'mo_ldap_local_search_filter' === $option || 'mo_ldap_local_username_attribute' === $option || 'mo_ldap_local_wp_to_ldap_search_base' === $option ) {
 									if ( 'mo_ldap_local_username_attribute' === $option ) {
 										$predefine_usr_attr = array( 'samaccountname', 'mail', 'userprincipalname', 'uid', 'cn' );
 										$extra_usr_attr     = '';
@@ -469,7 +472,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 			$mo_array     = array();
 			foreach ( $class_object as $key => $value ) {
 				$key = strtolower( $key );
-				if ( strcasecmp( $value, 'mo_ldap_local_ldap_server_address' ) === 0 || strcasecmp( $value, 'mo_ldap_local_server_url' ) === 0 || strcasecmp( $value, 'mo_ldap_local_server_dn' ) === 0 || strcasecmp( $value, 'mo_ldap_local_search_base' ) === 0 || strcasecmp( $value, 'mo_ldap_local_search_filter' ) === 0 || strcasecmp( $value, 'mo_ldap_local_Filter_Search' ) === 0 ) {
+				if ( strcasecmp( $value, 'mo_ldap_local_ldap_server_address' ) === 0 || strcasecmp( $value, 'mo_ldap_local_server_url' ) === 0 || strcasecmp( $value, 'mo_ldap_local_server_dn' ) === 0 || strcasecmp( $value, 'mo_ldap_local_search_base' ) === 0 || strcasecmp( $value, 'mo_ldap_local_search_filter' ) === 0 || strcasecmp( $value, 'mo_ldap_local_Filter_Search' ) === 0 || strcasecmp( $value, 'mo_ldap_local_wp_to_ldap_search_base' ) === 0 ) {
 					$flag = 1;
 				} else {
 					$flag = 0;
@@ -722,16 +725,45 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 						update_option( 'mo_ldap_local_message', 'Auto Registering users has been disabled.' );
 						$this->utils->show_error_message();
 					}
-				} elseif ( strcmp( $post_option, 'mo_ldap_local_enable_ldap_add' ) === 0 && check_admin_referer( 'mo_ldap_local_enable_ldap_add' ) ) {
+				} elseif ( strcmp( $post_option, 'mo_ldap_local_toggle_sync' ) === 0 && check_admin_referer( 'mo_ldap_local_toggle_sync' ) ) {
+					
 					$enable_sync_user_wptoldap = ( isset( $_POST['mo_ldap_local_enable_ldap_add'] ) && strcmp( sanitize_text_field( wp_unslash( $_POST['mo_ldap_local_enable_ldap_add'] ) ), 1 ) === 0 ) ? 1 : 0;
+					if ( $enable_sync_user_wptoldap ) {
+						$wp_to_ldap_search_base = $this->utils::decrypt( get_option( 'mo_ldap_local_wp_to_ldap_search_base' ) );
+						
+						if ( empty( $wp_to_ldap_search_base ) ) {
+							update_option( 'mo_ldap_local_message', 'Search Base is required. Please configure the WordPress to LDAP Sync Search Base first.' );
+							$this->utils->show_error_message();
+							return;
+						}
+					}
+
 					update_option( 'mo_ldap_local_enable_ldap_add', $enable_sync_user_wptoldap );
-					if ( get_option( 'mo_ldap_local_enable_ldap_add' ) ) {
-						update_option( 'mo_ldap_local_message', 'Adding new users to the LDAP directory when they register in WordPress has been enabled.' );
+					
+					if ( $enable_sync_user_wptoldap ) {
+						$message = 'Adding new users to the LDAP directory when they register in WordPress has been enabled.';
+						update_option( 'mo_ldap_local_message', $message );
 						$this->utils->show_success_message();
 					} else {
-						update_option( 'mo_ldap_local_message', 'Adding new users to the LDAP directory when they register in WordPress has been disabled.' );
+						$message = 'Adding new users to the LDAP directory when they register in WordPress has been disabled.';
+						update_option( 'mo_ldap_local_message', $message );
 						$this->utils->show_error_message();
 					}
+				} elseif ( strcmp( $post_option, 'mo_ldap_local_save_sync_configuration' ) === 0 && check_admin_referer( 'mo_ldap_local_save_sync_configuration' ) ) {
+					
+					$wp_to_ldap_search_base = isset( $_POST['wp_to_ldap_search_base'] ) ? sanitize_text_field( wp_unslash( $_POST['wp_to_ldap_search_base'] ) ) : '';
+					
+					if ( empty( $wp_to_ldap_search_base ) ) {
+						update_option( 'mo_ldap_local_message', 'Search Base is required. Please enter a valid search base.' );
+						$this->utils->show_error_message();
+						return;
+					}
+
+					update_option( 'mo_ldap_local_wp_to_ldap_search_base', $this->utils::encrypt( $wp_to_ldap_search_base ) );
+					
+					$message = 'WordPress to LDAP Sync Search Base has been saved successfully.';
+					update_option( 'mo_ldap_local_message', $message );
+					$this->utils->show_success_message();
 				} elseif ( strcmp( $post_option, 'mo_ldap_local_save_config' ) === 0 && check_admin_referer( 'mo_ldap_local_save_config' ) ) {
 					$server_name         = '';
 					$dn                  = '';

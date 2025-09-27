@@ -80,18 +80,23 @@ $current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['su
 <?php
 if ( strcasecmp( $current_subtab, 'wp-to-ldap-directory_sync' ) === 0 ) {
 	?>
-	<div style="margin-left: 5%;">
+	<div class="mo_ldap_local_advance_sync_container">
 		<br>
-		<form name="enable_sync_user_form" id="enable_sync_user_form" method="post" action="">
-			<?php wp_nonce_field( 'mo_ldap_local_enable_ldap_add' ); ?>
-			<input type="hidden" name="option" value="mo_ldap_local_enable_ldap_add" />
-			<div>
+		<form name="enable_sync_toggle_form" id="enable_sync_toggle_form" method="post" action="" style="display: inline;">
+			<?php wp_nonce_field( 'mo_ldap_local_toggle_sync' ); ?>
+			<input type="hidden" name="option" value="mo_ldap_local_toggle_sync" />
+			<div style="margin-left: 4%;">
 				<?php
-				$protocol       = get_option( 'mo_ldap_local_ldap_protocol' );
-				$is_ldaps       = 'ldaps' === $protocol;
-				$is_disabled    = $is_ldaps ? '' : 'disabled';
-				$is_checked     = $is_ldaps && ( strcasecmp( get_option( 'mo_ldap_local_enable_ldap_add' ), '1' ) === 0 ) ? 'checked' : '';
-				$mo_ldap_cursor = $is_ldaps ? '' : 'mo_ldap_cursor_not_allowed';
+				$wp_to_ldap_search_base  = $utils::decrypt( get_option( 'mo_ldap_local_wp_to_ldap_search_base' ) );
+				$has_search_base         = ! empty( $wp_to_ldap_search_base );
+				$is_disabled             = $has_search_base ? '' : 'disabled';
+				if ( ! $has_search_base ) {
+					update_option( 'mo_ldap_local_enable_ldap_add', '0' );
+				}
+				
+				$is_currently_enabled    = $has_search_base && ( strcasecmp( get_option( 'mo_ldap_local_enable_ldap_add' ), '1' ) === 0 );
+				$is_checked              = $is_currently_enabled ? 'checked' : '';
+				$mo_ldap_cursor          = $has_search_base ? '' : 'mo_ldap_cursor_not_allowed';
 				?>
 				<input type="checkbox"
 					id="mo_ldap_local_enable_ldap_add"
@@ -100,13 +105,13 @@ if ( strcasecmp( $current_subtab, 'wp-to-ldap-directory_sync' ) === 0 ) {
 					value="1"
 					<?php echo esc_attr( $is_checked ); ?>
 					<?php echo esc_attr( $is_disabled ); ?> />
-				<?php if ( ! $is_ldaps ) : ?>
-					<p style="width: 90%; color:red; font-size: 14px;"><b>NOTE: LDAPS connection required. Please configure it to enable the below feature.</b></p>
+				<?php if ( ! $has_search_base ) : ?>
+					<p class="mo_ldap_local_ldaps_note" style="width: 90%; color: red !important; font-size: 14px;"><b>NOTE: Please configure the WordPress to LDAP Sync Search Base below to enable this feature.</b></p>
 				<?php endif; ?>
 				<label for="mo_ldap_local_enable_ldap_add"
 					class="
 					<?php
-					echo $is_ldaps ? 'mo_ldap_local_toggle_switch ' : '';
+					echo $has_search_base ? 'mo_ldap_local_toggle_switch ' : '';
 					echo esc_attr( $mo_ldap_cursor );
 					?>
 				">
@@ -114,6 +119,40 @@ if ( strcasecmp( $current_subtab, 'wp-to-ldap-directory_sync' ) === 0 ) {
 				<label for="mo_ldap_local_enable_ldap_add" class="mo_ldap_local_d_inline mo_ldap_input_label_text">
 					Add new user in LDAP when registered in WordPress
 				</label>
+			</div>
+		</form>
+
+		<form name="sync_search_base_form" id="sync_search_base_form" method="post" action="">
+			<?php wp_nonce_field( 'mo_ldap_local_save_sync_configuration' ); ?>
+			<input type="hidden" name="option" value="mo_ldap_local_save_sync_configuration" />
+			
+			<div class="mo_ldap_user_mapping_search_base" style="margin-top: 20px;">
+				<div class="mo_ldap_local_input_field_container mo_ldap_local_searh_base_container">
+					<div class="mo_ldap_input_label_text mo_ldap_local_config_label" style="display: flex; margin-left: 4%;">User Base:<span style="color:red;">*</span></div>
+					<div class="mo_ldap_search_base_details">
+						<div class="mo_ldap_search_base_details_inner">
+							<?php $wp_to_ldap_search_base = $utils::decrypt( get_option( 'mo_ldap_local_wp_to_ldap_search_base' ) ); ?>
+							<input type="text" id="wp_to_ldap_search_base" name="wp_to_ldap_search_base" placeholder="dc=domain,dc=com" class="mo_ldap_local_standerd_input mo_ldap_local_input_field1" style="width:58%;" value="<?php echo esc_attr( $wp_to_ldap_search_base ); ?>" />
+							<div id="wp_to_ldap_searchbases" class="mo_ldap_select_search_base mo_ldap_search_base mo_ldap_user_mapping_tem" style="font-weight: 500;">
+								Select Search Base   
+								<svg style="margin-left: 10px" fill="#0076E1" height="20px" width="20px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 490.4 490.4" xml:space="preserve" stroke="#0076E1"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M484.1,454.796l-110.5-110.6c29.8-36.3,47.6-82.8,47.6-133.4c0-116.3-94.3-210.6-210.6-210.6S0,94.496,0,210.796 s94.3,210.6,210.6,210.6c50.8,0,97.4-18,133.8-48l110.5,110.5c12.9,11.8,25,4.2,29.2,0C492.5,475.596,492.5,463.096,484.1,454.796z M41.1,210.796c0-93.6,75.9-169.5,169.5-169.5s169.6,75.9,169.6,169.5s-75.9,169.5-169.5,169.5S41.1,304.396,41.1,210.796z"></path> </g> </g></svg>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Note above Save Configuration button -->
+			<div class="mo_ldap_local_input_paragraph_div" style="margin-top: 15px;">
+				<p style = "margin-top: -15px; margin-left: 15px;">
+					Select the search tree under which the user will be created.
+				</p>
+			</div>
+
+			<div style="margin-left: 33.4%; margin-top: 10px;">
+				<button type="submit" name="mo_ldap_sync_settings_submit" value="1" class="mo_ldap_troubleshooting_btn" style="background: #0076E1; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: normal; font-size: 14px; padding: 12px 24px;">
+					Save Configuration
+				</button>
 			</div>
 		</form>
 	</div>
@@ -313,4 +352,37 @@ if ( strcasecmp( $current_subtab, 'wp-to-ldap-directory_sync' ) === 0 ) {
 	</div> 
 	<?php
 }
+?>
+
+<script>
+jQuery(document).ready(function() {
+	jQuery("#wp_to_ldap_searchbases").click(function() {
+		showWpToLdapSearchBaseList();
+	});
+	
+	jQuery("#mo_ldap_local_enable_ldap_add").change(function() {
+		<?php if ( $has_search_base ) : ?>
+			jQuery("#enable_sync_toggle_form").submit();
+		<?php endif; ?>
+	});
+	jQuery("#sync_search_base_form").submit(function(e) {
+		var searchBase = jQuery("#wp_to_ldap_search_base").val().trim();
+		if (searchBase === '') {
+			e.preventDefault();
+			jQuery("#wp_to_ldap_search_base").prop('required', true);
+			jQuery("#wp_to_ldap_search_base")[0].reportValidity();
+			return false;
+		} else {
+			jQuery("#wp_to_ldap_search_base").prop('required', false);
+		}
+		
+		return true;
+	});
+	
+	function showWpToLdapSearchBaseList() {
+		var nonce = "<?php echo esc_js( wp_create_nonce( 'wp_to_ldap_searchbaselist_nonce' ) ); ?>";
+		var myWindow = window.open('<?php echo esc_js( site_url() ); ?>' + '/?option=wp_to_ldap_searchbaselist' + '&_wpnonce=' + nonce, "WordPress to LDAP Search Base Lists", "width=600, height=600");
+	}
+});
+</script>
 

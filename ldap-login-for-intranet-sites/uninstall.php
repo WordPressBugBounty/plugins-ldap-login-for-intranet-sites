@@ -32,6 +32,7 @@ if ( empty( get_option( 'en_save_config' ) ) || strcasecmp( get_option( 'en_save
 	delete_option( 'mo_ldap_local_server_dn' );
 	delete_option( 'mo_ldap_local_server_password' );
 	delete_option( 'mo_ldap_local_search_base' );
+	delete_option( 'mo_ldap_local_wp_to_ldap_search_base' );
 	delete_option( 'mo_ldap_local_search_filter' );
 	delete_option( 'mo_ldap_local_username_attribute' );
 	delete_option( 'Filter_search' );

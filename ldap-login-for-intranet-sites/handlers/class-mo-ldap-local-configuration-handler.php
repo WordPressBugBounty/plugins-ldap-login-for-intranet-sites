@@ -34,6 +34,16 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 			$this->utils = new Mo_Ldap_Local_Utils();
 		}
 
+	/**
+	 * Enqueue configuration handler CSS styles.
+	 *
+	 * @return void
+	 */
+	private function enqueue_configuration_styles() {
+		$css_url = plugin_dir_url( __DIR__ ) . 'includes/css/mo_ldap_local_configuration_handler.min.css';
+		echo '<link rel="stylesheet" type="text/css" href="' . esc_url( $css_url ) . '">';
+	}
+
 		/**
 		 * Function mo_ldap_local_authenticate : performs ldap authentication upon login.
 		 *
@@ -408,9 +418,10 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 		/**
 		 * Function show_search_bases_list : Display list of all the search bases.
 		 *
+		 * @param string $context The context for search base selection ('config' or 'wp_to_ldap').
 		 * @return void
 		 */
-		public function show_search_bases_list() {
+		public function show_search_bases_list( $context = 'config' ) {
 			if ( ! $this->utils::is_extension_installed( 'openssl' ) ) {
 				return;
 			}
@@ -427,152 +438,24 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 						delete_option( 'mo_ldap_local_service_account_status' );
 					}
 					$check_ldap_conn = get_option( 'mo_ldap_local_service_account_status' );
+
+					if ( $context === 'wp_to_ldap' ) {
+						$target_input_id      = 'wp_to_ldap_search_base';
+						$popup_title          = 'Select your Search Base DN for WordPress to LDAP Sync from the below Search bases list';
+						$submit_button_name   = 'submitwptoldapbase';
+						$nonce_action         = 'wp_to_ldap_searchbaselist_nonce';
+						$previous_search_base = $this->utils::decrypt( get_option( 'mo_ldap_local_wp_to_ldap_search_base' ) );
+					} else {
+						$target_input_id      = 'search_base';
+						$popup_title          = 'Select your Search Base DN from the below Search bases list';
+						$submit_button_name   = 'submitbase';
+						$nonce_action         = 'searchbaselist_nonce';
+						$previous_search_base = $this->utils::decrypt( get_option( 'mo_ldap_local_search_base' ) );
+					}
+
+					$this->enqueue_configuration_styles();
+
 					?>
-				<style>
-					.mo_ldap_local_search_bases_container {
-						border-radius: 10px;
-						/* width: 80%; */
-						display: flex;
-					}
-					.mo_ldap_local_multiple_search_base_premium_box {
-						text-align: center; 
-						color: #fff; 
-						padding: 18px; 
-						font-weight: 500; 
-						display: flex; 
-						justify-content: center;
-					}
-					.mo_ldap_local_multiple_search_base_premium_box_inner {
-						width: 85%; 
-						border: 1px solid gray; 
-						border-radius: 10px; 
-						padding: 3px 5px; 
-						background-color: #aa4dc8; 
-						justify-content: center; 
-						align-items: center; 
-						display: flex; 
-						margin-right: 17px;
-					}
-					.mo_ldap_local_search_field {
-						opacity: 65%;
-						background: #5b5b5b;
-						width: 100%;
-						padding: 15px;
-						border: none;
-						color: #fff;
-						border-radius: 10px 0px 0px 10px;
-						outline: none;
-					}
-					.mo_ldap_local_search_field::placeholder {
-						color: #fff;
-					}
-
-					.mo_ldap_local_search_button {
-						opacity: 65%;
-						padding-right: 20px;
-						background: #5b5b5b;
-						border-radius: 0px 10px 10px 0px;
-						border: none;
-					}
-
-					.mo_ldap_local_search_field_container {
-						padding: 2% 10%;
-					}
-
-					.mo_ldap_local_show_search_base_main_container{
-						gap: 10px;
-						display: flex;
-						flex-direction: column;
-						height: -webkit-fill-available;
-						justify-content: space-evenly;
-					}
-
-					.mo_ldap_local_show_search_base_container {
-						font-family: 'Inter' !important;
-						font-style: normal;
-						min-height: 100%;
-						background: #9f9f9f;
-						margin: -8px;
-					}
-
-					.mo_ldap_local_search_base_div {
-						background-color: #565656;
-						border-radius: 10px;
-						padding: 15px 15px;
-						width: 88%;
-						font-size: 14px;
-						color: #fff;
-						margin-top: 10px;
-						margin-right: auto;
-						margin-left: auto;
-					}
-					.mo_ldap_local_not_found_div {
-						background-color: #565656;
-						border-radius: 10px;
-						padding: 15px 15px;
-						width: 80%;
-						font-size: 14px;
-						color: #fff;
-						margin-top: 10px;
-						margin-right: auto;
-						margin-left: auto;
-						text-align: justify;
-					}
-					.mo_ldap_local_overflow_container {
-						height: 325px;
-						display: flex;
-						flex-direction: column;
-						overflow-y: auto;
-						width: 90%;
-						margin: auto;
-					}
-
-					.mo_ldap_local_submit_button {
-						font-size: 14px;
-						width: 25%;
-						cursor: pointer;
-						background: #0076E1;
-						color: white;
-						border-radius: 8px;
-						padding: 12px;
-						margin: 10px;
-						font-weight: 600;
-						border: none;
-					}
-
-					.mo_ldap_local_close_button {
-						font-size: 14px;
-						width: 25%;
-						cursor: pointer;
-						background: #FFFFFF;
-						/* border: 1px solid #0076E1; */
-						color: #0076E1;
-						border-radius: 8px;
-						padding: 12px;
-						margin: 10px;
-						font-weight: 600;
-						border: none;
-					}
-
-					.mo_ldap_local_search_base_label {
-						display: flex;
-						align-items: center;
-						gap: 8px;
-						width: 100%;
-						white-space: nowrap;
-						overflow: hidden;
-					}
-					.mo_ldap_local_ou_value {
-						display: inline-block;
-						overflow: hidden;
-						text-overflow: ellipsis;
-						white-space: nowrap;
-						max-width: calc(100% - 32px); 
-						vertical-align: middle;
-						cursor: pointer;
-					}
-
-				</style>
 				<script>
 					function mo_ldap_local_search_search_base() {
 						let input = document.getElementById('mo_ldap_local_search_bar').value
@@ -603,13 +486,12 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 										</button>
 								</div>
 							</div>
-							<div style="text-align: center; color: #fff; font-weight: 600;">
-								<span>Select your Search Base DN from the below Search bases list</span>
-							</div>
+						<div class="mo_ldap_local_popup_title">
+							<span><?php echo esc_html( $popup_title ); ?></span>
+						</div>
 							<form method="post" action="">
 							<div class="mo_ldap_local_overflow_container">
 								<?php
-								$previous_search_bases     = $this->utils::decrypt( get_option( 'mo_ldap_local_search_base' ) );
 								$search_base_list          = array();
 								$result                    = ldap_read( $ldapconn, '', '(objectclass=*)', array( 'namingContexts' ) );
 								$data                      = ldap_get_entries( $ldapconn, $result );
@@ -620,7 +502,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 										$base_dn = $data[0]['namingcontexts'][ $i ];
 									}
 									$valuetext = $data[0]['namingcontexts'][ $i ];
-									if ( strcasecmp( $valuetext, $previous_search_bases ) === 0 ) {
+									if ( strcasecmp( $valuetext, $previous_search_base ) === 0 ) {
 										echo '<div class="mo_ldap_local_search_base_div"><label class="mo_ldap_local_search_base_label"><input type="radio" id="mo_ldap_local_searchbase_' . esc_attr( $i ) . '" class="select_search_bases" name="select_ldap_search_bases[]" value="' . esc_attr( $valuetext ) . '" checked><span class="mo_ldap_local_ou_value" title="' . esc_attr( $valuetext ) . '">' . esc_html( $valuetext ) . '</span></label></div>';
 										array_push( $search_base_list, $data[0]['namingcontexts'][ $i ] );
 									} else {
@@ -635,7 +517,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 								$info        = ldap_get_entries( $ldapconn, $ldapsearch );
 								for ( $i = 0; $i < $info['count']; $i++ ) {
 									$textvalue = $info[ $i ]['dn'];
-									if ( ( strcasecmp( $textvalue, $previous_search_bases ) ) === 0 ) {
+									if ( ( strcasecmp( $textvalue, $previous_search_base ) ) === 0 ) {
 										echo '<div class="mo_ldap_local_search_base_div"><label class="mo_ldap_local_search_base_label"><input type="radio" id="mo_ldap_local_searchbase_' . esc_attr( $current_search_base_count ) . '" class="select_search_bases" name="select_ldap_search_bases[]" value="' . esc_attr( $textvalue ) . '" checked><span class="mo_ldap_local_ou_value" title="' . esc_attr( $textvalue ) . '">' . esc_html( $textvalue ) . '</span></label></div>';
 										array_push( $search_base_list, $info[ $i ]['dn'] );
 									} else {
@@ -649,21 +531,21 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 							<div class="mo_ldap_local_multiple_search_base_premium_box">
 								<div class="mo_ldap_local_multiple_search_base_premium_box_inner">
 									<img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="31px" width="25px">
-									<p style="font-size: 15px; margin-left: 12px;">Multiple search bases are supported in the premium version of the plugin.</p>
+									<p class="mo_ldap_local_premium_box_paragraph">Multiple search bases are supported in the premium version of the plugin.</p>
 								</div>
 							</div>
-							<div style="text-align: center;">
-								<input class="mo_ldap_local_submit_button" id="submitbase" type="submit" value="Submit" name="submitbase">
-								<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
-							</div>
+						<div class="mo_ldap_local_button_container">
+							<input class="mo_ldap_local_submit_button" id="<?php echo esc_attr( $submit_button_name ); ?>" type="submit" value="Submit" name="<?php echo esc_attr( $submit_button_name ); ?>">
+							<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
+						</div>
 							</form>
 						</div>
 						<?php
 					} else {
 						?>
 						<div class="mo_ldap_local_show_search_base_container">
-							<div style="text-align: center; color: #fff; padding: 18px;font-weight: 600;">
-								<span>No Search Base(s) Found</span>
+						<div class="mo_ldap_local_error_message_container">
+							<span>No Search Base(s) Found</span>
 								<div class="mo_ldap_local_not_found_div">
 									<span>Please check :</span>
 									<ul>
@@ -672,9 +554,9 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 									</ul>
 								</div>
 							</div>
-							<div style="text-align: center;">
-								<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
-							</div>
+						<div class="mo_ldap_local_button_container">
+							<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
+						</div>
 						</div>
 						<?php
 					}
@@ -684,7 +566,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 				} else {
 					?>
 					<div class="mo_ldap_local_show_search_base_container">
-						<div style="text-align: center; color: #fff; padding: 18px;font-weight: 600;">
+						<div class="mo_ldap_local_error_message_container">
 							<span>No Search Base(s) Found</span>
 							<div class="mo_ldap_local_not_found_div">
 								<span>Please check :</span>
@@ -694,7 +576,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 								</ul>
 							</div>
 						</div>
-						<div style="text-align: center;">
+						<div class="mo_ldap_local_close_button_container">
 							<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
 						</div>
 					</div>
@@ -706,8 +588,8 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 			} else {
 				?>
 				<div class="mo_ldap_local_show_search_base_container">
-					<div style="text-align: center; color: #fff; padding: 18px;font-weight: 600;">
-						<span>No Search Base(s) Found</span>
+						<div class="mo_ldap_local_error_message_container">
+							<span>No Search Base(s) Found</span>
 						<div class="mo_ldap_local_not_found_div">
 							<span>Please check :</span>
 							<ul>
@@ -715,24 +597,33 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 							</ul>
 						</div>
 					</div>
-					<div style="text-align: center;">
-						<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
-					</div>
+						<div class="mo_ldap_local_button_container">
+							<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
+						</div>
 				</div>
 				<?php
 			}
-			if ( isset( $_POST['submitbase'] ) && ( isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'searchbaselist_nonce' ) ) ) {
+			if ( (isset( $_POST['submitbase'] ) && ( isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'searchbaselist_nonce' ) ) ) ||
+				( isset( $_POST['submitwptoldapbase'] ) && ( isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'wp_to_ldap_searchbaselist_nonce' ) ) ) ) {
 				if ( ! empty( $_POST['select_ldap_search_bases'] ) ) {
 					$search_bases = strtolower( isset( $_POST['select_ldap_search_bases'][0] ) ? sanitize_text_field( wp_unslash( $_POST['select_ldap_search_bases'][0] ) ) : '' );
-					update_option( 'mo_ldap_local_search_base', $this->utils::encrypt( $search_bases ) );
 
-					echo '<script>window.close();
+					if ( isset( $_POST['submitbase'] ) ) {
+						update_option( 'mo_ldap_local_search_base', $this->utils::encrypt( $search_bases ) );
+						echo '<script>window.close();
                	window.onunload = function(){
                	window.opener.location.reload();
             	};
         		</script>';
+					} elseif ( isset( $_POST['submitwptoldapbase'] ) ) {
+						echo '<script>
+							window.opener.document.getElementById("wp_to_ldap_search_base").value = "' . esc_js( $search_bases ) . '";
+							window.close();
+						</script>';
+					}
 				} else {
-					echo '<span"><script> alert("You have not selected any Search Base.")</script></span>';
+					$error_message = isset( $_POST['submitwptoldapbase'] ) ? 'You have not selected any Search Base for WordPress to LDAP Sync.' : 'You have not selected any Search Base.';
+					echo '<span"><script> alert("' . esc_js( $error_message ) . '")</script></span>';
 				}
 			}
 			exit();
@@ -751,49 +642,10 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 
 			$username = ldap_escape( $username, '', LDAP_ESCAPE_FILTER );
 
+			// Enqueue CSS styles for attribute mapping test
+			$this->enqueue_configuration_styles();
+
 			?>
-				<style>
-					.mo_ldap_local_attr_map_container {
-						min-height: 100%;
-						background: #9f9f9f;
-						margin: -8px;
-						font-family: 'Inter' !important;
-						font-style: normal;
-					}
-					.mo_ldap_local_test_result {
-						background-color: #565656;
-						border-radius: 10px;
-						padding: 15px 15px;
-						width: 80%;
-						font-size: 16px;
-						color: #fff;
-						margin-top: 10px;
-						margin-right: auto;
-						margin-left: auto;
-					}
-					.mo_ldap_local_attribute {
-						min-width: 15%;
-					}
-					.mo_ldap_local_user_info {
-						margin: 0 10% 0 10%;
-						font-size: 15px;
-						padding: 10px;
-						gap: 10px;
-						display: flex;
-					}
-					.mo_ldap_local_close_button {
-						font-size: 14px;
-						width: 25%;
-						cursor: pointer;
-						background: #FFFFFF;
-						color: #0076E1;
-						border-radius: 8px;
-						padding: 12px;
-						margin: 10px;
-						font-weight: 600;
-						border: none;
-					}
-				</style>
 			<?php
 			if ( $this->utils::is_extension_installed( 'ldap' ) ) {
 				$ldap_bind_dn       = get_option( 'mo_ldap_local_server_dn' ) ? $this->utils::decrypt( get_option( 'mo_ldap_local_server_dn' ) ) : '';
@@ -811,12 +663,12 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 				if ( empty( $search_bases ) || empty( $search_filter ) ) {
 					?>
 					<div class="mo_ldap_local_attr_map_container">
-						<div style="text-align: center; color: #fff; padding: 18px;font-weight: 600;">
-							<span style="font-size: 1.5rem;">Attribute Mapping Test:</span>
+						<div class="mo_ldap_local_error_message_container">
+							<span class="mo_ldap_local_popup_title_large_font">Attribute Mapping Test:</span>
 						</div>
 						<div class='mo_ldap_local_test_result'>
-							<div style="justify-content: center;gap: 12px;display: flex;">
-								<div style="align-self: center;">
+							<div class="mo_ldap_local_test_status_container">
+								<div class="mo_ldap_local_test_status_text">
 									Status: Test Failed
 								</div>
 								<div>
@@ -825,7 +677,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 									</svg>
 								</div>
 							</div>
-							<hr style="width: 85%;">
+							<hr class="mo_ldap_local_hr_width">
 							<div class="mo_ldap_local_user_info">
 								<div>
 									Please Check:
@@ -834,7 +686,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 								</div>
 							</div>
 						</div>
-						<div style="text-align: center;">
+						<div class="mo_ldap_local_close_button_container">
 							<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
 						</div>
 					</div>
@@ -868,12 +720,12 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 						if ( ! empty( $dn ) ) {
 							?>
 							<div class="mo_ldap_local_attr_map_container">
-								<div style="text-align: center; color: #fff; padding: 18px;font-weight: 600;">
-									<span style="font-size: 1.5rem;">Attribute Mapping Test:</span>
+								<div class="mo_ldap_local_error_message_container">
+									<span class="mo_ldap_local_popup_title_large_font">Attribute Mapping Test:</span>
 								</div>
 								<div class='mo_ldap_local_test_result'>
-									<div style="justify-content: center;gap: 12px;display: flex;">
-										<div style="align-self: center;">
+									<div class="mo_ldap_local_test_status_container">
+										<div class="mo_ldap_local_test_status_text">
 											Status: Test Successful
 										</div>
 										<div>
@@ -882,9 +734,9 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 											</svg>
 										</div>
 									</div>
-									<hr style="width: 85%;">
+									<hr class="mo_ldap_local_hr_width">
 									<div class="mo_ldap_local_user_info">
-										<div class="mo_ldap_local_attribute"><strong>User DN: </strong></div>
+										<div class="mo_ldap_local_attribute mo_ldap_local_attribute_mapping"><strong>User DN: </strong></div>
 										<div>
 											<?php
 											if ( isset( $dn ) ) {
@@ -895,12 +747,12 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 											?>
 										</div>
 									</div>
-									<hr style="width: 85%;">
+									<hr class="mo_ldap_local_hr_width">
 									<div class="mo_ldap_local_user_info">
 										<?php
 										foreach ( $attr as $attribute ) {
 											?>
-											<div class="mo_ldap_local_attribute"><strong><?php echo esc_html( $attribute ); ?>: </strong></div>
+											<div class="mo_ldap_local_attribute mo_ldap_local_attribute_mapping"><strong><?php echo esc_html( $attribute ); ?>: </strong></div>
 											<div>
 												<?php
 												if ( isset( $entry[0][ $attribute ][0] ) ) {
@@ -920,7 +772,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 													if ( ! empty( $mo_ldap_local_ldap_email_domain ) ) {
 														if ( in_array( $mo_ldap_local_ldap_username_attribute, $username_list_array, true ) || in_array( $custom_ldap_username_attribute, $username_list_array, true ) ) {
 															$default_email_id = $username . '@' . $mo_ldap_local_ldap_email_domain;
-															echo 'Mail attribute is not set in LDAP server.<br>As per configured default email domain <strong style="color:#60b6ff;">' . esc_html( $mo_ldap_local_ldap_email_domain ) . '</strong>, following email will be set to the user after successful login.<br><strong style="color:#60b6ff;">' . esc_html( $default_email_id ) . '</strong>';
+															echo 'Mail attribute is not set in LDAP server.<br>As per configured default email domain <strong class="mo_ldap_local_link_blue">' . esc_html( $mo_ldap_local_ldap_email_domain ) . '</strong>, following email will be set to the user after successful login.<br><strong class="mo_ldap_local_link_blue">' . esc_html( $default_email_id ) . '</strong>';
 														} else {
 															echo 'Mail attribute is not set in LDAP server.';
 														}
@@ -935,20 +787,20 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 										?>
 									</div>
 								</div>
-								<div style="text-align: center;">
-									<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
-								</div>
+						<div class="mo_ldap_local_button_container">
+							<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
+						</div>
 							</div>
 							<?php
 						} else {
 							?>
 							<div class="mo_ldap_local_attr_map_container">
-								<div style="text-align: center; color: #fff; padding: 18px;font-weight: 600;">
-									<span style="font-size: 1.5rem;">Attribute Mapping Test:</span>
+								<div class="mo_ldap_local_error_message_container">
+									<span class="mo_ldap_local_popup_title_large_font">Attribute Mapping Test:</span>
 								</div>
 								<div class='mo_ldap_local_test_result'>
-									<div style="justify-content: center;gap: 12px;display: flex;">
-										<div style="align-self: center;">
+									<div class="mo_ldap_local_test_status_container">
+										<div class="mo_ldap_local_test_status_text">
 											Status: Test Failed
 										</div>
 										<div>
@@ -957,7 +809,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 											</svg>
 										</div>
 									</div>
-									<hr style="width: 85%;">
+									<hr class="mo_ldap_local_hr_width">
 									<div class="mo_ldap_local_user_info">
 										<strong>
 										<?php
@@ -970,21 +822,21 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 										</strong>
 									</div>
 								</div>
-								<div style="text-align: center;">
-									<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
-								</div>
+						<div class="mo_ldap_local_button_container">
+							<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
+						</div>
 							</div>
 							<?php
 						}
 					} else {
 						?>
 						<div class="mo_ldap_local_attr_map_container">
-							<div style="text-align: center; color: #fff; padding: 18px;font-weight: 600;">
-								<span style="font-size: 1.5rem;">Attribute Mapping Test:</span>
+							<div class="mo_ldap_local_error_message_container">
+								<span class="mo_ldap_local_popup_title_large_font">Attribute Mapping Test:</span>
 							</div>
 							<div class='mo_ldap_local_test_result'>
-								<div style="justify-content: center;gap: 12px;display: flex;">
-									<div style="align-self: center;">
+								<div class="mo_ldap_local_test_status_container">
+									<div class="mo_ldap_local_test_status_text">
 										Status: Test Failed
 									</div>
 									<div>
@@ -993,7 +845,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 										</svg>
 									</div>
 								</div>
-								<hr style="width: 85%;">
+								<hr class="mo_ldap_local_hr_width">
 								<div class="mo_ldap_local_user_info">
 									<div>
 										Please Check:
@@ -1004,9 +856,9 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 									</div>
 								</div>
 							</div>
-							<div style="text-align: center;">
-								<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
-							</div>
+						<div class="mo_ldap_local_button_container">
+							<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
+						</div>
 						</div>
 						<?php
 					}
@@ -1017,12 +869,12 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 			} else {
 				?>
 				<div class="mo_ldap_local_attr_map_container">
-					<div style="text-align: center; color: #fff; padding: 18px;font-weight: 600;">
-						<span style="font-size: 1.5rem;">Attribute Mapping Test:</span>
+					<div class="mo_ldap_local_error_message_container">
+						<span class="mo_ldap_local_popup_title_large_font">Attribute Mapping Test:</span>
 					</div>
 					<div class='mo_ldap_local_test_result'>
-						<div style="justify-content: center;gap: 12px;display: flex;">
-							<div style="align-self: center;">
+						<div class="mo_ldap_local_test_status_container">
+							<div class="mo_ldap_local_test_status_text">
 								Status: Test Failed
 							</div>
 							<div>
@@ -1031,14 +883,14 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 								</svg>
 							</div>
 						</div>
-						<hr style="width: 85%;">
+						<hr class="mo_ldap_local_hr_width">
 						<div class="mo_ldap_local_user_info">
-							<span><a target="_blank" style="color:#60b6ff;" rel="noopener" href="http://php.net/manual/en/ldap.installation.php">PHP LDAP extension</a> is not installed or is disabled. Please enable it.</span>
+							<span><a target="_blank" class="mo_ldap_local_link_blue" rel="noopener" href="http://php.net/manual/en/ldap.installation.php">PHP LDAP extension</a> is not installed or is disabled. Please enable it.</span>
 						</div>
 					</div>
-					<div style="text-align: center;">
-						<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
-					</div>
+						<div class="mo_ldap_local_button_container">
+							<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
+						</div>
 				</div>
 				<?php
 				exit();
@@ -1058,49 +910,9 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 
 			$username = ldap_escape( $username, '', LDAP_ESCAPE_FILTER );
 
+			$this->enqueue_configuration_styles();
+
 			?>
-				<style>
-					.mo_ldap_local_attr_map_container {
-						min-height: 100%;
-						background: #9f9f9f;
-						margin: -8px;
-						font-family: 'Inter' !important;
-						font-style: normal;
-					}
-					.mo_ldap_local_test_result {
-						background-color: #565656;
-						border-radius: 10px;
-						padding: 15px 15px;
-						width: 80%;
-						font-size: 16px;
-						color: #fff;
-						margin-top: 10px;
-						margin-right: auto;
-						margin-left: auto;
-					}
-					.mo_ldap_local_attribute {
-						min-width: 25%;
-					}
-					.mo_ldap_local_user_info {
-						margin: 0 8% 0 8%;
-						font-size: 15px;
-						padding: 10px;
-						gap: 10px;
-						display: flex;
-					}
-					.mo_ldap_local_close_button {
-						font-size: 14px;
-						width: 25%;
-						cursor: pointer;
-						background: #FFFFFF;
-						color: #0076E1;
-						border-radius: 8px;
-						padding: 12px;
-						margin: 10px;
-						font-weight: 600;
-						border: none;
-					}
-				</style>
 			<?php
 			if ( $this->utils::is_extension_installed( 'ldap' ) ) {
 				$ldap_bind_dn       = get_option( 'mo_ldap_local_server_dn' ) ? $this->utils::decrypt( get_option( 'mo_ldap_local_server_dn' ) ) : '';
@@ -1115,12 +927,12 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 				if ( empty( $search_bases ) || empty( $search_filter ) ) {
 					?>
 					<div class="mo_ldap_local_attr_map_container">
-						<div style="text-align: center; color: #fff; padding: 18px;font-weight: 600;">
-							<span style="font-size: 1.5rem;">Role Mapping Test:</span>
+						<div class="mo_ldap_local_error_message_container">
+							<span class="mo_ldap_local_popup_title_large_font">Role Mapping Test:</span>
 						</div>
 						<div class='mo_ldap_local_test_result'>
-							<div style="justify-content: center;gap: 12px;display: flex;">
-								<div style="align-self: center;">
+							<div class="mo_ldap_local_test_status_container">
+								<div class="mo_ldap_local_test_status_text">
 									Status: Test Failed
 								</div>
 								<div>
@@ -1129,7 +941,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 									</svg>
 								</div>
 							</div>
-							<hr style="width: 85%;">
+							<hr class="mo_ldap_local_hr_width">
 							<div class="mo_ldap_local_user_info">
 								<div>
 									Please Check:
@@ -1138,7 +950,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 								</div>
 							</div>
 						</div>
-						<div style="text-align: center;">
+						<div class="mo_ldap_local_close_button_container">
 							<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
 						</div>
 					</div>
@@ -1175,12 +987,12 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 						if ( ! empty( $dn ) ) {
 							?>
 							<div class="mo_ldap_local_attr_map_container">
-								<div style="text-align: center; color: #fff; padding: 18px;font-weight: 600;">
-									<span style="font-size: 1.5rem;">Role Mapping Test:</span>
+								<div class="mo_ldap_local_error_message_container">
+									<span class="mo_ldap_local_popup_title_large_font">Role Mapping Test:</span>
 								</div>
 								<div class='mo_ldap_local_test_result'>
-									<div style="justify-content: center;gap: 12px;display: flex;">
-										<div style="align-self: center;">
+									<div class="mo_ldap_local_test_status_container">
+										<div class="mo_ldap_local_test_status_text">
 											Status: Test Successful
 										</div>
 										<div>
@@ -1189,9 +1001,9 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 											</svg>
 										</div>
 									</div>
-									<hr style="width: 85%;">
-									<div class="mo_ldap_local_user_info">
-										<div class="mo_ldap_local_attribute"><strong>User DN: </strong></div>
+									<hr class="mo_ldap_local_hr_width">
+									<div class="mo_ldap_local_user_info mo_ldap_local_role_mapping_info">
+										<div class="mo_ldap_local_attribute mo_ldap_local_role_mapping"><strong>User DN: </strong></div>
 										<div>
 											<?php
 											if ( isset( $dn ) ) {
@@ -1202,26 +1014,26 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 											?>
 										</div>
 									</div>
-									<hr style="width: 85%;">
-									<div class="mo_ldap_local_user_info">
-										<div class="mo_ldap_local_attribute"><strong>WordPress Role: </strong></div>
+									<hr class="mo_ldap_local_hr_width">
+									<div class="mo_ldap_local_user_info mo_ldap_local_role_mapping_info">
+										<div class="mo_ldap_local_attribute mo_ldap_local_role_mapping"><strong>WordPress Role: </strong></div>
 										<div><?php echo esc_html( $default_role ); ?></div>
 									</div>
 								</div>
-								<div style="text-align: center;">
-									<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
-								</div>
+						<div class="mo_ldap_local_button_container">
+							<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
+						</div>
 							</div>
 							<?php
 						} else {
 							?>
 							<div class="mo_ldap_local_attr_map_container">
-								<div style="text-align: center; color: #fff; padding: 18px;font-weight: 600;">
-									<span style="font-size: 1.5rem;">Role Mapping Test:</span>
+								<div class="mo_ldap_local_error_message_container">
+									<span class="mo_ldap_local_popup_title_large_font">Role Mapping Test:</span>
 								</div>
 								<div class='mo_ldap_local_test_result'>
-									<div style="justify-content: center;gap: 12px;display: flex;">
-										<div style="align-self: center;">
+									<div class="mo_ldap_local_test_status_container">
+										<div class="mo_ldap_local_test_status_text">
 											Status: Test Failed
 										</div>
 										<div>
@@ -1230,7 +1042,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 											</svg>
 										</div>
 									</div>
-									<hr style="width: 85%;">
+									<hr class="mo_ldap_local_hr_width">
 									<div class="mo_ldap_local_user_info">
 										<strong>
 										<?php
@@ -1243,21 +1055,21 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 										</strong>
 									</div>
 								</div>
-								<div style="text-align: center;">
-									<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
-								</div>
+						<div class="mo_ldap_local_button_container">
+							<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
+						</div>
 							</div>
 							<?php
 						}
 					} else {
 						?>
 						<div class="mo_ldap_local_attr_map_container">
-							<div style="text-align: center; color: #fff; padding: 18px;font-weight: 600;">
-								<span style="font-size: 1.5rem;">Role Mapping Test:</span>
+							<div class="mo_ldap_local_error_message_container">
+								<span class="mo_ldap_local_popup_title_large_font">Role Mapping Test:</span>
 							</div>
 							<div class='mo_ldap_local_test_result'>
-								<div style="justify-content: center;gap: 12px;display: flex;">
-									<div style="align-self: center;">
+								<div class="mo_ldap_local_test_status_container">
+									<div class="mo_ldap_local_test_status_text">
 										Status: Test Failed
 									</div>
 									<div>
@@ -1266,7 +1078,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 										</svg>
 									</div>
 								</div>
-								<hr style="width: 85%;">
+								<hr class="mo_ldap_local_hr_width">
 								<div class="mo_ldap_local_user_info">
 									<div>
 										Please Check:
@@ -1277,9 +1089,9 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 									</div>
 								</div>
 							</div>
-							<div style="text-align: center;">
-								<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
-							</div>
+						<div class="mo_ldap_local_button_container">
+							<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
+						</div>
 						</div>
 						<?php
 					}
@@ -1290,12 +1102,12 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 			} else {
 				?>
 				<div class="mo_ldap_local_attr_map_container">
-					<div style="text-align: center; color: #fff; padding: 18px;font-weight: 600;">
-						<span style="font-size: 1.5rem;">Role Mapping Test:</span>
+					<div class="mo_ldap_local_error_message_container">
+						<span class="mo_ldap_local_popup_title_large_font">Role Mapping Test:</span>
 					</div>
 					<div class='mo_ldap_local_test_result'>
-						<div style="justify-content: center;gap: 12px;display: flex;">
-							<div style="align-self: center;">
+						<div class="mo_ldap_local_test_status_container">
+							<div class="mo_ldap_local_test_status_text">
 								Status: Test Failed
 							</div>
 							<div>
@@ -1304,14 +1116,14 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 								</svg>
 							</div>
 						</div>
-						<hr style="width: 85%;">
+						<hr class="mo_ldap_local_hr_width">
 						<div class="mo_ldap_local_user_info">
-							<span><a target="_blank" style="color:#60b6ff;" rel="noopener" href="http://php.net/manual/en/ldap.installation.php">PHP LDAP extension</a> is not installed or is disabled. Please enable it.</span>
+							<span><a target="_blank" class="mo_ldap_local_link_blue" rel="noopener" href="http://php.net/manual/en/ldap.installation.php">PHP LDAP extension</a> is not installed or is disabled. Please enable it.</span>
 						</div>
 					</div>
-					<div style="text-align: center;">
-						<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
-					</div>
+						<div class="mo_ldap_local_button_container">
+							<input class="mo_ldap_local_close_button" type="button"  id ="searchbase" value="Close" onClick="self.close();"/>
+						</div>
 				</div>
 				<?php
 				exit();

@@ -59,7 +59,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_User_Handler' ) ) {
 
 			if ( $ldapconn ) {
 				$rdn_attribute = $current_directory->get_rdn_attribute( $user_info );
-				$user_base     = $this->utils::decrypt( get_option( 'mo_ldap_local_search_base' ) );
+				$user_base = $this->utils::decrypt( get_option( 'mo_ldap_local_wp_to_ldap_search_base', '' ) );
 				if ( empty( $user_base ) ) {
 					return;
 				}
@@ -68,7 +68,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_User_Handler' ) ) {
 
 				$email_attribute = get_option( 'mo_ldap_local_email_attribute' );
 
-				$user_data = $current_directory->set_native_attributes( $user_info );
+				$user_data = array_map( 'trim', $current_directory->set_native_attributes( $user_info ) );
 
 				if ( $email_attribute ) {
 					$user_data[ strtolower( $email_attribute ) ] = $user_info->user_email;
@@ -144,20 +144,20 @@ if ( ! class_exists( 'Mo_Ldap_Local_User_Handler' ) ) {
 		 * @param  string $user_id : User id.
 		 * @return void
 		 */
-		public function mo_ldap_create_user_action( $user_id ) {
-			$user         = get_userdata( $user_id );
-			$ldap_user_dn = get_user_meta( $user_id, 'mo_ldap_user_dn', true );
-
-			if ( ! empty( $ldap_user_dn ) ) {
-				return;
-			}
-
-			if ( 'ldap' === get_option( 'mo_ldap_local_ldap_protocol', 'ldap' ) ) {
-				return;
-			}
-
-			$mo_ldap_config = new Mo_Ldap_Local_User_Handler();
-			$mo_ldap_config->add_user( $user );
+	public function mo_ldap_create_user_action( $user_id ) {
+		if ( strcasecmp( get_option( 'mo_ldap_local_enable_ldap_add' ), '1' ) !== 0 ) {
+			return;
 		}
+
+		$user         = get_userdata( $user_id );
+		$ldap_user_dn = get_user_meta( $user_id, 'mo_ldap_user_dn', true );
+
+		if ( ! empty( $ldap_user_dn ) ) {
+			return;
+		}
+
+		$mo_ldap_config = new Mo_Ldap_Local_User_Handler();
+		$mo_ldap_config->add_user( $user );
+	}
 	}
 }

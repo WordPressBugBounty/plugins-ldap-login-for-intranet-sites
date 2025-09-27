@@ -39,6 +39,7 @@ if ( ! class_exists( 'MO_LDAP_Config_Details' ) ) {
 		const KEEP_EXSTING_ROLE             = 'mo_ldap_local_keep_existing_user_roles';
 		const LOCAL_EMAIL_DOMAIN            = 'mo_ldap_local_email_domain';
 		const MAIL                          = 'mo_ldap_local_email_attribute';
+		const WP_TO_LDAP_SEARCH_BASE        = 'mo_ldap_local_wp_to_ldap_search_base';
 		const PLUGIN_VERSION                = 'mo_ldap_local_current_plugin_version';
 	}
 }
