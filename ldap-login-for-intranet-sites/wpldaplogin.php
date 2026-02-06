@@ -14,7 +14,7 @@
  * Plugin URI: https://miniorange.com
  * Description: Active Directory Integration for Intranet Sites plugin provides login to WordPress using credentials stored in your Active Directory / other LDAP Directory.
  * Author: miniOrange
- * Version: 5.3.1
+ * Version: 5.4.0
  * Author URI: https://miniorange.com
  * License: Expat
  * License URI: https://plugins.miniorange.com/mit-license
@@ -32,8 +32,8 @@ use MO_LDAP\Mo_Ldap_Local_Login;
 
 define( 'MO_LDAP_LOCAL_PLUGIN_NAME', plugin_basename( __FILE__ ) );
 
-$dir_name = substr( MO_LDAP_LOCAL_PLUGIN_NAME, 0, strpos( MO_LDAP_LOCAL_PLUGIN_NAME, '/' ) );
-define( 'MO_LDAP_LOCAL_NAME', $dir_name );
+$mo_ldap_local_dir_name = substr( MO_LDAP_LOCAL_PLUGIN_NAME, 0, strpos( MO_LDAP_LOCAL_PLUGIN_NAME, '/' ) );
+define( 'MO_LDAP_LOCAL_NAME', $mo_ldap_local_dir_name );
 
 require_once 'mo-ldap-local-autoload-plugin.php';
 

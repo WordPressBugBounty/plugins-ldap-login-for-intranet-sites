@@ -64,5 +64,4 @@ interface DirectoryBase {
 	 * @return array
 	 */
 	public function get_attribute_set();
-
 }

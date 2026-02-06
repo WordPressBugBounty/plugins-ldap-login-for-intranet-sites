@@ -10,15 +10,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$addon_array_recommended = maybe_unserialize( MO_LDAP_RECOMMENDED_ADDONS );
-$addon_array_third_party = maybe_unserialize( MO_LDAP_THIRD_PARTY_INTEGRATION_ADDONS );
-$request_uri             = isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
-$pricing_list            = $pricing;
-$site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash( $_GET['sitetype'] ) ) : 'singlesite'; //phpcs:ignore WordPress.Security.NonceVerification.Recommended, - Reading GET parameter from the URL for checking the sub-tab name, doesn't require nonce verification.
+$mo_ldap_local_addon_array_recommended = maybe_unserialize( MO_LDAP_RECOMMENDED_ADDONS );
+$mo_ldap_local_addon_array_third_party = maybe_unserialize( MO_LDAP_THIRD_PARTY_INTEGRATION_ADDONS );
+$mo_ldap_local_request_uri             = isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+$mo_ldap_local_pricing_list            = $pricing;
+$mo_ldap_local_site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash( $_GET['sitetype'] ) ) : 'singlesite'; //phpcs:ignore WordPress.Security.NonceVerification.Recommended, - Reading GET parameter from the URL for checking the sub-tab name, doesn't require nonce verification.
 
 ?>
 <script>
-	var selectArray = JSON.parse('<?php echo wp_json_encode( $pricing_list ); ?>');
+	var selectArray = JSON.parse('<?php echo wp_json_encode( $mo_ldap_local_pricing_list ); ?>');
 	function createSelectOpt(elemId) {
 		var selectPricingArray = selectArray[elemId];
 		var selectElem = '<span id="mo_ldap_local_price_' + elemId + '" class="mo_ldap_local_price">$ ' + selectArray[elemId]["1"] + '</span></div><div class="mo_ldap_local_licensing_plan_instances"><div><b>No. of Intances</b></div>';
@@ -59,7 +59,7 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 
 	<div id="mo_ldap_local_licesing_nav" class="mo_ldap_local_licensing_nav_bar">
 		<div style="font-weight:700;" class="mo_ldap_local_horizontal_flex_container">
-			<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'default' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect mo_ldap_local_horizontal_flex_container">
+			<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'default' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect mo_ldap_local_horizontal_flex_container">
 				<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'LeftArrow.svg' ); ?>" height="20px" width="15px"></span>Plugin Config
 			</a>
 		</div>
@@ -89,20 +89,20 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 		</div>
 
 		<div class="mo_ldap_local_licensing_page_toogle_switch_outer_div">
-			<div class="mo_ldap_local_licensing_page_toogle_switch" onclick="mo_ldap_local_license_switch()">
+		<div class="mo_ldap_local_licensing_page_toogle_switch" onclick="mo_ldap_local_license_switch()">
 
-				<div id="mo_ldap_local_single_site" class="mo_ldap_local_licensing_page_site <?php echo strcasecmp( $site_type, 'multisite' ) !== 0 ? 'mo_ldap_local_toogle_switch_highlighted' : ''; ?>" >
-					SINGLE SITE
-				</div>
-				<div id="mo_ldap_local_multi_site" class="mo_ldap_local_licensing_page_site <?php echo strcasecmp( $site_type, 'multisite' ) === 0 ? 'mo_ldap_local_toogle_switch_highlighted' : ''; ?>" >
-					MULTI SITE
-				</div>
-
+			<div id="mo_ldap_local_single_site" class="mo_ldap_local_licensing_page_site <?php echo strcasecmp( $mo_ldap_local_site_type, 'multisite' ) !== 0 ? 'mo_ldap_local_toogle_switch_highlighted' : ''; ?>" >
+				SINGLE SITE
 			</div>
-		</div>
+			<div id="mo_ldap_local_multi_site" class="mo_ldap_local_licensing_page_site <?php echo strcasecmp( $mo_ldap_local_site_type, 'multisite' ) === 0 ? 'mo_ldap_local_toogle_switch_highlighted' : ''; ?>" >
+				MULTI SITE
+			</div>
 
-		<div id="mo_ldap_local_plans">
-			<div id="mo_ldap_single_site_plans" class="mo_ldap_local_licensing_all_plans <?php echo strcasecmp( $site_type, 'multisite' ) === 0 ? 'mo_ldap_d_none' : ''; ?>">
+		</div>
+	</div>
+
+	<div id="mo_ldap_local_plans">
+		<div id="mo_ldap_single_site_plans" class="mo_ldap_local_licensing_all_plans <?php echo strcasecmp( $mo_ldap_local_site_type, 'multisite' ) === 0 ? 'mo_ldap_d_none' : ''; ?>">
 				<div class="mo_ldap_local_licensing_plan_container mo_ldap_local_licensing_plan_container2">
 					<div class="mo_ldap_local_licensing_plan_name">
 						<div class="mo_ldap_local_each_plan_heading">
@@ -219,7 +219,7 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 			</div>
 
 			<!-- Multisite  -->
-			<div id="mo_ldap_multi_site_plans" class="mo_ldap_local_licensing_all_plans <?php echo strcasecmp( $site_type, 'multisite' ) !== 0 ? 'mo_ldap_d_none' : ''; ?>" >
+			<div id="mo_ldap_multi_site_plans" class="mo_ldap_local_licensing_all_plans <?php echo strcasecmp( $mo_ldap_local_site_type, 'multisite' ) !== 0 ? 'mo_ldap_d_none' : ''; ?>" >
 				<div class="mo_ldap_local_licensing_plan_container mo_ldap_local_licensing_plan_container2">
 					<div class="mo_ldap_local_licensing_plan_name">
 						<div class="mo_ldap_local_each_plan_heading">
@@ -344,7 +344,7 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 			<input type="text" name="redirectUrl" value="<?php echo esc_attr( MO_LDAP_LOCAL_HOST_NAME ) . '/moas/initializepayment'; ?>" />
 			<input type="text" name="requestOrigin" id="requestOrigin" /> 
 		</form> 
-		<a id="mo_backto_ldap_accountsetup_tab" style="display:none;" href="<?php echo esc_url( add_query_arg( array( 'tab' => 'account' ), htmlentities( $request_uri ) ) ); ?>">Back</a> 
+		<a id="mo_backto_ldap_accountsetup_tab" style="display:none;" href="<?php echo esc_url( add_query_arg( array( 'tab' => 'account' ), htmlentities( $mo_ldap_local_request_uri ) ) ); ?>">Back</a> 
 	<div class="mo_ldap_local_contact_us">
 		<div class="mo_ldap_local_contact_us_1">
 			<p class="mo_ldap_local_contact_us_1_para"> Are you not able to choose your plan? </p>
@@ -685,7 +685,7 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 					<input type="hidden" name="option" value="mo_ldap_login_send_query"/>
 					<?php wp_nonce_field( 'mo_ldap_login_send_query' ); ?>
 					<div>
-						<input type="email" class="mo_ldap_pop_up_input_field mo_ldap_local_full_width_input" id="mo_ldap_local_query_email" style="margin-top: 10px" name="mo_ldap_local_query_email" value="<?php echo esc_attr( $admin_email ); ?>" placeholder="Enter your email" required>
+						<input type="email" class="mo_ldap_pop_up_input_field mo_ldap_local_full_width_input" id="mo_ldap_local_query_email" style="margin-top: 10px" name="mo_ldap_local_query_email" value="<?php echo esc_attr( $mo_ldap_local_admin_email ); ?>" placeholder="Enter your email" required>
 						<div style="margin-top: 8px">
 							<input type="text" style="height:38px;" class="mo_ldap_pop_up_input_field mo_ldap_local_full_width_input" name="mo_ldap_local_query_phone" id="mo_ldap_local_query_phone" value="<?php echo esc_attr( get_option( 'mo_ldap_local_admin_phone' ) ); ?>" placeholder="Enter your phone"/>
 						</div>
@@ -710,19 +710,19 @@ $site_type               = isset( $_GET['sitetype'] ) ? sanitize_key( wp_unslash
 								<label class="mo_ldap_input_label_text">Timezone:<span style="color:red; margin-top: 10px">*</span></label>
 								<select class="mo_ldap_pop_up_input_field mo_ldap_local_full_width_input" name="mo_ldap_setup_call_timezone" style="margin-top: 10px; min-width: 70%; width: 70% !important;">
 									<option value="" selected disabled>---------Select your timezone--------</option>
-									<?php
-									foreach ( $zones as $zone => $value ) {
-										if ( strcasecmp( $value, 'Etc/GMT' ) === 0 ) {
-											?>
-											<option value="<?php echo esc_attr( $zone ) . ' ' . esc_attr( $value ); ?>" selected><?php echo esc_html( $zone ); ?></option>
-											<?php
-										} else {
-											?>
-											<option value="<?php echo esc_attr( $zone ) . ' ' . esc_attr( $value ); ?>"><?php echo esc_html( $zone ); ?></option>
-											<?php
-										}
+								<?php
+								foreach ( $mo_ldap_local_zones as $mo_ldap_local_zone => $mo_ldap_local_value ) {
+									if ( strcasecmp( $mo_ldap_local_value, 'Etc/GMT' ) === 0 ) {
+										?>
+										<option value="<?php echo esc_attr( $mo_ldap_local_zone ) . ' ' . esc_attr( $mo_ldap_local_value ); ?>" selected><?php echo esc_html( $mo_ldap_local_zone ); ?></option>
+										<?php
+									} else {
+										?>
+										<option value="<?php echo esc_attr( $mo_ldap_local_zone ) . ' ' . esc_attr( $mo_ldap_local_value ); ?>"><?php echo esc_html( $mo_ldap_local_zone ); ?></option>
+										<?php
 									}
-									?>
+								}
+								?>
 								</select>
 							</div>
 							<div class="mo_ldap_local_setup_call_timezone mo_ldap_local_setup_call_date">

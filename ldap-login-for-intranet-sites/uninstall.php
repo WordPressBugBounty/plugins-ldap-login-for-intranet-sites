@@ -15,7 +15,6 @@ if ( empty( get_option( 'en_save_config' ) ) || strcasecmp( get_option( 'en_save
 	delete_option( 'mo_ldap_local_enable_admin_wp_login' );
 	delete_option( 'mo_ldap_local_enable_ldap_add' );
 	delete_option( 'mo_ldap_local_anonymous_bind' );
-	delete_option( 'mo_ldap_local_anonymous_bind' );
 	delete_option( 'mo_ldap_local_admin_email' );
 	delete_option( 'mo_ldap_local_host_name' );
 	delete_option( 'mo_ldap_local_new_registration' );
@@ -47,11 +46,10 @@ if ( empty( get_option( 'en_save_config' ) ) || strcasecmp( get_option( 'en_save
 	delete_option( 'mo_ldap_local_ldaps_port_number' );
 	delete_option( 'custom_ldap_username_attribute' );
 
-
-	$role_mapping_count = get_option( 'mo_ldap_local_role_mapping_count' );
-	for ( $i = 1;$i <= $role_mapping_count;$i++ ) {
-		delete_option( 'mo_ldap_local_mapping_key_' . $i );
-		delete_option( 'mo_ldap_local_mapping_value_' . $i );
+	$mo_ldap_local_role_mapping_count = (int) get_option( 'mo_ldap_local_role_mapping_count', 0 );
+	for ( $mo_ldap_local_i = 1;$mo_ldap_local_i <= $mo_ldap_local_role_mapping_count;$mo_ldap_local_i++ ) {
+		delete_option( 'mo_ldap_local_mapping_key_' . $mo_ldap_local_i );
+		delete_option( 'mo_ldap_local_mapping_value_' . $mo_ldap_local_i );
 	}
 
 	delete_option( 'mo_ldap_local_role_mapping_count' );

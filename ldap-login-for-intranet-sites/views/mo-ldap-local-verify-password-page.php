@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="mo_ldap_local_account_box">
 	<div style="padding-left: 30px;">
-		<a style="width: fit-content;" href="<?php echo esc_url( add_query_arg( array( 'tab' => 'default' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_back_btn mo_ldap_local_plugin_config_back_btn mo_ldap_local_unset_link_affect"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'back.svg' ); ?>" height="10px" width="15px"></span> Plugin Config</a>
+		<a style="width: fit-content;" href="<?php echo esc_url( add_query_arg( array( 'tab' => 'default' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_back_btn mo_ldap_local_plugin_config_back_btn mo_ldap_local_unset_link_affect"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'back.svg' ); ?>" height="10px" width="15px"></span> Plugin Config</a>
 	</div>
 	<div class="mo_ldap_local_registration_info">
 		<div>

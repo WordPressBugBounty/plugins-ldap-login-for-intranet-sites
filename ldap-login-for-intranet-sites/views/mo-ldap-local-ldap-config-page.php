@@ -10,18 +10,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$directory_server_value   = ! empty( get_option( 'mo_ldap_directory_server_value' ) ) ? get_option( 'mo_ldap_directory_server_value' ) : '';
-$server_url               = ( get_option( 'mo_ldap_local_server_url' ) ? $utils::decrypt( get_option( 'mo_ldap_local_server_url' ) ) : '' );
-$ldap_server_protocol     = ( get_option( 'mo_ldap_local_ldap_protocol' ) ? get_option( 'mo_ldap_local_ldap_protocol' ) : 'ldap' );
-$ldap_server_address      = get_option( 'mo_ldap_local_ldap_server_address' ) ? $utils::decrypt( get_option( 'mo_ldap_local_ldap_server_address' ) ) : '';
-$ldap_server_port_number  = ( get_option( 'mo_ldap_local_ldap_port_number' ) ? get_option( 'mo_ldap_local_ldap_port_number' ) : '389' );
-$ldaps_server_port_number = ( get_option( 'mo_ldap_local_ldaps_port_number' ) ? get_option( 'mo_ldap_local_ldaps_port_number' ) : '636' );
+$mo_ldap_local_directory_server_value   = ! empty( get_option( 'mo_ldap_directory_server_value' ) ) ? get_option( 'mo_ldap_directory_server_value' ) : '';
+$mo_ldap_local_server_url               = ( get_option( 'mo_ldap_local_server_url' ) ? $utils::decrypt( get_option( 'mo_ldap_local_server_url' ) ) : '' );
+$mo_ldap_local_ldap_server_protocol     = ( get_option( 'mo_ldap_local_ldap_protocol' ) ? get_option( 'mo_ldap_local_ldap_protocol' ) : 'ldap' );
+$mo_ldap_local_ldap_server_address      = get_option( 'mo_ldap_local_ldap_server_address' ) ? $utils::decrypt( get_option( 'mo_ldap_local_ldap_server_address' ) ) : '';
+$mo_ldap_local_ldap_server_port_number  = ( get_option( 'mo_ldap_local_ldap_port_number' ) ? get_option( 'mo_ldap_local_ldap_port_number' ) : '389' );
+$mo_ldap_local_ldaps_server_port_number = ( get_option( 'mo_ldap_local_ldaps_port_number' ) ? get_option( 'mo_ldap_local_ldaps_port_number' ) : '636' );
 
-$dn          = ( get_option( 'mo_ldap_local_server_dn' ) ? $utils::decrypt( get_option( 'mo_ldap_local_server_dn' ) ) : '' );
-$search_base = ( get_option( 'mo_ldap_local_search_base' ) ? $utils::decrypt( get_option( 'mo_ldap_local_search_base' ) ) : '' );
+$mo_ldap_local_dn          = ( get_option( 'mo_ldap_local_server_dn' ) ? $utils::decrypt( get_option( 'mo_ldap_local_server_dn' ) ) : '' );
+$mo_ldap_local_search_base = ( get_option( 'mo_ldap_local_search_base' ) ? $utils::decrypt( get_option( 'mo_ldap_local_search_base' ) ) : '' );
 
 $mo_ldap_local_server_url_status = get_option( 'mo_ldap_local_server_url_status' ) ? get_option( 'mo_ldap_local_server_url_status' ) : '';
-if ( ! empty( $server_url ) ) {
+if ( ! empty( $mo_ldap_local_server_url ) ) {
 	if ( strcasecmp( $mo_ldap_local_server_url_status, 'VALID' ) === 0 ) {
 		$mo_ldap_local_server_url_status = 'mo_ldap_local_valid_value';
 	} elseif ( strcasecmp( $mo_ldap_local_server_url_status, 'INVALID' ) === 0 ) {
@@ -65,28 +65,28 @@ $mo_ldap_local_custom_directory               = ! empty( get_option( 'mo_ldap_di
 ?>
 <div class="mo_ldap_outer" >
 	<div class="mo_ldap_all_tabs">
-		<div class="mo_ldap_tabs <?php echo strcasecmp( $active_step, '1' ) !== 0 ? 'mo_ldap_arrow_between_tabs_disabled' : ''; ?>">
-			<a href="<?php echo esc_url( add_query_arg( array( 'step' => '1' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
+		<div class="mo_ldap_tabs <?php echo strcasecmp( $mo_ldap_local_active_step, '1' ) !== 0 ? 'mo_ldap_arrow_between_tabs_disabled' : ''; ?>">
+			<a href="<?php echo esc_url( add_query_arg( array( 'step' => '1' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
 				<?php
-				if ( strcasecmp( $active_step, '1' ) !== 0 && strcasecmp( $mo_ldap_local_server_url_status, 'mo_ldap_local_valid_value' ) === 0 && strcasecmp( $mo_ldap_local_service_account_status, 'mo_ldap_local_valid_value' ) === 0 ) {
+				if ( strcasecmp( $mo_ldap_local_active_step, '1' ) !== 0 && strcasecmp( $mo_ldap_local_server_url_status, 'mo_ldap_local_valid_value' ) === 0 && strcasecmp( $mo_ldap_local_service_account_status, 'mo_ldap_local_valid_value' ) === 0 ) {
 					?>
 					<div class="mo_ldap_local_circle mo_ldap_local_circle_success mo_ldap_local_circle_border_remove">
 						<img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'valid.svg' ); ?>" height="20px" width="20px" class="mo_ldap_config_success_img_light">
 					</div>
 					<?php
-				} elseif ( strcasecmp( $active_step, '1' ) === 0 && strcasecmp( $mo_ldap_local_server_url_status, 'mo_ldap_local_valid_value' ) === 0 && strcasecmp( $mo_ldap_local_service_account_status, 'mo_ldap_local_valid_value' ) === 0 ) {
+				} elseif ( strcasecmp( $mo_ldap_local_active_step, '1' ) === 0 && strcasecmp( $mo_ldap_local_server_url_status, 'mo_ldap_local_valid_value' ) === 0 && strcasecmp( $mo_ldap_local_service_account_status, 'mo_ldap_local_valid_value' ) === 0 ) {
 					?>
 					<div class="mo_ldap_local_circle mo_ldap_local_circle_success" >
 						<img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'valid.svg' ); ?>" height="20px" width="20px">
 					</div>
 					<?php
-				} elseif ( strcasecmp( $active_step, '1' ) !== 0 && ! empty( $server_url ) ) {
+				} elseif ( strcasecmp( $mo_ldap_local_active_step, '1' ) !== 0 && ! empty( $mo_ldap_local_server_url ) ) {
 					?>
 					<div class="mo_ldap_local_circle mo_ldap_local_circle_warn">
 						<img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'warn.svg' ); ?>" height="20px" width="20px">
 					</div>
 					<?php
-				} elseif ( strcasecmp( $active_step, '1' ) === 0 ) {
+				} elseif ( strcasecmp( $mo_ldap_local_active_step, '1' ) === 0 ) {
 					?>
 					<div class="mo_ldap_local_circle mo_ldap_local_circle_current">
 						1						
@@ -103,7 +103,7 @@ $mo_ldap_local_custom_directory               = ! empty( get_option( 'mo_ldap_di
 
 				<div 
 				<?php
-				if ( strcasecmp( $active_step, '1' ) === 0 ) {
+				if ( strcasecmp( $mo_ldap_local_active_step, '1' ) === 0 ) {
 					?>
 					class="mo_ldap_config_subtab_bold" 
 					<?php
@@ -117,28 +117,28 @@ $mo_ldap_local_custom_directory               = ! empty( get_option( 'mo_ldap_di
 		<div class="mo_ldap_arrow_between_tabs">
 			<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'fwdarrow.svg' ); ?>" height="20px" width="20px"></span>
 		</div>
-		<div class="mo_ldap_tabs <?php echo strcasecmp( $active_step, '2' ) !== 0 ? 'mo_ldap_arrow_between_tabs_disabled' : ''; ?>">
-			<a href="<?php echo esc_url( add_query_arg( array( 'step' => '2' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
+		<div class="mo_ldap_tabs <?php echo strcasecmp( $mo_ldap_local_active_step, '2' ) !== 0 ? 'mo_ldap_arrow_between_tabs_disabled' : ''; ?>">
+			<a href="<?php echo esc_url( add_query_arg( array( 'step' => '2' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
 				<?php
-				if ( strcasecmp( $active_step, '2' ) !== 0 && strcasecmp( $mo_ldap_local_user_mapping_status, 'mo_ldap_local_valid_value' ) === 0 ) {
+				if ( strcasecmp( $mo_ldap_local_active_step, '2' ) !== 0 && strcasecmp( $mo_ldap_local_user_mapping_status, 'mo_ldap_local_valid_value' ) === 0 ) {
 					?>
 					<div class="mo_ldap_local_circle mo_ldap_local_circle_success mo_ldap_local_circle_border_remove">
 						<img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'valid.svg' ); ?>" height="20px" width="20px" class="mo_ldap_config_success_img_light">
 					</div>
 					<?php
-				} elseif ( strcasecmp( $active_step, '2' ) === 0 && strcasecmp( $mo_ldap_local_user_mapping_status, 'mo_ldap_local_valid_value' ) === 0 ) {
+				} elseif ( strcasecmp( $mo_ldap_local_active_step, '2' ) === 0 && strcasecmp( $mo_ldap_local_user_mapping_status, 'mo_ldap_local_valid_value' ) === 0 ) {
 					?>
 					<div class="mo_ldap_local_circle mo_ldap_local_circle_success" >
 						<img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'valid.svg' ); ?>" height="20px" width="20px">
 					</div>
 					<?php
-				} elseif ( strcasecmp( $active_step, '2' ) !== 0 && ! empty( $search_base ) ) {
+				} elseif ( strcasecmp( $mo_ldap_local_active_step, '2' ) !== 0 && ! empty( $mo_ldap_local_search_base ) ) {
 					?>
 					<div class="mo_ldap_local_circle mo_ldap_local_circle_warn">
 						<img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'warn.svg' ); ?>" height="20px" width="20px">
 					</div>
 					<?php
-				} elseif ( strcasecmp( $active_step, '2' ) === 0 ) {
+				} elseif ( strcasecmp( $mo_ldap_local_active_step, '2' ) === 0 ) {
 					?>
 					<div class="mo_ldap_local_circle mo_ldap_local_circle_current" style="width: 23px; height: 23px;">
 						2
@@ -154,7 +154,7 @@ $mo_ldap_local_custom_directory               = ! empty( get_option( 'mo_ldap_di
 				?>
 				<div 
 				<?php
-				if ( strcasecmp( $active_step, '2' ) === 0 ) {
+				if ( strcasecmp( $mo_ldap_local_active_step, '2' ) === 0 ) {
 					?>
 					class="mo_ldap_config_subtab_bold" 
 					<?php
@@ -166,14 +166,14 @@ $mo_ldap_local_custom_directory               = ! empty( get_option( 'mo_ldap_di
 		<div class="mo_ldap_arrow_between_tabs">
 			<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'fwdarrow.svg' ); ?>" height="20px" width="20px"></span>
 		</div>
-		<div class="mo_ldap_tabs <?php echo strcasecmp( $active_step, '3' ) !== 0 ? 'mo_ldap_arrow_between_tabs_disabled' : ''; ?>">
-			<a href="<?php echo esc_url( add_query_arg( array( 'step' => '3' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
-				<div class="mo_ldap_local_circle <?php echo strcasecmp( $active_step, '3' ) === 0 ? 'mo_ldap_local_circle_current' : ''; ?>">
+		<div class="mo_ldap_tabs <?php echo strcasecmp( $mo_ldap_local_active_step, '3' ) !== 0 ? 'mo_ldap_arrow_between_tabs_disabled' : ''; ?>">
+			<a href="<?php echo esc_url( add_query_arg( array( 'step' => '3' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
+				<div class="mo_ldap_local_circle <?php echo strcasecmp( $mo_ldap_local_active_step, '3' ) === 0 ? 'mo_ldap_local_circle_current' : ''; ?>">
 					3
 				</div>
 				<div 
 				<?php
-				if ( strcasecmp( $active_step, '3' ) === 0 ) {
+				if ( strcasecmp( $mo_ldap_local_active_step, '3' ) === 0 ) {
 					?>
 					class="mo_ldap_config_subtab_bold" 
 					<?php
@@ -185,16 +185,16 @@ $mo_ldap_local_custom_directory               = ! empty( get_option( 'mo_ldap_di
 	</div>
 </div>
 <?php
-if ( strcasecmp( $active_step, '1' ) === 0 ) {
-	$directory_server_value = ! empty( $directory_server_value ) ? $directory_server_value : 'Select';
+if ( strcasecmp( $mo_ldap_local_active_step, '1' ) === 0 ) {
+	$mo_ldap_local_directory_server_value = ! empty( $mo_ldap_local_directory_server_value ) ? $mo_ldap_local_directory_server_value : 'Select';
 	?>
 	<div class="mo_ldap_outer mo_ldap_outer_box">
 		<div class="mo_ldap_all_configurations">
 			<form id="mo_ldap_connection_info_form" class="mo_ldap_form1" method="post" action="">
 				<hr class="mo_ldap_local_hr_margin_remove">
 				<?php wp_nonce_field( 'mo_ldap_local_save_config' ); ?>
-				<input id="mo_ldap_local_ldap_server_port_no" type="hidden" name="mo_ldap_local_ldap_server_port_no" value="<?php echo esc_attr( $ldap_server_port_number ); ?>" />
-				<input id="mo_ldap_local_ldaps_server_port_no" type="hidden" name="mo_ldap_local_ldaps_server_port_no" value="<?php echo esc_attr( $ldaps_server_port_number ); ?>" />
+				<input id="mo_ldap_local_ldap_server_port_no" type="hidden" name="mo_ldap_local_ldap_server_port_no" value="<?php echo esc_attr( $mo_ldap_local_ldap_server_port_number ); ?>" />
+				<input id="mo_ldap_local_ldaps_server_port_no" type="hidden" name="mo_ldap_local_ldaps_server_port_no" value="<?php echo esc_attr( $mo_ldap_local_ldaps_server_port_number ); ?>" />
 
 				<input id="mo_ldap_local_connection_configuration_form_action" type="hidden" name="option" value="mo_ldap_local_save_config" />
 
@@ -209,7 +209,7 @@ if ( strcasecmp( $active_step, '1' ) === 0 ) {
 										'tab'    => 'default',
 										'step'   => '2',
 									),
-									$filtered_current_page_url
+									$mo_ldap_local_filtered_current_page_url
 								)
 							)
 							. '"';
@@ -226,42 +226,42 @@ if ( strcasecmp( $active_step, '1' ) === 0 ) {
 				<label for="mo_ldap_directory_server_value" class="mo_ldap_input_label_text mo_ldap_local_config_label">Directory Server <span style="color:red;">*</span></label>
 					<select name="mo_ldap_directory_server_value" id="mo_ldap_directory_server_value" onchange="showCustomDirectoryInputField()" class="mo_ldap_local_standerd_input mo_ldap_select_directory_server mo_ldap_local_select_directory_server_max_width" required>
 						<option class="mo_ldap_select_option" value="">Select</option>
-						<option value="msad"
-						<?php
-						if ( strcmp( $directory_server_value, 'msad' ) === 0 ) {
-							echo 'selected';}
-						?>
-						>Microsoft Active Directory</option>
-						<option class="mo_ldap_select_option" value="openldap" 
-						<?php
-						if ( strcmp( $directory_server_value, 'openldap' ) === 0 ) {
-							echo 'selected';}
-						?>
-						>OpenLDAP</option>
-						<option class="mo_ldap_select_option" value="freeipa" 
-						<?php
-						if ( strcmp( $directory_server_value, 'freeipa' ) === 0 ) {
-							echo 'selected';}
-						?>
-						>FreeIPA</option>
-						<option class="mo_ldap_select_option" value="jumpcloud" 
-						<?php
-						if ( strcmp( $directory_server_value, 'jumpcloud' ) === 0 ) {
-							echo 'selected';}
-						?>
-						>JumpCloud</option>
-						<option class="mo_ldap_select_option" value="other" 
-						<?php
-						if ( strcmp( $directory_server_value, 'other' ) === 0 ) {
-							echo 'selected';}
-						?>
-						>Other</option>
+					<option value="msad"
+					<?php
+					if ( strcmp( $mo_ldap_local_directory_server_value, 'msad' ) === 0 ) {
+						echo 'selected';}
+					?>
+					>Microsoft Active Directory</option>
+					<option class="mo_ldap_select_option" value="openldap" 
+					<?php
+					if ( strcmp( $mo_ldap_local_directory_server_value, 'openldap' ) === 0 ) {
+						echo 'selected';}
+					?>
+					>OpenLDAP</option>
+					<option class="mo_ldap_select_option" value="freeipa" 
+					<?php
+					if ( strcmp( $mo_ldap_local_directory_server_value, 'freeipa' ) === 0 ) {
+						echo 'selected';}
+					?>
+					>FreeIPA</option>
+					<option class="mo_ldap_select_option" value="jumpcloud" 
+					<?php
+					if ( strcmp( $mo_ldap_local_directory_server_value, 'jumpcloud' ) === 0 ) {
+						echo 'selected';}
+					?>
+					>JumpCloud</option>
+					<option class="mo_ldap_select_option" value="other" 
+					<?php
+					if ( strcmp( $mo_ldap_local_directory_server_value, 'other' ) === 0 ) {
+						echo 'selected';}
+					?>
+					>Other</option>
 					</select>
 				</div>
 				<br>
 
 				<div class="mo_ldap_conection_heading_font">
-					<input class="mo_ldap_local_standerd_input mo_ldap_user_credentials" name="mo_ldap_directory_server_custom_value" value="<?php echo esc_attr( $mo_ldap_local_custom_directory ); ?>" placeholder="Microsoft Active Directory" type="text" id="mo_ldap_local_show_custom_directory" style="max-width: 17rem; <?php echo 'other' === $directory_server_value ? 'display:block;' : 'display:none;'; ?>"/>
+					<input class="mo_ldap_local_standerd_input mo_ldap_user_credentials" name="mo_ldap_directory_server_custom_value" value="<?php echo esc_attr( $mo_ldap_local_custom_directory ); ?>" placeholder="Microsoft Active Directory" type="text" id="mo_ldap_local_show_custom_directory" style="max-width: 17rem; <?php echo 'other' === $mo_ldap_local_directory_server_value ? 'display:block;' : 'display:none;'; ?>"/>
 				</div>
 
 				<br>
@@ -270,22 +270,22 @@ if ( strcasecmp( $active_step, '1' ) === 0 ) {
 					<label for="mo_ldap_server" class="mo_ldap_input_label_text mo_ldap_local_config_label">LDAP Server Domain/IP<span style="color:red;">*</span></label>
 					<div class="mo_ldap_server_align">
 						<select name="mo_ldap_protocol" id="mo_ldap_protocol" class="  mo_ldap_select_server" >
-							<?php
-							if ( strcmp( $ldap_server_protocol, 'ldap' ) === 0 ) {
-								?>
-							<option value="ldap" selected>ldap</option>
-							<option value="ldaps">ldaps</option>
-								<?php
-							} elseif ( strcmp( $ldap_server_protocol, 'ldaps' ) === 0 ) {
-								?>
-							<option value="ldap">ldap</option>
-							<option value="ldaps" selected>ldaps</option>
-								<?php
-							}
+						<?php
+						if ( strcmp( $mo_ldap_local_ldap_server_protocol, 'ldap' ) === 0 ) {
 							?>
+						<option value="ldap" selected>ldap</option>
+						<option value="ldaps">ldaps</option>
+							<?php
+						} elseif ( strcmp( $mo_ldap_local_ldap_server_protocol, 'ldaps' ) === 0 ) {
+							?>
+						<option value="ldap">ldap</option>
+						<option value="ldaps" selected>ldaps</option>
+							<?php
+						}
+						?>
 						</select>	
-						<input type="text" id="mo_ldap_server" name="ldap_server" placeholder="LDAP Server hostname or IP address" class="  mo_ldap_input_ip <?php echo esc_attr( $mo_ldap_local_server_url_status ); ?>" value="<?php echo esc_attr( $ldap_server_address ); ?>" required />
-						<input type="text" id="mo_ldap_server_port_no" name="mo_ldap_server_port_no" placeholder="port number" class="  mo_ldap_input_port" value="<?php echo strcmp( $ldap_server_protocol, 'ldaps' ) === 0 ? esc_attr( $ldaps_server_port_number ) : esc_attr( $ldap_server_port_number ); ?>" required/>
+					<input type="text" id="mo_ldap_server" name="ldap_server" placeholder="LDAP Server hostname or IP address" class="  mo_ldap_input_ip <?php echo esc_attr( $mo_ldap_local_server_url_status ); ?>" value="<?php echo esc_attr( $mo_ldap_local_ldap_server_address ); ?>" required />
+					<input type="text" id="mo_ldap_server_port_no" name="mo_ldap_server_port_no" placeholder="port number" class="  mo_ldap_input_port" value="<?php echo strcmp( $mo_ldap_local_ldap_server_protocol, 'ldaps' ) === 0 ? esc_attr( $mo_ldap_local_ldaps_server_port_number ) : esc_attr( $mo_ldap_local_ldap_server_port_number ); ?>" required/>
 					</div>
 				</div>
 				<div class="mo_ldap_local_input_paragraph_div"> 
@@ -297,8 +297,8 @@ if ( strcasecmp( $active_step, '1' ) === 0 ) {
 				</div>
 				<br>
 				<div class="mo_ldap_local_input_field_container mo_ldap_local_input_field_row">
-					<label for="dn" class="mo_ldap_input_label_text mo_ldap_local_config_label">Service Account Username <span style="color:red; width: 15%" >*</span></label>
-					<input type="text" id="dn" name="dn" class="mo_ldap_local_standerd_input mo_ldap_user_credentials <?php echo esc_attr( $mo_ldap_local_service_account_status ); ?>" placeholder="Enter Username" value="<?php echo esc_attr( $dn ); ?>" />
+				<label for="dn" class="mo_ldap_input_label_text mo_ldap_local_config_label">Service Account Username <span style="color:red; width: 15%" >*</span></label>
+				<input type="text" id="dn" name="dn" class="mo_ldap_local_standerd_input mo_ldap_user_credentials <?php echo esc_attr( $mo_ldap_local_service_account_status ); ?>" placeholder="Enter Username" value="<?php echo esc_attr( $mo_ldap_local_dn ); ?>" />
 				</div>
 				<div class="mo_ldap_local_input_paragraph_div"> 
 					<p class="mo_ldap_local_input_paragraph">Please enter the Distinguished Name (DN) or userPrincipalName of any user present in your LDAP server</p>
@@ -339,7 +339,7 @@ if ( strcasecmp( $active_step, '1' ) === 0 ) {
 				<div class="mo_ldap_premium_version mo_ldap_d_none" id="mo_ldap_add_more_server_premium_box">
 					<p class="mo_ldap_premium_version_p">Adding more LDAP server(s) is supported in premium version of the plugin</p>
 					<div class="">
-						<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now mo_ldap_local_unset_link_affect">
+						<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now mo_ldap_local_unset_link_affect">
 							<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'arrow.svg' ); ?>" height="10px" width="20px"></span> Upgrade Now
 						</a>
 					</div>
@@ -350,7 +350,7 @@ if ( strcasecmp( $active_step, '1' ) === 0 ) {
 		</div>
 	</div>
 	<?php
-} elseif ( strcasecmp( $active_step, '2' ) === 0 ) {
+} elseif ( strcasecmp( $mo_ldap_local_active_step, '2' ) === 0 ) {
 	?>
 	<div class="mo_ldap_outer mo_ldap_outer_box">
 		<div class="mo_ldap_user_mapping_configs">
@@ -366,7 +366,7 @@ if ( strcasecmp( $active_step, '1' ) === 0 ) {
 									'tab'    => 'default',
 									'step'   => '1',
 								),
-								$filtered_current_page_url
+								$mo_ldap_local_filtered_current_page_url
 							)
 						)
 						. '"';
@@ -383,7 +383,7 @@ if ( strcasecmp( $active_step, '1' ) === 0 ) {
 									'tab'    => 'default',
 									'step'   => '3',
 								),
-								$filtered_current_page_url
+								$mo_ldap_local_filtered_current_page_url
 							)
 						)
 						. '"';
@@ -400,7 +400,7 @@ if ( strcasecmp( $active_step, '1' ) === 0 ) {
 						<div class="mo_ldap_input_label_text mo_ldap_local_config_label" style="display: flex;">Search Base:<span style="color:red;">*</span></div>
 						<div class="mo_ldap_search_base_details" >
 							<div class="mo_ldap_search_base_details_inner">
-								<input type="text" id="search_base" name="search_base" placeholder="dc=domain,dc=com" class="mo_ldap_local_standerd_input mo_ldap_local_input_field1 <?php echo esc_attr( $mo_ldap_local_user_mapping_status ); ?>" style="width:58%;" value="<?php echo esc_attr( $search_base ); ?>" required/>
+								<input type="text" id="search_base" name="search_base" placeholder="dc=domain,dc=com" class="mo_ldap_local_standerd_input mo_ldap_local_input_field1 <?php echo esc_attr( $mo_ldap_local_user_mapping_status ); ?>" style="width:58%;" value="<?php echo esc_attr( $mo_ldap_local_search_base ); ?>" required/>
 								<div id="searchbases" class="mo_ldap_select_search_base mo_ldap_search_base mo_ldap_user_mapping_tem">
 									Select Search Base   
 									<svg style="margin-left: 10px" fill="#0076E1" height="20px" width="20px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 490.4 490.4" xml:space="preserve" stroke="#0076E1"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M484.1,454.796l-110.5-110.6c29.8-36.3,47.6-82.8,47.6-133.4c0-116.3-94.3-210.6-210.6-210.6S0,94.496,0,210.796 s94.3,210.6,210.6,210.6c50.8,0,97.4-18,133.8-48l110.5,110.5c12.9,11.8,25,4.2,29.2,0C492.5,475.596,492.5,463.096,484.1,454.796z M41.1,210.796c0-93.6,75.9-169.5,169.5-169.5s169.6,75.9,169.6,169.5s-75.9,169.5-169.5,169.5S41.1,304.396,41.1,210.796z"></path> </g> </g></svg>
@@ -435,7 +435,7 @@ if ( strcasecmp( $active_step, '1' ) === 0 ) {
 						<div class="mo_ldap_premium_version">
 							<p class="mo_ldap_premium_version_p">Multiple search bases are supported in premium version of the plugin.</p>
 							<div class="">
-								<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now mo_ldap_local_unset_link_affect">
+								<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now mo_ldap_local_unset_link_affect">
 									<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'arrow.svg' ); ?>" height="10px" width="20px"></span> Upgrade Now
 								</a>
 							</div>
@@ -525,7 +525,7 @@ if ( strcasecmp( $active_step, '1' ) === 0 ) {
 				<div class="mo_ldap_premium_version ">
 					<p class="mo_ldap_premium_version_p">Logging in with <span style="font-weight: bold;font-style: italic;">multiple attributes</span> and <span style="font-weight: bold;font-style: italic;">using Custom search filters</span> are supported in the Premium Version of the Plugin</p>
 					<div>
-						<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now mo_ldap_local_unset_link_affect">
+						<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now mo_ldap_local_unset_link_affect">
 							<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'arrow.svg' ); ?>" height="10px" width="20px"></span> Upgrade Now
 						</a>
 					</div>
@@ -592,7 +592,7 @@ if ( strcasecmp( $active_step, '1' ) === 0 ) {
 		</script>
 	</div>
 	<?php
-} elseif ( strcasecmp( $active_step, '3' ) === 0 ) {
+} elseif ( strcasecmp( $mo_ldap_local_active_step, '3' ) === 0 ) {
 	?>
 	<!-- Third Page -->
 	<div class="mo_ldap_outer mo_ldap_outer_box">
@@ -609,7 +609,7 @@ if ( strcasecmp( $active_step, '1' ) === 0 ) {
 									'tab'    => 'default',
 									'step'   => '2',
 								),
-								$filtered_current_page_url
+								$mo_ldap_local_filtered_current_page_url
 							)
 						)
 						. '"';
@@ -625,7 +625,7 @@ if ( strcasecmp( $active_step, '1' ) === 0 ) {
 									'subtab' => 'role-mapping',
 									'tab'    => 'default',
 								),
-								$filtered_current_page_url
+								$mo_ldap_local_filtered_current_page_url
 							)
 						)
 						. '"';

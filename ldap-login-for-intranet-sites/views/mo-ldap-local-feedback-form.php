@@ -50,15 +50,15 @@ wp_enqueue_style( 'mo_ldap_admin_plugins_page_style', MO_LDAP_LOCAL_INCLUDES . '
 				<hr class="mo_ldap_local_horizontal_line">
 				<div class="mo_ldap_local_feedback_contanier">
 					<?php
-						$email = get_option( 'mo_ldap_local_admin_email' );
-					if ( empty( $email ) ) {
-						$user  = wp_get_current_user();
-						$email = $user->user_email;
+						$mo_ldap_local_email = get_option( 'mo_ldap_local_admin_email' );
+					if ( empty( $mo_ldap_local_email ) ) {
+						$mo_ldap_local_user  = wp_get_current_user();
+						$mo_ldap_local_email = $mo_ldap_local_user->user_email;
 					}
 					?>
 					<div class="mo_ldap_feedback_email_div">
 						<label for="mo_ldap_local_query_mail" class="mo_ldap_local_d_inline mo_ldap_local_bold_label">Email Address:</label>
-						<input type="email" id="mo_ldap_local_query_mail" name="mo_ldap_local_query_mail" class="mo_ldap_pop_up_input_field mo_ldap_feedback_email_field" placeholder="your email address" required value="<?php echo esc_attr( $email ); ?>" readonly="readonly"/>
+						<input type="email" id="mo_ldap_local_query_mail" name="mo_ldap_local_query_mail" class="mo_ldap_pop_up_input_field mo_ldap_feedback_email_field" placeholder="your email address" required value="<?php echo esc_attr( $mo_ldap_local_email ); ?>" readonly="readonly"/>
 
 						<input type="radio" name="mo_ldap_local_edit" id="mo_ldap_local_edit" onclick="editEmailAddress()" value=""/>
 						<label for="mo_ldap_local_edit"><img class="mo_ldap_local_editable" alt="Image not found" src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . '61456.png' ); ?>" />

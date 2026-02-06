@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="mo_ldap_local_account_detail_page">
 	<div class="mo_ldap_local_account_detail_header">
-		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'default' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect mo_ldap_local_horizontal_flex_container">
+		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'default' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect mo_ldap_local_horizontal_flex_container">
 			<span>
 				<svg id="mo_ldap_local_dropdown" style="margin-top: 3%;margin-left: 5%;transform: rotate(90deg);" viewBox="0 0 448 512" height="15px" width="15px" fill="#fff" class="mo_ldap_local_reverse_rotate">
 					<path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>
@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</form>
 			</div>
 			<div style="display:flex;">
-				<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), htmlentities( $filtered_current_page_url ) ) ); ?>" style="text-decoration:none; margin-left: 35px;" type="button" class="mo_ldap_troubleshooting_btn mo_ldap_wireframe_btn">Check Licensing Plans</a>
+				<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), htmlentities( $mo_ldap_local_filtered_current_page_url ) ) ); ?>" style="text-decoration:none; margin-left: 35px;" type="button" class="mo_ldap_troubleshooting_btn mo_ldap_wireframe_btn">Check Licensing Plans</a>
 			</div>
 		</div>
 	</div>

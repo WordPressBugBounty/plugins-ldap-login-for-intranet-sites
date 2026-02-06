@@ -10,11 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['subtab'] ) ) : 'wp-to-ldap-directory_sync'; //phpcs:ignore WordPress.Security.NonceVerification.Recommended, - Reading GET parameter from the URL for checking the sub-tab name, doesn't require nonce verification.
+$mo_ldap_local_current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['subtab'] ) ) : 'wp-to-ldap-directory_sync'; //phpcs:ignore WordPress.Security.NonceVerification.Recommended, - Reading GET parameter from the URL for checking the sub-tab name, doesn't require nonce verification.
 ?>
 
 <div class="mo_ldap_local_horizontal_flex_container mo_ldap_local_subtab_container">
-	<div class="<?php echo strcmp( $current_subtab, 'wp-to-ldap-directory_sync' ) === 0 ? 'mo_ldap_local_active_subtab' : ''; ?>">
+	<div class="<?php echo strcmp( $mo_ldap_local_current_subtab, 'wp-to-ldap-directory_sync' ) === 0 ? 'mo_ldap_local_active_subtab' : ''; ?>">
 		<a href="
 		<?php
 		echo esc_url(
@@ -23,13 +23,13 @@ $current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['su
 					'tab'    => 'advance-sync',
 					'subtab' => 'wp-to-ldap-directory_sync',
 				),
-				$filtered_current_page_url
+				$mo_ldap_local_filtered_current_page_url
 			)
 		);
 		?>
 		" class="mo_ldap_local_unset_link_affect">WordPress to LDAP Sync</a>
 	</div>
-	<div class="<?php echo strcmp( $current_subtab, 'ldap-to-wp-directory_sync' ) === 0 ? 'mo_ldap_local_active_subtab' : ''; ?>">
+	<div class="<?php echo strcmp( $mo_ldap_local_current_subtab, 'ldap-to-wp-directory_sync' ) === 0 ? 'mo_ldap_local_active_subtab' : ''; ?>">
 		<a href="
 		<?php
 		echo esc_url(
@@ -38,13 +38,13 @@ $current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['su
 					'tab'    => 'advance-sync',
 					'subtab' => 'ldap-to-wp-directory_sync',
 				),
-				$filtered_current_page_url
+				$mo_ldap_local_filtered_current_page_url
 			)
 		);
 		?>
 		" class="mo_ldap_local_unset_link_affect">LDAP to WordPress Sync</a>
 	</div>
-	<div class="<?php echo strcmp( $current_subtab, 'password_sync' ) === 0 ? 'mo_ldap_local_active_subtab' : ''; ?>">
+	<div class="<?php echo strcmp( $mo_ldap_local_current_subtab, 'password_sync' ) === 0 ? 'mo_ldap_local_active_subtab' : ''; ?>">
 		<a href="
 		<?php
 		echo esc_url(
@@ -53,13 +53,13 @@ $current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['su
 					'tab'    => 'advance-sync',
 					'subtab' => 'password_sync',
 				),
-				$filtered_current_page_url
+				$mo_ldap_local_filtered_current_page_url
 			)
 		);
 		?>
 		" class="mo_ldap_local_unset_link_affect">AD Self-Service Password Reset</a>
 	</div>
-	<div class="<?php echo strcmp( $current_subtab, 'profile_picture_sync' ) === 0 ? 'mo_ldap_local_active_subtab' : ''; ?>">
+	<div class="<?php echo strcmp( $mo_ldap_local_current_subtab, 'profile_picture_sync' ) === 0 ? 'mo_ldap_local_active_subtab' : ''; ?>">
 		<a href="
 		<?php
 		echo esc_url(
@@ -68,7 +68,7 @@ $current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['su
 					'tab'    => 'advance-sync',
 					'subtab' => 'profile_picture_sync',
 				),
-				$filtered_current_page_url
+				$mo_ldap_local_filtered_current_page_url
 			)
 		);
 		?>
@@ -78,7 +78,7 @@ $current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['su
 <hr class="mo_ldap_hr">
 
 <?php
-if ( strcasecmp( $current_subtab, 'wp-to-ldap-directory_sync' ) === 0 ) {
+if ( strcasecmp( $mo_ldap_local_current_subtab, 'wp-to-ldap-directory_sync' ) === 0 ) {
 	?>
 	<div class="mo_ldap_local_advance_sync_container">
 		<br>
@@ -87,31 +87,30 @@ if ( strcasecmp( $current_subtab, 'wp-to-ldap-directory_sync' ) === 0 ) {
 			<input type="hidden" name="option" value="mo_ldap_local_toggle_sync" />
 			<div style="margin-left: 4%;">
 				<?php
-				$wp_to_ldap_search_base  = $utils::decrypt( get_option( 'mo_ldap_local_wp_to_ldap_search_base' ) );
-				$has_search_base         = ! empty( $wp_to_ldap_search_base );
-				$is_disabled             = $has_search_base ? '' : 'disabled';
-				if ( ! $has_search_base ) {
+				$mo_ldap_local_wp_to_ldap_search_base = $utils::decrypt( get_option( 'mo_ldap_local_wp_to_ldap_search_base' ) );
+				$mo_ldap_local_has_search_base        = ! empty( $mo_ldap_local_wp_to_ldap_search_base );
+				$mo_ldap_local_is_disabled            = $mo_ldap_local_has_search_base ? '' : 'disabled';
+				if ( ! $mo_ldap_local_has_search_base ) {
 					update_option( 'mo_ldap_local_enable_ldap_add', '0' );
 				}
-				
-				$is_currently_enabled    = $has_search_base && ( strcasecmp( get_option( 'mo_ldap_local_enable_ldap_add' ), '1' ) === 0 );
-				$is_checked              = $is_currently_enabled ? 'checked' : '';
-				$mo_ldap_cursor          = $has_search_base ? '' : 'mo_ldap_cursor_not_allowed';
+				$mo_ldap_local_is_currently_enabled = $mo_ldap_local_has_search_base && ( strcasecmp( get_option( 'mo_ldap_local_enable_ldap_add' ), '1' ) === 0 );
+				$mo_ldap_local_is_checked           = $mo_ldap_local_is_currently_enabled ? 'checked' : '';
+				$mo_ldap_cursor                     = $mo_ldap_local_has_search_base ? '' : 'mo_ldap_cursor_not_allowed';
 				?>
 				<input type="checkbox"
 					id="mo_ldap_local_enable_ldap_add"
 					class="mo_ldap_local_toggle_switch_hide"
 					name="mo_ldap_local_enable_ldap_add"
 					value="1"
-					<?php echo esc_attr( $is_checked ); ?>
-					<?php echo esc_attr( $is_disabled ); ?> />
-				<?php if ( ! $has_search_base ) : ?>
+					<?php echo esc_attr( $mo_ldap_local_is_checked ); ?>
+					<?php echo esc_attr( $mo_ldap_local_is_disabled ); ?> />
+				<?php if ( ! $mo_ldap_local_has_search_base ) : ?>
 					<p class="mo_ldap_local_ldaps_note" style="width: 90%; color: red !important; font-size: 14px;"><b>NOTE: Please configure the WordPress to LDAP Sync Search Base below to enable this feature.</b></p>
 				<?php endif; ?>
 				<label for="mo_ldap_local_enable_ldap_add"
 					class="
 					<?php
-					echo $has_search_base ? 'mo_ldap_local_toggle_switch ' : '';
+					echo $mo_ldap_local_has_search_base ? 'mo_ldap_local_toggle_switch ' : '';
 					echo esc_attr( $mo_ldap_cursor );
 					?>
 				">
@@ -124,15 +123,14 @@ if ( strcasecmp( $current_subtab, 'wp-to-ldap-directory_sync' ) === 0 ) {
 
 		<form name="sync_search_base_form" id="sync_search_base_form" method="post" action="">
 			<?php wp_nonce_field( 'mo_ldap_local_save_sync_configuration' ); ?>
-			<input type="hidden" name="option" value="mo_ldap_local_save_sync_configuration" />
-			
+			<input type="hidden" name="option" value="mo_ldap_local_save_sync_configuration" />			
 			<div class="mo_ldap_user_mapping_search_base" style="margin-top: 20px;">
 				<div class="mo_ldap_local_input_field_container mo_ldap_local_searh_base_container">
 					<div class="mo_ldap_input_label_text mo_ldap_local_config_label" style="display: flex; margin-left: 4%;">User Base:<span style="color:red;">*</span></div>
 					<div class="mo_ldap_search_base_details">
 						<div class="mo_ldap_search_base_details_inner">
-							<?php $wp_to_ldap_search_base = $utils::decrypt( get_option( 'mo_ldap_local_wp_to_ldap_search_base' ) ); ?>
-							<input type="text" id="wp_to_ldap_search_base" name="wp_to_ldap_search_base" placeholder="dc=domain,dc=com" class="mo_ldap_local_standerd_input mo_ldap_local_input_field1" style="width:58%;" value="<?php echo esc_attr( $wp_to_ldap_search_base ); ?>" />
+							<?php $mo_ldap_local_wp_to_ldap_search_base = $utils::decrypt( get_option( 'mo_ldap_local_wp_to_ldap_search_base' ) ); ?>
+							<input type="text" id="wp_to_ldap_search_base" name="wp_to_ldap_search_base" placeholder="dc=domain,dc=com" class="mo_ldap_local_standerd_input mo_ldap_local_input_field1" style="width:58%;" value="<?php echo esc_attr( $mo_ldap_local_wp_to_ldap_search_base ); ?>" />
 							<div id="wp_to_ldap_searchbases" class="mo_ldap_select_search_base mo_ldap_search_base mo_ldap_user_mapping_tem" style="font-weight: 500;">
 								Select Search Base   
 								<svg style="margin-left: 10px" fill="#0076E1" height="20px" width="20px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 490.4 490.4" xml:space="preserve" stroke="#0076E1"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M484.1,454.796l-110.5-110.6c29.8-36.3,47.6-82.8,47.6-133.4c0-116.3-94.3-210.6-210.6-210.6S0,94.496,0,210.796 s94.3,210.6,210.6,210.6c50.8,0,97.4-18,133.8-48l110.5,110.5c12.9,11.8,25,4.2,29.2,0C492.5,475.596,492.5,463.096,484.1,454.796z M41.1,210.796c0-93.6,75.9-169.5,169.5-169.5s169.6,75.9,169.6,169.5s-75.9,169.5-169.5,169.5S41.1,304.396,41.1,210.796z"></path> </g> </g></svg>
@@ -163,12 +161,12 @@ if ( strcasecmp( $current_subtab, 'wp-to-ldap-directory_sync' ) === 0 ) {
 			</div>
 			<div style="font-size: 16px;">This is available in premium version of the plugin</div>
 			<div class="">
-				<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
+				<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
 					<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'arrow.svg' ); ?>" height="10px" width="20px"></span> Upgrade Today
 				</a>
 			</div>
 		</div>
-		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
+		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
 			<div class="mo_ldap_local_premium_feature_btn">
 				<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="20px" width="20px"></span> Premium Feature
 			</div>
@@ -201,20 +199,20 @@ if ( strcasecmp( $current_subtab, 'wp-to-ldap-directory_sync' ) === 0 ) {
 		</div>
 	</div>
 	<?php
-} elseif ( strcasecmp( $current_subtab, 'ldap-to-wp-directory_sync' ) === 0 ) {
+} elseif ( strcasecmp( $mo_ldap_local_current_subtab, 'ldap-to-wp-directory_sync' ) === 0 ) {
 	?>
 	<div class="mo_ldap_local_outer mo_ldap_local_premium_box">
 		<div style="top: 15%; height: 80%; right: 0;" class="mo_ldap_local_premium_role_mapping_banner mo_ldap_d_none">
 			<div><h1>Premium Plan</h1></div>
 			<div style="font-size: 16px;">This is available in premium version of the plugin</div>
 			<div class="">
-				<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
+				<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
 					<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'arrow.svg' ); ?>" height="10px" width="20px"></span> Upgrade Today
 				</a>
 			</div>
 		</div>
 
-		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
+		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
 			<div class="mo_ldap_local_premium_feature_btn">
 				<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="20px" width="20px"></span> Premium Feature
 			</div>
@@ -267,7 +265,7 @@ if ( strcasecmp( $current_subtab, 'wp-to-ldap-directory_sync' ) === 0 ) {
 		</div>
 	</div>
 	<?php
-} elseif ( strcasecmp( $current_subtab, 'password_sync' ) === 0 ) {
+} elseif ( strcasecmp( $mo_ldap_local_current_subtab, 'password_sync' ) === 0 ) {
 	?>
 	<div class="mo_ldap_local_outer mo_ldap_local_premium_box">
 
@@ -275,13 +273,13 @@ if ( strcasecmp( $current_subtab, 'wp-to-ldap-directory_sync' ) === 0 ) {
 			<div><h1>Premium Plan</h1></div>
 			<div style="font-size: 16px;">This is available in premium version of the plugin</div>
 			<div class="">
-				<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
+				<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
 					<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'arrow.svg' ); ?>" height="10px" width="20px"></span> Upgrade Today
 				</a>
 			</div>
 		</div>
 
-		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
+		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
 			<div class="mo_ldap_local_premium_feature_btn">
 				<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="20px" width="20px"></span> Premium Feature
 			</div>
@@ -304,7 +302,7 @@ if ( strcasecmp( $current_subtab, 'wp-to-ldap-directory_sync' ) === 0 ) {
 		</div>
 	</div>
 	<?php
-} elseif ( strcasecmp( $current_subtab, 'profile_picture_sync' ) === 0 ) {
+} elseif ( strcasecmp( $mo_ldap_local_current_subtab, 'profile_picture_sync' ) === 0 ) {
 	?>
 	<div class="mo_ldap_local_outer mo_ldap_local_premium_box">
 
@@ -312,13 +310,13 @@ if ( strcasecmp( $current_subtab, 'wp-to-ldap-directory_sync' ) === 0 ) {
 			<div><h1>Premium Plan</h1></div>
 			<div style="font-size: 16px;">This is available in premium version of the plugin</div>
 			<div class="">
-				<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
+				<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
 					<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'arrow.svg' ); ?>" height="10px" width="20px"></span> Upgrade Today
 				</a>
 			</div>
 		</div>
 
-		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
+		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
 			<div class="mo_ldap_local_premium_feature_btn">
 				<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="20px" width="20px"></span> Premium Feature
 			</div>
@@ -359,9 +357,9 @@ jQuery(document).ready(function() {
 	jQuery("#wp_to_ldap_searchbases").click(function() {
 		showWpToLdapSearchBaseList();
 	});
-	
+
 	jQuery("#mo_ldap_local_enable_ldap_add").change(function() {
-		<?php if ( $has_search_base ) : ?>
+		<?php if ( $mo_ldap_local_has_search_base ) : ?>
 			jQuery("#enable_sync_toggle_form").submit();
 		<?php endif; ?>
 	});
@@ -375,10 +373,10 @@ jQuery(document).ready(function() {
 		} else {
 			jQuery("#wp_to_ldap_search_base").prop('required', false);
 		}
-		
+
 		return true;
 	});
-	
+
 	function showWpToLdapSearchBaseList() {
 		var nonce = "<?php echo esc_js( wp_create_nonce( 'wp_to_ldap_searchbaselist_nonce' ) ); ?>";
 		var myWindow = window.open('<?php echo esc_js( site_url() ); ?>' + '/?option=wp_to_ldap_searchbaselist' + '&_wpnonce=' + nonce, "WordPress to LDAP Search Base Lists", "width=600, height=600");

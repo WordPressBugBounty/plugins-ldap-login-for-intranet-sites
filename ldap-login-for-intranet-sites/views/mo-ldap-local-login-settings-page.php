@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								'subtab' => 'attribute-mapping',
 								'tab'    => 'default',
 							),
-							$filtered_current_page_url
+							$mo_ldap_local_filtered_current_page_url
 						)
 					)
 					. '"';
@@ -58,9 +58,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php wp_nonce_field( 'mo_ldap_local_enable_admin_wp_login' ); ?>
 			<input type="hidden" name="option" value="mo_ldap_local_enable_admin_wp_login" />
 			<div>
-				<?php
-				$enable_ldap_login = get_option( 'mo_ldap_local_enable_login' );
-				?>
+			<?php
+			$mo_ldap_local_enable_ldap_login = get_option( 'mo_ldap_local_enable_login' );
+			?>
 				<input type="checkbox" id="mo_ldap_local_enable_admin_wp_login" class="mo_ldap_local_toggle_switch_hide" name="mo_ldap_local_enable_admin_wp_login" value="1" <?php checked( esc_attr( strcasecmp( get_option( 'mo_ldap_local_enable_admin_wp_login' ), '1' ) === 0 ) ); ?>/>
 				<label for="mo_ldap_local_enable_admin_wp_login" class="mo_ldap_local_toggle_switch"></label>
 				<label for="mo_ldap_local_enable_admin_wp_login" class="mo_ldap_local_d_inline mo_ldap_input_label_text">
@@ -89,13 +89,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div><h1>Premium Plan</h1></div>
 			<div style="font-size: 16px;">This is available in premium version of the plugin</div>
 			<div class="">
-				<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
+				<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
 					<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'arrow.svg' ); ?>" height="10px" width="20px"></span> Upgrade Today
 				</a>
 			</div>
 		</div>
 
-		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
+		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
 			<div class="mo_ldap_local_premium_feature_btn">
 				<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="20px" width="20px"></span>Premium Features
 			</div>
@@ -132,10 +132,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="mo_ldap_local_select_roles">Select Role(s)</div>
 			<select id="mo-ldap-directory-server" name="directory-server" class="mo_ldap_local_standerd_input mo_ldap_select_directory_server" disabled>
 				<option class="mo_ldap_select_option" value="">Select Role(s)</option>
-				<?php
-				$default_role = get_option( 'default_role' );
-				wp_dropdown_roles( $default_role );
-				?>
+			<?php
+			$mo_ldap_local_default_role = get_option( 'default_role' );
+			wp_dropdown_roles( $mo_ldap_local_default_role );
+			?>
 			</select>
 
 			<div class="mo_ldap_local_input_container mo_ldap_local_horizontal_flex_container mo_ldap_local_content_start mo_ldap_local_flex_gap">

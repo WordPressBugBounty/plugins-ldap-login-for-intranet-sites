@@ -112,7 +112,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login' ) ) {
 		}
 
 		/**
-		 * Function mo_ldap_local_update_plugin_version : Returns URL links used in plugin menu
+		 * Function mo_ldap_local_update_plugin_version : Updates plugin version and migrates data if needed.
 		 *
 		 * @return void
 		 */
@@ -257,9 +257,9 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login' ) ) {
 			wp_enqueue_style( 'mo_ldap_local_admin_datatable_style', MO_LDAP_LOCAL_INCLUDES . 'css/mo_ldap_local_datatable.min.css', array(), MO_LDAP_LOCAL_VERSION );
 			wp_enqueue_style( 'mo_ldap_add_fonts', 'https://fonts.googleapis.com/css2?family=Inter&display=swap', false, MO_LDAP_LOCAL_VERSION );
 
-			$active_tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'default'; //phpcs:ignore WordPress.Security.NonceVerification.Recommended, - Reading GET parameter from the URL for checking the sub-tab name, doesn't require nonce verification.
+			$mo_ldap_local_active_tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'default'; //phpcs:ignore WordPress.Security.NonceVerification.Recommended, - Reading GET parameter from the URL for checking the sub-tab name, doesn't require nonce verification.
 
-			if ( strcmp( $active_tab, 'pricing' ) === 0 ) {
+			if ( strcmp( $mo_ldap_local_active_tab, 'pricing' ) === 0 ) {
 				wp_enqueue_style( 'mo_ldap_local_admin_licensing_style', MO_LDAP_LOCAL_INCLUDES . 'css/mo_ldap_local_licensing_page.min.css', array(), MO_LDAP_LOCAL_VERSION );
 			}
 		}

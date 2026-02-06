@@ -183,9 +183,8 @@ if ( ! class_exists( 'Mo_Ldap_Local_Customer_Setup_Handler' ) ) {
 			$string_to_hash         = $customer_key . $current_time_in_millis . $api_key;
 			$hash_value             = hash( 'sha512', $string_to_hash );
 			$from_email             = $email;
-			global $user;
-			$user    = wp_get_current_user();
-			$company = ! empty( $company ) ? sanitize_text_field( wp_unslash( $company ) ) : sanitize_text_field( isset( $_SERVER['SERVER_NAME'] ) ? wp_unslash( $_SERVER['SERVER_NAME'] ) : '' );
+			$mo_ldap_local_user     = wp_get_current_user();
+			$company                = ! empty( $company ) ? sanitize_text_field( wp_unslash( $company ) ) : sanitize_text_field( isset( $_SERVER['SERVER_NAME'] ) ? wp_unslash( $_SERVER['SERVER_NAME'] ) : '' );
 
 			$esc_allowed = array(
 				'a'      => array(
@@ -206,7 +205,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Customer_Setup_Handler' ) ) {
 				'span'   => array(),
 			);
 
-			$content      = '<div >First Name :' . esc_html( $user->user_firstname ) . '<br><br>Last  Name :' . esc_html( $user->user_lastname ) . '   <br><br>Company :<a rel="noopener" href="' . esc_url( $company ) . '" target="_blank" >' . esc_html( $company ) . '</a><br><br>Email :<a href="mailto:' . esc_attr( $from_email ) . '" target="_blank">' . esc_html( $from_email ) . '</a><br><br>' . wp_kses( $query, $esc_allowed ) . '</div>';
+			$content      = '<div >First Name :' . esc_html( $mo_ldap_local_user->user_firstname ) . '<br><br>Last  Name :' . esc_html( $mo_ldap_local_user->user_lastname ) . '   <br><br>Company :<a rel="noopener" href="' . esc_url( $company ) . '" target="_blank" >' . esc_html( $company ) . '</a><br><br>Email :<a href="mailto:' . esc_attr( $from_email ) . '" target="_blank">' . esc_html( $from_email ) . '</a><br><br>' . wp_kses( $query, $esc_allowed ) . '</div>';
 			$fields       = array(
 				'customerKey' => $customer_key,
 				'sendEmail'   => true,

@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								'subtab' => 'ldap-config',
 								'tab'    => 'default',
 							),
-							$filtered_current_page_url
+							$mo_ldap_local_filtered_current_page_url
 						)
 					)
 					. '"';
@@ -39,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								'subtab' => 'attribute-mapping',
 								'tab'    => 'default',
 							),
-							$filtered_current_page_url
+							$mo_ldap_local_filtered_current_page_url
 						)
 					)
 					. '"';
@@ -57,14 +57,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="mo_ldap_display_flex_elements">
 				<label for="default_group_mapping" class="mo_ldap_local_d_block mo_ldap_input_label_text" style="width: 48%;">Select the default role for all the LDAP users:</label>
 				<select id="default_group_mapping" name="mapping_value_default" class="mo_ldap_select_wp_role">
-					<?php
-					if ( get_option( 'mo_ldap_local_mapping_value_default' ) ) {
-						$default_role = get_option( 'mo_ldap_local_mapping_value_default' );
-					} else {
-						$default_role = get_option( 'default_role' );
-					}
-					wp_dropdown_roles( $default_role );
-					?>
+				<?php
+				if ( get_option( 'mo_ldap_local_mapping_value_default' ) ) {
+					$mo_ldap_local_default_role = get_option( 'mo_ldap_local_mapping_value_default' );
+				} else {
+					$mo_ldap_local_default_role = get_option( 'default_role' );
+				}
+				wp_dropdown_roles( $mo_ldap_local_default_role );
+				?>
 				</select>
 			</div>
 		</form>
@@ -94,7 +94,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</form>
 	</div>
 	<div class="mo_ldap_local_outer mo_ldap_local_premium_box">
-		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
+		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
 			<div class="mo_ldap_local_premium_feature_btn"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15px" width="15px"></span>Premium feature</div>
 		</a>
 
@@ -118,7 +118,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div><h1>Premium Plan</h1></div>
 				<div style="font-size: 16px;">This is available in premium version of the plugin</div>
 				<div class="">
-					<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
+					<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
 						<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'arrow.svg' ); ?>" height="10px" width="20px"></span> Upgrade Today
 					</a>
 				</div>
@@ -172,7 +172,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div><h1>Premium Plan</h1></div>
 				<div style="font-size: 16px;">This is available in premium version of the plugin</div>
 				<div class="">
-					<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
+					<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
 						<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'arrow.svg' ); ?>" height="10px" width="20px"></span> Upgrade Today
 					</a>
 				</div>
@@ -218,7 +218,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div><h1>Premium Plan</h1></div>
 				<div style="font-size: 16px;">This is available in premium version of the plugin</div>
 				<div class="">
-					<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
+					<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
 						<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'arrow.svg' ); ?>" height="10px" width="20px"></span> Upgrade Today
 					</a>
 				</div>
@@ -269,18 +269,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 			<p class="mo_ldap_local_input_paragraph mo_ldap_local_test_mapping_para">Enter LDAP username to test role mapping configuration</p>
 			<br>
+		<?php
+			$mo_ldap_local_search_base_string = get_option( 'mo_ldap_local_search_base' ) ? $utils::decrypt( get_option( 'mo_ldap_local_search_base' ) ) : '';
+			$mo_ldap_local_search_bases       = explode( ';', $mo_ldap_local_search_base_string );
+		?>
+		<div class="mo_ldap_local_horizontal_flex_container mo_ldap_local_content_start mo_ldap_local_flex_gap mo_ldap_local_test_config_btn"> 
+		<input type="submit" class="mo_ldap_local_test_configuration_button" value="Test Configuration" 
 			<?php
-				$search_base_string = get_option( 'mo_ldap_local_search_base' ) ? $utils::decrypt( get_option( 'mo_ldap_local_search_base' ) ) : '';
-				$search_bases       = explode( ';', $search_base_string );
+			if ( empty( $mo_ldap_local_search_bases[0] ) ) {
+				echo 'disabled';
+			}
 			?>
-			<div class="mo_ldap_local_horizontal_flex_container mo_ldap_local_content_start mo_ldap_local_flex_gap mo_ldap_local_test_config_btn"> 
-			<input type="submit" class="mo_ldap_local_test_configuration_button" value="Test Configuration" 
-				<?php
-				if ( empty( $search_bases[0] ) ) {
-					echo 'disabled';
-				}
-				?>
-			>
+		>
 			</div>
 		</form>
 	</div>

@@ -10,12 +10,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['subtab'] ) ) : 'users-report'; //phpcs:ignore WordPress.Security.NonceVerification.Recommended, - Reading GET parameter from the URL for checking the sub-tab name, doesn't require nonce verification.
+$mo_ldap_local_current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['subtab'] ) ) : 'users-report'; //phpcs:ignore WordPress.Security.NonceVerification.Recommended, - Reading GET parameter from the URL for checking the sub-tab name, doesn't require nonce verification.
 
 ?>
 
 <div class="mo_ldap_local_horizontal_flex_container mo_ldap_local_subtab_container">
-	<div class="<?php echo 'users-report' === $current_subtab ? 'mo_ldap_local_active_subtab' : ''; ?>">
+	<div class="<?php echo 'users-report' === $mo_ldap_local_current_subtab ? 'mo_ldap_local_active_subtab' : ''; ?>">
 		<a href="
 		<?php
 		echo esc_url(
@@ -24,13 +24,13 @@ $current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['su
 					'tab'    => 'users-report',
 					'subtab' => 'users-report',
 				),
-				$filtered_current_page_url
+				$mo_ldap_local_filtered_current_page_url
 			)
 		);
 		?>
 		" class="mo_ldap_local_unset_link_affect">Authentication Report</a>
 	</div>
-	<div class="<?php echo 'auth-report' === $current_subtab ? 'mo_ldap_local_active_subtab' : ''; ?>">
+	<div class="<?php echo 'auth-report' === $mo_ldap_local_current_subtab ? 'mo_ldap_local_active_subtab' : ''; ?>">
 		<a href="
 		<?php
 		echo esc_url(
@@ -39,7 +39,7 @@ $current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['su
 					'tab'    => 'users-report',
 					'subtab' => 'auth-report',
 				),
-				$filtered_current_page_url
+				$mo_ldap_local_filtered_current_page_url
 			)
 		);
 		?>
@@ -49,7 +49,7 @@ $current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['su
 
 <hr class="mo_ldap_hr">
 
-<?php if ( 'users-report' === $current_subtab ) : ?>
+<?php if ( 'users-report' === $mo_ldap_local_current_subtab ) : ?>
 
 	<div class="mo_ldap_local_auth_reports_outer mo_ldap_local_outer3">
 		<div class="mo_ldap_local_imp_exp_headings">User Report</div>
@@ -140,12 +140,12 @@ $current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['su
 							</div>
 						</div>
 					</div>
-					<?php
-					$log_user_reporting = get_option( 'mo_ldap_local_user_report_log' );
-					$user_logs_empty    = $utils::mo_ldap_is_user_logs_empty();
+				<?php
+				$mo_ldap_local_log_user_reporting = get_option( 'mo_ldap_local_user_report_log' );
+				$mo_ldap_local_user_logs_empty    = $utils::mo_ldap_is_user_logs_empty();
 
-					if ( strcasecmp( $log_user_reporting, '1' ) === 0 && ! $user_logs_empty ) {
-						?>
+				if ( strcasecmp( $mo_ldap_local_log_user_reporting, '1' ) === 0 && ! $mo_ldap_local_user_logs_empty ) {
+					?>
 						<div class="mo_ldap_local_auth_report_config mo_ldap_local_log_requests mo_ldap_local_auth_report_position">
 							<form method="post" action="" name="mo_ldap_local_authentication_report">
 						<?php wp_nonce_field( 'mo_ldap_authentication_report' ); ?>
@@ -172,33 +172,33 @@ $current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['su
 								<th>Additional Information</th>
 							</tr>
 						</thead>
-						<tbody>
-						<?php
-						$index = 1;
-						foreach ( $auth_logs as $log ) {
-							?>
-								<tr>
-									<td><?php echo esc_html( $index ); ?></td>
-									<td><?php echo esc_html( $log['user_name'] ); ?></td>
-									<td><?php echo esc_html( $log['time'] ); ?></td>
-									<td>
-										<div class="mo_ldap_local_ldap_status_error">
-											<img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'round-error.png' ); ?>" height="20px" width="20px">
-							<?php echo esc_html( $log['ldap_status'] ); ?>
-										</div>
-									</td>
-									<td><?php echo wp_kses( $log['ldap_error'], MO_LDAP_LOCAL_ESC_ALLOWED ); ?></td>
-								</tr>
-							<?php
-							++$index;
-						}
+					<tbody>
+					<?php
+					$mo_ldap_local_index = 1;
+					foreach ( $mo_ldap_local_auth_logs as $mo_ldap_local_log ) {
 						?>
+							<tr>
+								<td><?php echo esc_html( $mo_ldap_local_index ); ?></td>
+								<td><?php echo esc_html( $mo_ldap_local_log['user_name'] ); ?></td>
+								<td><?php echo esc_html( $mo_ldap_local_log['time'] ); ?></td>
+								<td>
+									<div class="mo_ldap_local_ldap_status_error">
+										<img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'round-error.png' ); ?>" height="20px" width="20px">
+						<?php echo esc_html( $mo_ldap_local_log['ldap_status'] ); ?>
+									</div>
+								</td>
+								<td><?php echo wp_kses( $mo_ldap_local_log['ldap_error'], MO_LDAP_LOCAL_ESC_ALLOWED ); ?></td>
+							</tr>
+						<?php
+						++$mo_ldap_local_index;
+					}
+					?>
 						</tbody>
 					</table>
 				</div>
-						<?php
-					} elseif ( strcasecmp( $log_user_reporting, '1' ) === 0 && $user_logs_empty ) {
-						?>
+					<?php
+				} elseif ( strcasecmp( $mo_ldap_local_log_user_reporting, '1' ) === 0 && $mo_ldap_local_user_logs_empty ) {
+					?>
 			</div>
 						<?php
 						echo '<p class="mo_ldap_local_normal_font"> No audit logs are available currently. <p>';
@@ -207,21 +207,21 @@ $current_subtab = isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['su
 		</div>
 	</div>
 	<?php
-elseif ( 'auth-report' === $current_subtab ) :
+elseif ( 'auth-report' === $mo_ldap_local_current_subtab ) :
 	global $wpdb;
 
-	$total = $wpdb->get_var( "SELECT COUNT(*) FROM `{$wpdb->base_prefix}wptoldap_sync_reports`" );//phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange,  - Fetching data from a custom table.
-	if ( $total > 100 ) {
-		$oldest_id = $wpdb->get_var( "SELECT id FROM `{$wpdb->base_prefix}wptoldap_sync_reports` ORDER BY id ASC LIMIT 1" );//phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange,  - Fetching data from a custom table.
+	$mo_ldap_local_total = $wpdb->get_var( "SELECT COUNT(*) FROM `{$wpdb->base_prefix}wptoldap_sync_reports`" );//phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange,  - Fetching data from a custom table.
+	if ( $mo_ldap_local_total > 100 ) {
+		$mo_ldap_local_oldest_id = $wpdb->get_var( "SELECT id FROM `{$wpdb->base_prefix}wptoldap_sync_reports` ORDER BY id ASC LIMIT 1" );//phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange,  - Fetching data from a custom table.
 		$wpdb->delete(//phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange,  - Fetching data from a custom table.
 			"{$wpdb->base_prefix}wptoldap_sync_reports",
-			array( 'id' => $oldest_id ),
+			array( 'id' => $mo_ldap_local_oldest_id ),
 			array( '%d' )
 		);
 	}
 
-	$reports = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM `{$wpdb->base_prefix}wptoldap_sync_reports` ORDER BY id DESC LIMIT %d", 100 ) );//phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange,  - Fetching data from a custom table.
-	$reports = ! empty( $reports ) ? $reports : array();
+	$mo_ldap_local_reports = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM `{$wpdb->base_prefix}wptoldap_sync_reports` ORDER BY id DESC LIMIT %d", 100 ) );//phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange,  - Fetching data from a custom table.
+	$mo_ldap_local_reports = ! empty( $mo_ldap_local_reports ) ? $mo_ldap_local_reports : array();
 	?>
 	<div class="mo_ldap_sync_table_layout mo_ldap_sync_table_left_padding">
 		<p class="mo_ldap_sync_input_note">
@@ -237,39 +237,39 @@ elseif ( 'auth-report' === $current_subtab ) :
 				</tr>
 			</thead>
 	<?php
-	$index = 1;
-	foreach ( $reports as $report ) {
-		$user_data = get_userdata( $report->user_id );
-		if ( ! empty( $user_data ) ) {
-			$username = $user_data->user_login;
+	$mo_ldap_local_index = 1;
+	foreach ( $mo_ldap_local_reports as $mo_ldap_local_report ) {
+		$mo_ldap_local_user_data = get_userdata( $mo_ldap_local_report->user_id );
+		if ( ! empty( $mo_ldap_local_user_data ) ) {
+			$mo_ldap_local_username = $mo_ldap_local_user_data->user_login;
 		} else {
-			$username = $report->username;
+			$mo_ldap_local_username = $mo_ldap_local_report->username;
 		}
 		?>
-				<tr>
-					<td><?php echo esc_html( $index++ ); ?></td>
-					<td><?php echo esc_html( $username ); ?></td>
-					<td>
+			<tr>
+				<td><?php echo esc_html( $mo_ldap_local_index++ ); ?></td>
+				<td><?php echo esc_html( $mo_ldap_local_username ); ?></td>
+				<td>
 		<?php
-		if ( 'ERROR' === $report->sync_status ) {
+		if ( 'ERROR' === $mo_ldap_local_report->sync_status ) {
 			?>
-								<div class=" mo_ldap_local_ldap_status_error">
-									<img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'round-error.png' ); ?>" height="20px" width="20px">
-			<?php echo esc_html( $report->sync_status ); ?>
-								</div>
+							<div class=" mo_ldap_local_ldap_status_error">
+								<img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'round-error.png' ); ?>" height="20px" width="20px">
+			<?php echo esc_html( $mo_ldap_local_report->sync_status ); ?>
+							</div>
 			<?php
 		} else {
 			?>
-								<div class=" mo_ldap_local_ldap_status_success">
-									<img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'success.png' ); ?>" height="20px" width="20px">
-			<?php echo esc_html( $report->sync_status ); ?>
-								</div>
+							<div class=" mo_ldap_local_ldap_status_success">
+								<img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'success.png' ); ?>" height="20px" width="20px">
+			<?php echo esc_html( $mo_ldap_local_report->sync_status ); ?>
+							</div>
 			<?php
 		}
 		?>
-					</td>
-					<td><?php echo esc_html( $report->additional_info ); ?></td>
-				</tr>
+				</td>
+				<td><?php echo esc_html( $mo_ldap_local_report->additional_info ); ?></td>
+			</tr>
 		<?php
 	}
 

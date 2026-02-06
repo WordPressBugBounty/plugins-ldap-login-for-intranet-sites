@@ -99,7 +99,6 @@ class FreeIPA implements DirectoryBase {
 		$this->object_class_string = 'top;person;posixAccount;organizationalperson;inetorgperson;krbPrincipalAux;krbTicketPolicyAux;mepOriginEntry;inetUser;ipaobject;ipaSshGroupOfPubKeys;ipasshuser';
 
 		return $this->object_class_string;
-
 	}
 
 	/**

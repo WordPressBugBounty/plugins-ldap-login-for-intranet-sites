@@ -59,9 +59,14 @@ if ( ! class_exists( 'Mo_Ldap_Local_User_Handler' ) ) {
 
 			if ( $ldapconn ) {
 				$rdn_attribute = $current_directory->get_rdn_attribute( $user_info );
-				$user_base = $this->utils::decrypt( get_option( 'mo_ldap_local_wp_to_ldap_search_base', '' ) );
+				$user_base     = $this->utils::decrypt( get_option( 'mo_ldap_local_wp_to_ldap_search_base', '' ) );
 				if ( empty( $user_base ) ) {
 					return;
+				}
+				if ( strpos( $rdn_attribute, '=' ) !== false ) {
+					list( $rdn_attr_name, $rdn_attr_value ) = explode( '=', $rdn_attribute, 2 );
+					$rdn_attr_value                         = ldap_escape( $rdn_attr_value, '', LDAP_ESCAPE_DN );
+					$rdn_attribute                          = $rdn_attr_name . '=' . $rdn_attr_value;
 				}
 
 				$user_dn = $rdn_attribute . ',' . $user_base;
@@ -103,7 +108,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_User_Handler' ) ) {
 				if ( get_option( 'mo_ldap_local_use_tls' ) ) {
 					ldap_start_tls( $ldapconn );
 				}
-				$ldapbind = @ldap_bind( $ldapconn, $ldap_bind_dn, $ldap_bind_password );//phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+				$ldapbind = @ldap_bind( $ldapconn, $ldap_bind_dn, $ldap_bind_password );//phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, LDAP bind emits unavoidable PHP warnings on invalid credentials or server issues; errors are safely handled via  Mo_Ldap_Local_Auth_Response_Helper.
 				if ( $ldapbind ) {
 					global $wpdb;
 					$res = ldap_add( $ldapconn, $user_dn, $user_data );
@@ -144,20 +149,20 @@ if ( ! class_exists( 'Mo_Ldap_Local_User_Handler' ) ) {
 		 * @param  string $user_id : User id.
 		 * @return void
 		 */
-	public function mo_ldap_create_user_action( $user_id ) {
-		if ( strcasecmp( get_option( 'mo_ldap_local_enable_ldap_add' ), '1' ) !== 0 ) {
-			return;
+		public function mo_ldap_create_user_action( $user_id ) {
+			if ( strcasecmp( get_option( 'mo_ldap_local_enable_ldap_add' ), '1' ) !== 0 ) {
+				return;
+			}
+
+			$user         = get_userdata( $user_id );
+			$ldap_user_dn = get_user_meta( $user_id, 'mo_ldap_user_dn', true );
+
+			if ( ! empty( $ldap_user_dn ) ) {
+				return;
+			}
+
+			$mo_ldap_config = new Mo_Ldap_Local_User_Handler();
+			$mo_ldap_config->add_user( $user );
 		}
-
-		$user         = get_userdata( $user_id );
-		$ldap_user_dn = get_user_meta( $user_id, 'mo_ldap_user_dn', true );
-
-		if ( ! empty( $ldap_user_dn ) ) {
-			return;
-		}
-
-		$mo_ldap_config = new Mo_Ldap_Local_User_Handler();
-		$mo_ldap_config->add_user( $user );
-	}
 	}
 }

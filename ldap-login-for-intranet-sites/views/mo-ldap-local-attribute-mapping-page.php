@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 											'subtab' => 'role-mapping',
 											'tab'    => 'default',
 										),
-										$filtered_current_page_url
+										$mo_ldap_local_filtered_current_page_url
 									)
 								)
 								. '"';
@@ -43,7 +43,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 											'subtab' => 'login-settings',
 											'tab'    => 'default',
 										),
-										$filtered_current_page_url
+										$mo_ldap_local_filtered_current_page_url
 									)
 								)
 								. '"';
@@ -84,7 +84,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<div><h1>Premium Plan</h1></div>
 						<div style="font-size: 16px;padding: 10px;">This is available in premium version of the plugin</div>
 						<div class="">
-							<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
+							<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
 								<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'arrow.svg' ); ?>" height="10px" width="20px"></span> Upgrade Today
 							</a>
 						</div>
@@ -145,13 +145,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<p class="mo_ldap_local_input_paragraph mo_ldap_local_test_mapping_para">Enter LDAP username to test attribute configuration</p>
 				<br>
 				<?php
-				$search_base_string = get_option( 'mo_ldap_local_search_base' ) ? $utils::decrypt( get_option( 'mo_ldap_local_search_base' ) ) : '';
-				$search_bases       = explode( ';', $search_base_string );
+				$mo_ldap_local_search_base_string = get_option( 'mo_ldap_local_search_base' ) ? $utils::decrypt( get_option( 'mo_ldap_local_search_base' ) ) : '';
+				$mo_ldap_local_search_bases       = explode( ';', $mo_ldap_local_search_base_string );
 				?>
 				<div class="mo_ldap_local_attr_mapping_left_align"> 
 				<input type="submit" class="mo_ldap_save_user_mapping" value="Test Configuration" 
 					<?php
-					if ( empty( $search_bases[0] ) ) {
+					if ( empty( $mo_ldap_local_search_bases[0] ) ) {
 						echo 'disabled';
 					}
 					?>

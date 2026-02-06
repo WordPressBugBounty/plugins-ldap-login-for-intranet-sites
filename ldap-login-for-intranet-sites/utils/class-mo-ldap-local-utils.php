@@ -167,11 +167,12 @@ if ( ! class_exists( 'Mo_Ldap_Local_Utils' ) ) {
 						'ldap_status' => $status,
 						'ldap_error'  => $ldap_error,
 
-					)
+					),
+					array( '%s', '%s', '%s', '%s' )
 				);
-				wp_cache_delete( 'mo_ldap_user_report_cache' );
-				wp_cache_delete( 'mo_ldap_user_report_count_cache' );
-				wp_cache_delete( 'wp_user_reports_pagination_cache' );
+					wp_cache_delete( 'mo_ldap_user_report_cache' );
+					wp_cache_delete( 'mo_ldap_user_report_count_cache' );
+					wp_cache_delete( 'wp_user_reports_pagination_cache' );
 			}
 		}
 

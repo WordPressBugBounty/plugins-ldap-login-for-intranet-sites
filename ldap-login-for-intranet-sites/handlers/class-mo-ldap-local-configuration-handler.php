@@ -34,15 +34,20 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 			$this->utils = new Mo_Ldap_Local_Utils();
 		}
 
-	/**
-	 * Enqueue configuration handler CSS styles.
-	 *
-	 * @return void
-	 */
-	private function enqueue_configuration_styles() {
-		$css_url = plugin_dir_url( __DIR__ ) . 'includes/css/mo_ldap_local_configuration_handler.min.css';
-		echo '<link rel="stylesheet" type="text/css" href="' . esc_url( $css_url ) . '">';
-	}
+		/**
+		 * Enqueue configuration handler CSS styles.
+		 *
+		 * @return void
+		 */
+		private function enqueue_configuration_styles() {
+			wp_enqueue_style(
+				'mo_ldap_local_configuration_handler',
+				MO_LDAP_LOCAL_INCLUDES . 'css/mo_ldap_local_configuration_handler.min.css',
+				array(),
+				MO_LDAP_LOCAL_VERSION
+			);
+			wp_print_styles( 'mo_ldap_local_configuration_handler' );
+		}
 
 		/**
 		 * Function mo_ldap_local_authenticate : performs ldap authentication upon login.
@@ -73,11 +78,10 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 
 			$ldapconn = $this->get_connection();
 			if ( $ldapconn ) {
-				$filter             = get_option( 'mo_ldap_local_search_filter' ) ? $this->utils::decrypt( get_option( 'mo_ldap_local_search_filter' ) ) : '';
-				$search_base_string = get_option( 'mo_ldap_local_search_base' ) ? $this->utils::decrypt( get_option( 'mo_ldap_local_search_base' ) ) : '';
-				$ldap_bind_dn       = get_option( 'mo_ldap_local_server_dn' ) ? $this->utils::decrypt( get_option( 'mo_ldap_local_server_dn' ) ) : '';
-				$ldap_bind_password = get_option( 'mo_ldap_local_server_password' ) ? $this->utils::decrypt( get_option( 'mo_ldap_local_server_password' ) ) : '';
-
+				$filter                  = get_option( 'mo_ldap_local_search_filter' ) ? $this->utils::decrypt( get_option( 'mo_ldap_local_search_filter' ) ) : '';
+				$search_base_string      = get_option( 'mo_ldap_local_search_base' ) ? $this->utils::decrypt( get_option( 'mo_ldap_local_search_base' ) ) : '';
+				$ldap_bind_dn            = get_option( 'mo_ldap_local_server_dn' ) ? $this->utils::decrypt( get_option( 'mo_ldap_local_server_dn' ) ) : '';
+				$ldap_bind_password      = get_option( 'mo_ldap_local_server_password' ) ? $this->utils::decrypt( get_option( 'mo_ldap_local_server_password' ) ) : '';
 				$email_attribute         = strtolower( get_option( 'mo_ldap_local_email_attribute' ) );
 				$search_filter_attribute = strtolower( get_option( 'Filter_search' ) );
 
@@ -422,6 +426,10 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 		 * @return void
 		 */
 		public function show_search_bases_list( $context = 'config' ) {
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'ldap-login-for-intranet-sites' ) );
+			}
+
 			if ( ! $this->utils::is_extension_installed( 'openssl' ) ) {
 				return;
 			}
@@ -439,7 +447,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 					}
 					$check_ldap_conn = get_option( 'mo_ldap_local_service_account_status' );
 
-					if ( $context === 'wp_to_ldap' ) {
+					if ( 'wp_to_ldap' === $context ) {
 						$target_input_id      = 'wp_to_ldap_search_base';
 						$popup_title          = 'Select your Search Base DN for WordPress to LDAP Sync from the below Search bases list';
 						$submit_button_name   = 'submitwptoldapbase';
@@ -603,8 +611,8 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 				</div>
 				<?php
 			}
-			if ( (isset( $_POST['submitbase'] ) && ( isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'searchbaselist_nonce' ) ) ) ||
-				( isset( $_POST['submitwptoldapbase'] ) && ( isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'wp_to_ldap_searchbaselist_nonce' ) ) ) ) {
+			if ( ( isset( $_POST['submitbase'] ) && ( isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'searchbaselist_nonce' ) ) ) ||
+			( isset( $_POST['submitwptoldapbase'] ) && ( isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'wp_to_ldap_searchbaselist_nonce' ) ) ) ) {
 				if ( ! empty( $_POST['select_ldap_search_bases'] ) ) {
 					$search_bases = strtolower( isset( $_POST['select_ldap_search_bases'][0] ) ? sanitize_text_field( wp_unslash( $_POST['select_ldap_search_bases'][0] ) ) : '' );
 
@@ -642,7 +650,6 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 
 			$username = ldap_escape( $username, '', LDAP_ESCAPE_FILTER );
 
-			// Enqueue CSS styles for attribute mapping test
 			$this->enqueue_configuration_styles();
 
 			?>
@@ -653,6 +660,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 
 				$search_base_string = get_option( 'mo_ldap_local_search_base' ) ? $this->utils::decrypt( get_option( 'mo_ldap_local_search_base' ) ) : '';
 				$search_bases       = explode( ';', $search_base_string );
+				$search_bases       = array_map( 'trim', $search_bases );
 				$search_filter      = get_option( 'mo_ldap_local_search_filter' ) ? $this->utils::decrypt( get_option( 'mo_ldap_local_search_filter' ) ) : '';
 				$search_filter      = str_replace( '?', $username, $search_filter );
 
@@ -920,9 +928,11 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 
 				$search_base_string = get_option( 'mo_ldap_local_search_base' ) ? $this->utils::decrypt( get_option( 'mo_ldap_local_search_base' ) ) : '';
 				$search_bases       = explode( ';', $search_base_string );
-				$search_filter      = get_option( 'mo_ldap_local_search_filter' ) ? $this->utils::decrypt( get_option( 'mo_ldap_local_search_filter' ) ) : '';
-				$search_filter      = str_replace( '?', $username, $search_filter );
-				$default_role       = ! empty( get_option( 'mo_ldap_local_mapping_value_default' ) ) ? get_option( 'mo_ldap_local_mapping_value_default' ) : get_option( 'default_role' );
+				// Trim whitespace from each search base.
+				$search_bases  = array_map( 'trim', $search_bases );
+				$search_filter = get_option( 'mo_ldap_local_search_filter' ) ? $this->utils::decrypt( get_option( 'mo_ldap_local_search_filter' ) ) : '';
+				$search_filter = str_replace( '?', $username, $search_filter );
+				$default_role  = ! empty( get_option( 'mo_ldap_local_mapping_value_default' ) ) ? get_option( 'mo_ldap_local_mapping_value_default' ) : get_option( 'default_role' );
 
 				if ( empty( $search_bases ) || empty( $search_filter ) ) {
 					?>

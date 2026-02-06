@@ -19,14 +19,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 	<div class="mo_ldap_local_header_buttons_section">
 		<div class="mo_ldap_local_column_flex_container mo_ldap_local_gap_20 mo_ldap_local_vertical_line">
-			<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), htmlentities( $filtered_current_page_url ) ) ); ?>" class="mo_ldap_local_unset_link_affect mo_ldap_local_rounded_rectangular_buttons mo_ldap_local_horizontal_flex_container">Premium Pricing <span class="mo_ldap_free_trial"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'pricing.svg' ); ?>" height="20px" width="20px"></span></a>
+			<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), htmlentities( $mo_ldap_local_filtered_current_page_url ) ) ); ?>" class="mo_ldap_local_unset_link_affect mo_ldap_local_rounded_rectangular_buttons mo_ldap_local_horizontal_flex_container">Premium Pricing <span class="mo_ldap_free_trial"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'pricing.svg' ); ?>" height="20px" width="20px"></span></a>
 
 			<div class="mo_ldap_local_rounded_rectangular_buttons mo_ldap_local_horizontal_flex_container">
 				<div class="mo_ldap_cursor_pointer mo_ldap_local_custom_requirement_btn" data-id="mo_ldap_local_custom_requirements_box" onclick="mo_ldap_local_popup_card_clicked(this, '')" >Custom Requirements <span><img width="19px" height="21px" src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'requirement.png' ); ?>" /></span></div>
 			</div>
 		</div>
 		<div class="mo_ldap_local_help_links mo_ldap_local_help_links_div">
-		<div><a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'faqs' ), $request_uri ) ); ?>" class="mo_ldap_local_unset_link_affect">FAQs</a></div>
+		<div><a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'faqs' ), $mo_ldap_local_request_uri ) ); ?>" class="mo_ldap_local_unset_link_affect">FAQs</a></div>
 			<div id="mo_ldap_local_documentation_section" class="mo_ldap_position_relative">
 				<div id="mo_ldap_local_documentation_dropdown" class="mo_ldap_local_horizontal_flex_container mo_ldap_local_content_start mo_ldap_cursor_pointer">
 					<div>Documentation</div> 
@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 		</div>
 		<div class="mo_ldap_local_column_flex_container mo_ldap_local_gap_20">
-			<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'account' ), $request_uri ) ); ?>" class="mo_ldap_local_my_account_styles mo_ldap_local_horizontal_flex_container mo_ldap_local_unset_link_affect"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'account.svg' ); ?>" height="18px" width="18px"></span> My Account</a>
+			<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'account' ), $mo_ldap_local_request_uri ) ); ?>" class="mo_ldap_local_my_account_styles mo_ldap_local_horizontal_flex_container mo_ldap_local_unset_link_affect"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'account.svg' ); ?>" height="18px" width="18px"></span> My Account</a>
 			<div class="mo_ldap_local_support_icons_container">
 				<div class="mo_ldap_local_support_icon mo_ldap_local_horizontal_flex_container" data-id="mo_ldap_local_contact_us_box" onclick="mo_ldap_local_popup_card_clicked(this, '')" >
 				Contact Us
@@ -155,7 +155,7 @@ if ( ! $utils::is_extension_installed( 'openssl' ) ) {
 					<input type="hidden" name="option" value="mo_ldap_login_send_query"/>
 					<?php wp_nonce_field( 'mo_ldap_login_send_query' ); ?>
 					<div>
-						<input type="email" class="mo_ldap_pop_up_input_field mo_ldap_local_full_width_input" id="mo_ldap_local_query_email" style="margin-top: 10px" name="mo_ldap_local_query_email" value="<?php echo esc_attr( $admin_email ); ?>" placeholder="Enter your email" required>
+						<input type="email" class="mo_ldap_pop_up_input_field mo_ldap_local_full_width_input" id="mo_ldap_local_query_email" style="margin-top: 10px" name="mo_ldap_local_query_email" value="<?php echo esc_attr( $mo_ldap_local_admin_email ); ?>" placeholder="Enter your email" required>
 						<div class="mo_ldap_local_phone_input_div">
 							<input type="text" class="mo_ldap_pop_up_input_field mo_ldap_local_full_width_input mo_ldap_local_phone_input" name="mo_ldap_local_query_phone" id="mo_ldap_local_query_phone" value="<?php echo esc_attr( get_option( 'mo_ldap_local_admin_phone' ) ); ?>" placeholder="Enter your phone"/>
 						</div>
@@ -181,14 +181,14 @@ if ( ! $utils::is_extension_installed( 'openssl' ) ) {
 								<select class="mo_ldap_pop_up_input_field mo_ldap_local_full_width_input mo_ldap_local_setup_call_timezone_dropdown" name="mo_ldap_setup_call_timezone">
 									<option value="" selected disabled>---------Select your timezone--------</option>
 									<?php
-									foreach ( $zones as $zone => $value ) {
-										if ( strcasecmp( $value, 'Etc/GMT' ) === 0 ) {
+									foreach ( $mo_ldap_local_zones as $mo_ldap_local_zone => $mo_ldap_local_value ) {
+										if ( strcasecmp( $mo_ldap_local_value, 'Etc/GMT' ) === 0 ) {
 											?>
-											<option value="<?php echo esc_attr( $zone ) . ' ' . esc_attr( $value ); ?>" selected><?php echo esc_html( $zone ); ?></option>
+											<option value="<?php echo esc_attr( $mo_ldap_local_zone ) . ' ' . esc_attr( $mo_ldap_local_value ); ?>" selected><?php echo esc_html( $mo_ldap_local_zone ); ?></option>
 											<?php
 										} else {
 											?>
-											<option value="<?php echo esc_attr( $zone ) . ' ' . esc_attr( $value ); ?>"><?php echo esc_html( $zone ); ?></option>
+											<option value="<?php echo esc_attr( $mo_ldap_local_zone ) . ' ' . esc_attr( $mo_ldap_local_value ); ?>"><?php echo esc_html( $mo_ldap_local_zone ); ?></option>
 											<?php
 										}
 									}
