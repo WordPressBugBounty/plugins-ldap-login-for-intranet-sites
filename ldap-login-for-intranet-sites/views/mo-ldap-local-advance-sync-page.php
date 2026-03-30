@@ -143,7 +143,7 @@ if ( strcasecmp( $mo_ldap_local_current_subtab, 'wp-to-ldap-directory_sync' ) ==
 			<!-- Note above Save Configuration button -->
 			<div class="mo_ldap_local_input_paragraph_div" style="margin-top: 15px;">
 				<p style = "margin-top: -15px; margin-left: 15px;">
-					Select the search tree under which the user will be created.
+					<strong>Note:</strong> Select the search tree/base under which the users will be created.
 				</p>
 			</div>
 

@@ -5,7 +5,7 @@ Tags: active directory, active directory integration, ldap, ldap authentication,
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 5.6.0
-Stable tag: 5.4.0
+Stable tag: 5.4.1
 License: Expat
 License URI: https://plugins.miniorange.com/mit-license
 
@@ -287,6 +287,10 @@ Yes. Free users receive basic support. Premium plans include priority support an
 14. Add New LDAP Server
 
 == Changelog ==
+
+= 5.4.1 =
+* Added a note to clarify the selection of the search base/tree for user creation (WP-to-LDAP).
+* Updated the Import/Export configuration heading to match the standard heading size.
 
 = 5.4.0 =
 * Security fixes - PCP, PHPCS, Vulnerability fixes
@@ -870,6 +874,10 @@ Enhanced Troubleshooting
 * this is the first release.
 
 == Upgrade Notice ==
+
+= 5.4.1 =
+* Added a note to clarify the selection of the search base/tree for user creation (WP-to-LDAP).
+* Updated the Import/Export configuration heading to match the standard heading size.
 
 = 5.4.0 =
 * Security fixes - PCP, PHPCS, Vulnerability fixes
