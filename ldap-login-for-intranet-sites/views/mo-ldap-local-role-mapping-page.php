@@ -93,10 +93,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 		</form>
 	</div>
-	<div class="mo_ldap_local_outer mo_ldap_local_premium_box">
-		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
-			<div class="mo_ldap_local_premium_feature_btn"><span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15px" width="15px"></span>Premium feature</div>
-		</a>
+	<div class="mo_ldap_local_outer mo_ldap_local_role_mapping_premium_outer">
 
 		<h3 style="padding-left:4%;">Role Mapping based on Security groups, LDAP OU and LDAP attributes</h3>
 		<br>
@@ -125,39 +122,51 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 
 			<div class="mo_ldap_local_advanced_role_mapping_box">
-				<div class="mo_ldap_local_input_container mo_ldap_local_horizontal_flex_container mo_ldap_local_content_start">
-					<input type="checkbox" disabled>
-					<label class="mo_ldap_local_d_inline mo_ldap_local_bold_label">Enable Role Mapping Based On LDAP Security Groups</label>
+				<div class="mo_ldap_local_input_container mo_ldap_local_horizontal_flex_container mo_ldap_local_content_start mo_ldap_local_rm_premium_row">
+					<div class="mo_ldap_local_tooltip mo_ldap_local_rm_premium_wrap mo_ldap_local_rm_premium_wrap_flex">
+						<span class="mo_ldap_local_tooltiptext mo_ldap_local_rm_premium_tip"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> Premium Feature</span>
+						<input type="checkbox" id="mo_ldap_local_security_groups_premium_checkbox" class="mo_ldap_local_rm_premium_checkbox" disabled aria-disabled="true">
+						<label for="mo_ldap_local_security_groups_premium_checkbox" class="mo_ldap_local_d_inline mo_ldap_local_bold_label mo_ldap_local_rm_premium_label">Enable Role Mapping Based On LDAP Security Groups <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></label>
+					</div>
 				</div>
 				<br>
 				<div class="mo_ldap_local_input_container mo_ldap_local_horizontal_flex_container mo_ldap_local_content_start">
-					<input type="text" class="mo_ldap_local_input mo_ldap_local_searchbase_input" name="" id="" placeholder="cn=group,dc=domain,dc=com" disabled>
+					<div class="mo_ldap_local_tooltip mo_ldap_local_rm_premium_wrap mo_ldap_local_rm_premium_wrap_field">
+						<span class="mo_ldap_local_tooltiptext mo_ldap_local_rm_premium_tip"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> Premium Feature</span>
+						<input type="text" class="mo_ldap_local_input mo_ldap_local_searchbase_input" name="" id="" placeholder="cn=group,dc=domain,dc=com" disabled aria-disabled="true">
+					</div>
 					<input type="button" value="Show Groups" class="mo_ldap_local_wired_button mo_ldap_local_groups_btn" disabled>
 				</div>
 				<br>
-				<div class="mo_ldap_local_horizontal_flex_container">
-					<div class="mo_ldap_local_group_role_div">
-						<div class="mo_ldap_local_horizontal_flex_container mo_ldap_local_table_head">
-							<div>Group Name</div>
-							<div>Distinguished Name</div>
-							<div>WordPress Role</div>
-							<div>Add/Remove</div>
+				<div class="mo_ldap_local_tooltip mo_ldap_local_rm_premium_wrap mo_ldap_local_rm_premium_wrap_wide">
+					<span class="mo_ldap_local_tooltiptext mo_ldap_local_rm_premium_tip"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> Premium Feature</span>
+					<div class="mo_ldap_local_horizontal_flex_container">
+						<div class="mo_ldap_local_group_role_div">
+							<div class="mo_ldap_local_horizontal_flex_container mo_ldap_local_table_head">
+								<div>Group Name</div>
+								<div>Distinguished Name</div>
+								<div>WordPress Role</div>
+								<div>Add/Remove</div>
+							</div>
+							<div class="mo_ldap_local_horizontal_flex_container mo_ldap_local_table_example">
+								<div style="margin-left:5%;" >Group</div>
+								<div style="margin-left:5%;" >CN=Group,DC=domain,DC=com</div>
+								<div style="margin-right:12%" >Contributor</div>
+								<div style="margin-right:7%" >+</div>
+							</div>
 						</div>
-						<div class="mo_ldap_local_horizontal_flex_container mo_ldap_local_table_example">
-							<div style="margin-left:5%;" >Group</div>
-							<div style="margin-left:5%;" >CN=Group,DC=domain,DC=com</div>
-							<div style="margin-right:12%" >Contributor</div>
-							<div style="margin-right:7%" >+</div>
+						<div class="mo_ldap_local_wired_button mo_ldap_local_horizontal_flex_container" style="margin-bottom: 5%;">
+							Filters <span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'filters.svg' ); ?>" height="14px" width="15px"></span>
 						</div>
-					</div>
-					<div class="mo_ldap_local_wired_button mo_ldap_local_horizontal_flex_container" style="margin-bottom: 5%;">
-						Filters <span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'filters.svg' ); ?>" height="14px" width="15px"></span>
 					</div>
 				</div>
 				<br>
-				<div class="mo_ldap_local_input_container mo_ldap_local_horizontal_flex_container mo_ldap_local_content_start mo_ldap_local_flex_gap">
-					<label class="mo_ldap_local_d_inline mo_ldap_local_bold_label">LDAP Group Attributes Name</label>
-					<input type="text" class="mo_ldap_local_input" style="width:40%" name="" id="" placeholder="Group attributes Name" disabled>
+				<div class="mo_ldap_local_tooltip mo_ldap_local_rm_premium_wrap mo_ldap_local_rm_premium_wrap_wide">
+					<span class="mo_ldap_local_tooltiptext mo_ldap_local_rm_premium_tip"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> Premium Feature</span>
+					<div class="mo_ldap_local_input_container mo_ldap_local_horizontal_flex_container mo_ldap_local_content_start mo_ldap_local_flex_gap">
+						<label class="mo_ldap_local_d_inline mo_ldap_local_bold_label">LDAP Group Attributes Name <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></label>
+						<input type="text" class="mo_ldap_local_input" style="width:40%" name="" id="" placeholder="Group attributes Name" disabled aria-disabled="true">
+					</div>
 				</div>
 				<div class="mo_ldap_local_input_container mo_ldap_local_horizontal_flex_container mo_ldap_local_content_start mo_ldap_local_flex_gap">
 					<input type="button" class="button1 mo_ldap_local_disabled_button" value="Save Mapping" disabled>
@@ -179,31 +188,40 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 
 			<div class="mo_ldap_local_advanced_role_mapping_box">
-				<div class="mo_ldap_local_input_container mo_ldap_local_horizontal_flex_container mo_ldap_local_content_start">
-					<input type="checkbox" disabled>
-					<label class="mo_ldap_local_d_inline mo_ldap_local_bold_label">Enable Role Mapping Based On LDAP OU</label>
+				<div class="mo_ldap_local_input_container mo_ldap_local_horizontal_flex_container mo_ldap_local_content_start mo_ldap_local_rm_premium_row">
+					<div class="mo_ldap_local_tooltip mo_ldap_local_rm_premium_wrap mo_ldap_local_rm_premium_wrap_flex">
+						<span class="mo_ldap_local_tooltiptext mo_ldap_local_rm_premium_tip"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> Premium Feature</span>
+						<input type="checkbox" id="mo_ldap_local_ou_role_mapping_premium_checkbox" class="mo_ldap_local_rm_premium_checkbox" disabled aria-disabled="true">
+						<label for="mo_ldap_local_ou_role_mapping_premium_checkbox" class="mo_ldap_local_d_inline mo_ldap_local_bold_label mo_ldap_local_rm_premium_label">Enable Role Mapping Based On LDAP OU <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></label>
+					</div>
 				</div>
 				<br>
 				<div class="mo_ldap_local_input_container mo_ldap_local_horizontal_flex_container mo_ldap_local_content_start">
-					<input type="text" class="mo_ldap_local_input mo_ldap_local_searchbase_input" name="" id="" placeholder="cn=group,dc=domain,dc=com" disabled>
+					<div class="mo_ldap_local_tooltip mo_ldap_local_rm_premium_wrap mo_ldap_local_rm_premium_wrap_field">
+						<span class="mo_ldap_local_tooltiptext mo_ldap_local_rm_premium_tip"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> Premium Feature</span>
+						<input type="text" class="mo_ldap_local_input mo_ldap_local_searchbase_input" name="" id="" placeholder="cn=group,dc=domain,dc=com" disabled aria-disabled="true">
+					</div>
 					<input type="button" value="Show OUs" class="mo_ldap_local_wired_button mo_ldap_local_groups_btn" disabled>
 				</div>
 				<br>
-				<div class="mo_ldap_local_horizontal_flex_container">
-					<div class="mo_ldap_local_group_role_div">
-						<div class="mo_ldap_local_horizontal_flex_container mo_ldap_local_table_head">
-							<div>Organizational Unit</div>
-							<div>WordPress Role</div>
-							<div>Add/Remove</div>
+				<div class="mo_ldap_local_tooltip mo_ldap_local_rm_premium_wrap mo_ldap_local_rm_premium_wrap_wide">
+					<span class="mo_ldap_local_tooltiptext mo_ldap_local_rm_premium_tip"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> Premium Feature</span>
+					<div class="mo_ldap_local_horizontal_flex_container">
+						<div class="mo_ldap_local_group_role_div">
+							<div class="mo_ldap_local_horizontal_flex_container mo_ldap_local_table_head">
+								<div>Organizational Unit</div>
+								<div>WordPress Role</div>
+								<div>Add/Remove</div>
+							</div>
+							<div class="mo_ldap_local_horizontal_flex_container mo_ldap_local_table_example">
+								<div style="margin-left:0%;" >OU=TestOU,DC=domain,DC=com</div>
+								<div style="margin-right:13%" >Contributor</div>
+								<div style="margin-right:15%" >+</div>
+							</div>
 						</div>
-						<div class="mo_ldap_local_horizontal_flex_container mo_ldap_local_table_example">
-							<div style="margin-left:0%;" >OU=TestOU,DC=domain,DC=com</div>
-							<div style="margin-right:13%" >Contributor</div>
-							<div style="margin-right:15%" >+</div>
+						<div class="mo_ldap_local_wired_button mo_ldap_local_horizontal_flex_container" style="margin-bottom: 5%;">
+							Filters <span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'filters.svg' ); ?>" height="14px" width="15px"></span>
 						</div>
-					</div>
-					<div class="mo_ldap_local_wired_button mo_ldap_local_horizontal_flex_container" style="margin-bottom: 5%;">
-						Filters <span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'filters.svg' ); ?>" height="14px" width="15px"></span>
 					</div>
 				</div>
 				<br>
@@ -225,24 +243,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 
 			<div class="mo_ldap_local_advanced_role_mapping_box">
-				<div class="mo_ldap_local_input_container mo_ldap_local_horizontal_flex_container mo_ldap_local_content_start">
-					<input type="checkbox" disabled>
-					<label class="mo_ldap_local_d_inline mo_ldap_local_bold_label">Enable Role Mapping Based On LDAP Attributes</label>
+				<div class="mo_ldap_local_input_container mo_ldap_local_horizontal_flex_container mo_ldap_local_content_start mo_ldap_local_rm_premium_row">
+					<div class="mo_ldap_local_tooltip mo_ldap_local_rm_premium_wrap mo_ldap_local_rm_premium_wrap_flex">
+						<span class="mo_ldap_local_tooltiptext mo_ldap_local_rm_premium_tip"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> Premium Feature</span>
+						<input type="checkbox" id="mo_ldap_local_attr_role_mapping_premium_checkbox" class="mo_ldap_local_rm_premium_checkbox" disabled aria-disabled="true">
+						<label for="mo_ldap_local_attr_role_mapping_premium_checkbox" class="mo_ldap_local_d_inline mo_ldap_local_bold_label mo_ldap_local_rm_premium_label">Enable Role Mapping Based On LDAP Attributes <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></label>
+					</div>
 				</div>
 				<br>
-				<div class="mo_ldap_local_horizontal_flex_container">
-					<div class="mo_ldap_local_group_role_div">
-						<div class="mo_ldap_local_horizontal_flex_container mo_ldap_local_table_head">
-							<div>LDAP Attribute</div>
-							<div>Attribute Value</div>
-							<div>WordPress Role</div>
-							<div>Add/Remove</div>
-						</div>
-						<div class="mo_ldap_local_horizontal_flex_container mo_ldap_local_table_example">
-							<div style="margin-left:5%;" >Department</div>
-							<div style="margin-left:5%;" >IT admin</div>
-							<div style="margin-right:12%" >Administrator</div>
-							<div style="margin-right:7%" >+</div>
+				<div class="mo_ldap_local_tooltip mo_ldap_local_rm_premium_wrap mo_ldap_local_rm_premium_wrap_wide">
+					<span class="mo_ldap_local_tooltiptext mo_ldap_local_rm_premium_tip"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> Premium Feature</span>
+					<div class="mo_ldap_local_horizontal_flex_container">
+						<div class="mo_ldap_local_group_role_div">
+							<div class="mo_ldap_local_horizontal_flex_container mo_ldap_local_table_head">
+								<div>LDAP Attribute</div>
+								<div>Attribute Value</div>
+								<div>WordPress Role</div>
+								<div>Add/Remove</div>
+							</div>
+							<div class="mo_ldap_local_horizontal_flex_container mo_ldap_local_table_example">
+								<div style="margin-left:5%;" >Department</div>
+								<div style="margin-left:5%;" >IT admin</div>
+								<div style="margin-right:12%" >Administrator</div>
+								<div style="margin-right:7%" >+</div>
+							</div>
 						</div>
 					</div>
 				</div>

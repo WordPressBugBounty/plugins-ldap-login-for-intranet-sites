@@ -154,197 +154,184 @@ if ( strcasecmp( $mo_ldap_local_current_subtab, 'wp-to-ldap-directory_sync' ) ==
 			</div>
 		</form>
 	</div>
-	<div class="mo_ldap_local_outer mo_ldap_local_premium_box">
-		<div style="top: 22%; height: 50%; right: 0;" class="mo_ldap_local_premium_role_mapping_banner mo_ldap_d_none">
-			<div>
-				<h1>Premium Plan</h1>
-			</div>
-			<div style="font-size: 16px;">This is available in premium version of the plugin</div>
-			<div class="">
-				<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
-					<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'arrow.svg' ); ?>" height="10px" width="20px"></span> Upgrade Today
-				</a>
-			</div>
-		</div>
-		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
-			<div class="mo_ldap_local_premium_feature_btn">
-				<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="20px" width="20px"></span> Premium Feature
-			</div>
-		</a>
+	<div class="mo_ldap_local_outer mo_ldap_local_premium_box mo_ldap_local_premium_box_no_hover">
 		<div class="mo_ldap_local_premium_feature_box">
 			<div class="mo_ldap_local_imp_exp_headings">
-				WordPress to LDAP Sync
+				<?php echo esc_html__( 'WordPress to LDAP Sync', 'ldap-login-for-intranet-sites' ); ?>
 			</div>
-			<div class="mo_ldap_local_md_search_conditions">
-				<label class="mo_ldap_local_toggle_switch"></label>
-				Delete user in LDAP when deleted in WordPress
-			</div>
-			<br>
-
-			<div class="mo_ldap_local_md_search_conditions">
-				<label class="mo_ldap_local_toggle_switch"></label>
-				Update user profile in LDAP when updated in WordPress
+			<div class="mo_ldap_local_login_settings_premium_row">
+				<input type="checkbox" id="mo_ldap_adv_sync_wp_delete_ldap" class="mo_ldap_local_toggle_switch_hide" disabled="disabled" aria-disabled="true" />
+				<label for="mo_ldap_adv_sync_wp_delete_ldap" class="mo_ldap_local_toggle_switch"></label>
+				<span class="mo_ldap_local_login_settings_premium_tooltip mo_ldap_local_tooltip">
+					<span class="mo_ldap_local_d_inline mo_ldap_input_label_text"><?php echo esc_html__( 'Delete user in LDAP when deleted in WordPress', 'ldap-login-for-intranet-sites' ); ?> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></span>
+					<span class="mo_ldap_local_tooltiptext"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> <?php echo esc_html__( 'Premium Feature', 'ldap-login-for-intranet-sites' ); ?></span>
+				</span>
 			</div>
 			<br>
 
-			<div class="mo_ldap_local_md_search_conditions">
-				<label class="mo_ldap_local_toggle_switch"></label>
-				Add/Remove user to/from groups in LDAP server when respective user role changed in WordPress
+			<div class="mo_ldap_local_login_settings_premium_row">
+				<input type="checkbox" id="mo_ldap_adv_sync_wp_update_profile" class="mo_ldap_local_toggle_switch_hide" disabled="disabled" aria-disabled="true" />
+				<label for="mo_ldap_adv_sync_wp_update_profile" class="mo_ldap_local_toggle_switch"></label>
+				<span class="mo_ldap_local_login_settings_premium_tooltip mo_ldap_local_tooltip">
+					<span class="mo_ldap_local_d_inline mo_ldap_input_label_text"><?php echo esc_html__( 'Update user profile in LDAP when updated in WordPress', 'ldap-login-for-intranet-sites' ); ?> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></span>
+					<span class="mo_ldap_local_tooltiptext"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> <?php echo esc_html__( 'Premium Feature', 'ldap-login-for-intranet-sites' ); ?></span>
+				</span>
 			</div>
 			<br>
 
-			<button style="cursor: no-drop;" class="mo_ldap_local_disabled_button">
-				Sync WordPress Users
+			<div class="mo_ldap_local_login_settings_premium_row">
+				<input type="checkbox" id="mo_ldap_adv_sync_wp_groups" class="mo_ldap_local_toggle_switch_hide" disabled="disabled" aria-disabled="true" />
+				<label for="mo_ldap_adv_sync_wp_groups" class="mo_ldap_local_toggle_switch"></label>
+				<span class="mo_ldap_local_login_settings_premium_tooltip mo_ldap_local_tooltip">
+					<span class="mo_ldap_local_d_inline mo_ldap_input_label_text"><?php echo esc_html__( 'Add/Remove user to/from groups in LDAP server when respective user role changed in WordPress', 'ldap-login-for-intranet-sites' ); ?> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></span>
+					<span class="mo_ldap_local_tooltiptext"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> <?php echo esc_html__( 'Premium Feature', 'ldap-login-for-intranet-sites' ); ?></span>
+				</span>
+			</div>
+			<br>
+
+			<button type="button" class="mo_ldap_local_disabled_button" disabled="disabled" aria-disabled="true">
+				<?php echo esc_html__( 'Sync WordPress Users', 'ldap-login-for-intranet-sites' ); ?>
 			</button>
 		</div>
 	</div>
 	<?php
 } elseif ( strcasecmp( $mo_ldap_local_current_subtab, 'ldap-to-wp-directory_sync' ) === 0 ) {
 	?>
-	<div class="mo_ldap_local_outer mo_ldap_local_premium_box">
-		<div style="top: 15%; height: 80%; right: 0;" class="mo_ldap_local_premium_role_mapping_banner mo_ldap_d_none">
-			<div><h1>Premium Plan</h1></div>
-			<div style="font-size: 16px;">This is available in premium version of the plugin</div>
-			<div class="">
-				<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
-					<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'arrow.svg' ); ?>" height="10px" width="20px"></span> Upgrade Today
-				</a>
-			</div>
-		</div>
-
-		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
-			<div class="mo_ldap_local_premium_feature_btn">
-				<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="20px" width="20px"></span> Premium Feature
-			</div>
-		</a>
+	<div class="mo_ldap_local_outer mo_ldap_local_premium_box mo_ldap_local_premium_box_no_hover">
 		<div class="mo_ldap_local_premium_feature_box">
 			<div class="mo_ldap_local_imp_exp_headings">
-				LDAP to WordPress Sync
+				<?php echo esc_html__( 'LDAP to WordPress Sync', 'ldap-login-for-intranet-sites' ); ?>
 			</div>
 			<br>
-			<div class="mo_ldap_local_md_search_conditions">
-				<input style="background: #f5f5f5; border: 1px solid #a3a3a3; border-radius: 4px; cursor: no-drop; width:20px; height: 20px !important" type="checkbox" disabled >
-				Specify Search base and Search filter
+			<div class="mo_ldap_local_login_settings_premium_row">
+				<input type="checkbox" id="mo_ldap_adv_sync_ldap_wp_search_base" class="mo_ldap_local_toggle_switch_hide" disabled="disabled" aria-disabled="true" />
+				<label for="mo_ldap_adv_sync_ldap_wp_search_base" class="mo_ldap_local_toggle_switch"></label>
+				<span class="mo_ldap_local_login_settings_premium_tooltip mo_ldap_local_tooltip">
+					<span class="mo_ldap_local_d_inline mo_ldap_input_label_text"><?php echo esc_html__( 'Specify Search base and Search filter', 'ldap-login-for-intranet-sites' ); ?> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></span>
+					<span class="mo_ldap_local_tooltiptext"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> <?php echo esc_html__( 'Premium Feature', 'ldap-login-for-intranet-sites' ); ?></span>
+				</span>
 			</div>
 			<br>
-			<div class="mo_ldap_local_input_field_container">
-				<div>LDAP to WP Sync Frequency <span style="color:red;">*</span></div>
-				<select style="background: #f5f5f5; cursor: no-drop;" class="mo_ldap_local_standerd_input mo_ldap_select_directory_server " disabled>
-					<option class="mo_ldap_select_option" value="">Daily</option>
+			<div class="mo_ldap_local_premium_control_block mo_ldap_local_input_field_container">
+				<div class="mo_ldap_local_login_settings_premium_tooltip mo_ldap_local_tooltip">
+					<div>
+						<?php echo esc_html__( 'LDAP to WP Sync Frequency', 'ldap-login-for-intranet-sites' ); ?> <span style="color:red;">*</span> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" />
+					</div>
+					<span class="mo_ldap_local_tooltiptext"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> <?php echo esc_html__( 'Premium Feature', 'ldap-login-for-intranet-sites' ); ?></span>
+				</div>
+				<select class="mo_ldap_local_standerd_input mo_ldap_select_directory_server" style="background: #f5f5f5;" disabled="disabled" aria-disabled="true">
+					<option class="mo_ldap_select_option" value=""><?php echo esc_html__( 'Daily', 'ldap-login-for-intranet-sites' ); ?></option>
 				</select>
 			</div>
 			<br>
-			<div class="mo_ldap_local_input_field_container">
-				<div>Select Timezone <span style="color:red;">*</span></div>
-				<select style="background: #f5f5f5; cursor: no-drop;" class="mo_ldap_local_standerd_input mo_ldap_select_directory_server " disabled>
-					<option class="mo_ldap_select_option" value="">Abidjan</option>
+			<div class="mo_ldap_local_premium_control_block mo_ldap_local_input_field_container">
+				<div class="mo_ldap_local_login_settings_premium_tooltip mo_ldap_local_tooltip">
+					<div>
+						<?php echo esc_html__( 'Select Timezone', 'ldap-login-for-intranet-sites' ); ?> <span style="color:red;">*</span> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" />
+					</div>
+					<span class="mo_ldap_local_tooltiptext"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> <?php echo esc_html__( 'Premium Feature', 'ldap-login-for-intranet-sites' ); ?></span>
+				</div>
+				<select class="mo_ldap_local_standerd_input mo_ldap_select_directory_server" style="background: #f5f5f5;" disabled="disabled" aria-disabled="true">
+					<option class="mo_ldap_select_option" value=""><?php echo esc_html__( 'Abidjan', 'ldap-login-for-intranet-sites' ); ?></option>
 				</select>
 			</div>
 
 			<br>
 
-			<div class="mo_ldap_local_md_search_conditions">
-				<div class="mo_ldap_local_md_dearch_conditions_box"></div>
-				Unsync WordPress Users not present in LDAP
+			<div class="mo_ldap_local_login_settings_premium_row">
+				<input type="checkbox" id="mo_ldap_adv_sync_ldap_wp_unsync" class="mo_ldap_local_toggle_switch_hide" disabled="disabled" aria-disabled="true" />
+				<label for="mo_ldap_adv_sync_ldap_wp_unsync" class="mo_ldap_local_toggle_switch"></label>
+				<span class="mo_ldap_local_login_settings_premium_tooltip mo_ldap_local_tooltip">
+					<span class="mo_ldap_local_d_inline mo_ldap_input_label_text"><?php echo esc_html__( 'Unsync WordPress Users not present in LDAP', 'ldap-login-for-intranet-sites' ); ?> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></span>
+					<span class="mo_ldap_local_tooltiptext"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> <?php echo esc_html__( 'Premium Feature', 'ldap-login-for-intranet-sites' ); ?></span>
+				</span>
 			</div>
 			<br>
-			<div class="mo_ldap_local_md_search_conditions">
-				<div class="mo_ldap_local_md_dearch_conditions_box"></div>
-				Enable Schedule Sync
+			<div class="mo_ldap_local_login_settings_premium_row">
+				<input type="checkbox" id="mo_ldap_adv_sync_ldap_wp_schedule" class="mo_ldap_local_toggle_switch_hide" disabled="disabled" aria-disabled="true" />
+				<label for="mo_ldap_adv_sync_ldap_wp_schedule" class="mo_ldap_local_toggle_switch"></label>
+				<span class="mo_ldap_local_login_settings_premium_tooltip mo_ldap_local_tooltip">
+					<span class="mo_ldap_local_d_inline mo_ldap_input_label_text"><?php echo esc_html__( 'Enable Schedule Sync', 'ldap-login-for-intranet-sites' ); ?> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></span>
+					<span class="mo_ldap_local_tooltiptext"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> <?php echo esc_html__( 'Premium Feature', 'ldap-login-for-intranet-sites' ); ?></span>
+				</span>
 			</div>
 
 			<br>
 
-			<button style="cursor: no-drop;" class="mo_ldap_local_disabled_button">
-				Save Configuration
+			<button type="button" class="mo_ldap_local_disabled_button" disabled="disabled" aria-disabled="true">
+				<?php echo esc_html__( 'Save Configuration', 'ldap-login-for-intranet-sites' ); ?>
 			</button>
 
-			<button style="cursor: no-drop;" class="mo_ldap_troubleshooting_btn mo_ldap_local_md_disabled_btn">
-				Sync Users Now
+			<button type="button" class="mo_ldap_troubleshooting_btn mo_ldap_local_md_disabled_btn" disabled="disabled" aria-disabled="true">
+				<?php echo esc_html__( 'Sync Users Now', 'ldap-login-for-intranet-sites' ); ?>
 			</button>
 		</div>
 	</div>
 	<?php
 } elseif ( strcasecmp( $mo_ldap_local_current_subtab, 'password_sync' ) === 0 ) {
 	?>
-	<div class="mo_ldap_local_outer mo_ldap_local_premium_box">
-
-		<div style="top: 22%; height: 76%; right: 0;" class="mo_ldap_local_premium_role_mapping_banner mo_ldap_d_none">
-			<div><h1>Premium Plan</h1></div>
-			<div style="font-size: 16px;">This is available in premium version of the plugin</div>
-			<div class="">
-				<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
-					<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'arrow.svg' ); ?>" height="10px" width="20px"></span> Upgrade Today
-				</a>
-			</div>
-		</div>
-
-		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
-			<div class="mo_ldap_local_premium_feature_btn">
-				<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="20px" width="20px"></span> Premium Feature
-			</div>
-		</a>
+	<div class="mo_ldap_local_outer mo_ldap_local_premium_box mo_ldap_local_premium_box_no_hover">
 		<div class="mo_ldap_local_premium_feature_box">
 			<div class="mo_ldap_local_imp_exp_headings">
-				LDAP Password Sync Configuration
+				<?php echo esc_html__( 'LDAP Password Sync Configuration', 'ldap-login-for-intranet-sites' ); ?>
 			</div>
 			<br>
-			<div class="mo_ldap_local_md_search_conditions">
-				<div class="mo_ldap_local_md_dearch_conditions_box"></div>
-				Update user password in LDAP when reset in WordPress
+			<div class="mo_ldap_local_login_settings_premium_row">
+				<input type="checkbox" id="mo_ldap_adv_sync_password_ldap_reset" class="mo_ldap_local_toggle_switch_hide" disabled="disabled" aria-disabled="true" />
+				<label for="mo_ldap_adv_sync_password_ldap_reset" class="mo_ldap_local_toggle_switch"></label>
+				<span class="mo_ldap_local_login_settings_premium_tooltip mo_ldap_local_tooltip">
+					<span class="mo_ldap_local_d_inline mo_ldap_input_label_text"><?php echo esc_html__( 'Update user password in LDAP when reset in WordPress', 'ldap-login-for-intranet-sites' ); ?> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></span>
+					<span class="mo_ldap_local_tooltiptext"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> <?php echo esc_html__( 'Premium Feature', 'ldap-login-for-intranet-sites' ); ?></span>
+				</span>
 			</div>
-			<p>Enable the above option after successfully saving the LDAP Connection Information and User Mapping Configuration.</p>
+			<p><?php echo esc_html__( 'Enable the above option after successfully saving the LDAP Connection Information and User Mapping Configuration.', 'ldap-login-for-intranet-sites' ); ?></p>
 			<br>
 
-			<button style="cursor: no-drop;" class="mo_ldap_local_disabled_button">
-				Password Sync
+			<button type="button" class="mo_ldap_local_disabled_button" disabled="disabled" aria-disabled="true">
+				<?php echo esc_html__( 'Password Sync', 'ldap-login-for-intranet-sites' ); ?>
 			</button>
 		</div>
 	</div>
 	<?php
 } elseif ( strcasecmp( $mo_ldap_local_current_subtab, 'profile_picture_sync' ) === 0 ) {
 	?>
-	<div class="mo_ldap_local_outer mo_ldap_local_premium_box">
-
-		<div style="top: 17%; height: 80%; right: 0;" class="mo_ldap_local_premium_role_mapping_banner mo_ldap_d_none">
-			<div><h1>Premium Plan</h1></div>
-			<div style="font-size: 16px;">This is available in premium version of the plugin</div>
-			<div class="">
-				<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
-					<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'arrow.svg' ); ?>" height="10px" width="20px"></span> Upgrade Today
-				</a>
-			</div>
-		</div>
-
-		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
-			<div class="mo_ldap_local_premium_feature_btn">
-				<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="20px" width="20px"></span> Premium Feature
-			</div>
-		</a>
+	<div class="mo_ldap_local_outer mo_ldap_local_premium_box mo_ldap_local_premium_box_no_hover">
 		<div class="mo_ldap_local_premium_feature_box">
 			<div class="mo_ldap_local_imp_exp_headings">
-				LDAP Profile Picture Sync
+				<?php echo esc_html__( 'LDAP Profile Picture Sync', 'ldap-login-for-intranet-sites' ); ?>
 			</div>
 			<br>
-			<div class="mo_ldap_local_md_search_conditions">
-				<div class="mo_ldap_local_md_dearch_conditions_box"></div>
-				Enable AD Profile Picture Mapping
+			<div class="mo_ldap_local_login_settings_premium_row">
+				<input type="checkbox" id="mo_ldap_adv_sync_profile_ad_mapping" class="mo_ldap_local_toggle_switch_hide" disabled="disabled" aria-disabled="true" />
+				<label for="mo_ldap_adv_sync_profile_ad_mapping" class="mo_ldap_local_toggle_switch"></label>
+				<span class="mo_ldap_local_login_settings_premium_tooltip mo_ldap_local_tooltip">
+					<span class="mo_ldap_local_d_inline mo_ldap_input_label_text"><?php echo esc_html__( 'Enable AD Profile Picture Mapping', 'ldap-login-for-intranet-sites' ); ?> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></span>
+					<span class="mo_ldap_local_tooltiptext"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> <?php echo esc_html__( 'Premium Feature', 'ldap-login-for-intranet-sites' ); ?></span>
+				</span>
 			</div>
-			<br> 
-			<div class="mo_ldap_local_md_search_conditions">
-				<div class="mo_ldap_local_md_dearch_conditions_box"></div>
-				Enable BuddyPress Profile Picture Mapping
+			<br>
+			<div class="mo_ldap_local_login_settings_premium_row">
+				<input type="checkbox" id="mo_ldap_adv_sync_profile_buddypress_mapping" class="mo_ldap_local_toggle_switch_hide" disabled="disabled" aria-disabled="true" />
+				<label for="mo_ldap_adv_sync_profile_buddypress_mapping" class="mo_ldap_local_toggle_switch"></label>
+				<span class="mo_ldap_local_login_settings_premium_tooltip mo_ldap_local_tooltip">
+					<span class="mo_ldap_local_d_inline mo_ldap_input_label_text"><?php echo esc_html__( 'Enable BuddyPress Profile Picture Mapping', 'ldap-login-for-intranet-sites' ); ?> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></span>
+					<span class="mo_ldap_local_tooltiptext"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> <?php echo esc_html__( 'Premium Feature', 'ldap-login-for-intranet-sites' ); ?></span>
+				</span>
 			</div>
-			<br> 
+			<br>
 
-			<div class="mo_ldap_local_input_field_container">
-				<br>
-				<div>Profile Photo Attribute <span style="color:red;">*</span></div>
-				<input class="mo_ldap_local_disabled_input_field mo_ldap_local_disabled_input_field_md" placeholder="Enter Profile Picture Attribute" disabled/>
+			<div class="mo_ldap_local_premium_control_block mo_ldap_local_input_field_container">
+				<div class="mo_ldap_local_login_settings_premium_tooltip mo_ldap_local_tooltip">
+					<div>
+						<?php echo esc_html__( 'Profile Photo Attribute', 'ldap-login-for-intranet-sites' ); ?> <span style="color:red;">*</span> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" />
+					</div>
+					<span class="mo_ldap_local_tooltiptext"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> <?php echo esc_html__( 'Premium Feature', 'ldap-login-for-intranet-sites' ); ?></span>
+				</div>
+				<input type="text" class="mo_ldap_local_disabled_input_field mo_ldap_local_disabled_input_field_md" placeholder="<?php echo esc_attr__( 'Enter Profile Picture Attribute', 'ldap-login-for-intranet-sites' ); ?>" disabled="disabled" aria-disabled="true" />
 			</div>
 
-			<button style="cursor: no-drop;" class="mo_ldap_local_disabled_button">
-				Sync Profile Picture 
+			<button type="button" class="mo_ldap_local_disabled_button" disabled="disabled" aria-disabled="true">
+				<?php echo esc_html__( 'Sync Profile Picture', 'ldap-login-for-intranet-sites' ); ?>
 			</button>
 		</div>
 	</div> 

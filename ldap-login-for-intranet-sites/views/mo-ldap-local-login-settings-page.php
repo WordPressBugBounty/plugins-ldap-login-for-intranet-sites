@@ -11,9 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-<div class="mo_ldap_login_settings_outer mo_ldap_outer_box">
-
-	<div>
+<div class="mo_ldap_outer_box">
+	<div class="mo_ldap_login_settings_outer">
+		<div>
 		<div class="mo_ldap_heading_container">
 			<div class="mo_ldap_local_footer_btns_container mo_ldap_local_btns_upr_space_remove">
 				<a 
@@ -81,55 +81,56 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 		</form>
 		<br>
+		</div>
 	</div>
 
-
-	<div class="mo_ldap_local_outer_login_settings mo_ldap_local_premium_box">
+	<div class="mo_ldap_local_outer mo_ldap_local_premium_box mo_ldap_local_premium_box_no_hover">
 		<div class="mo_ldap_local_premium_role_mapping_banner mo_ldap_d_none mo_ldap_local_login_settings_premium">
-			<div><h1>Premium Plan</h1></div>
-			<div style="font-size: 16px;">This is available in premium version of the plugin</div>
-			<div class="">
-				<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_upgrade_now1 mo_ldap_local_unset_link_affect">
-					<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'arrow.svg' ); ?>" height="10px" width="20px"></span> Upgrade Today
-				</a>
-			</div>
 		</div>
-
-		<a href="<?php echo esc_url( add_query_arg( array( 'tab' => 'pricing' ), $mo_ldap_local_filtered_current_page_url ) ); ?>" class="mo_ldap_local_unset_link_affect">
-			<div class="mo_ldap_local_premium_feature_btn">
-				<span><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="20px" width="20px"></span>Premium Features
-			</div>
-		</a>
-
 		<div class="mo_ldap_local_premium_feature_box">
-			<div>
-				<input type="checkbox" id="mo_ldap_local_toggle_switch_3" class="mo_ldap_local_toggle_switch_hide" disabled/>
+			<div class="mo_ldap_local_login_settings_premium_row">
+				<input type="checkbox" id="mo_ldap_local_toggle_switch_3" class="mo_ldap_local_toggle_switch_hide" disabled="disabled" aria-disabled="true" />
 				<label for="mo_ldap_local_toggle_switch_3" class="mo_ldap_local_toggle_switch"></label>
-				Authenticate WP Users from both LDAP and WordPress
+				<span class="mo_ldap_local_login_settings_premium_tooltip mo_ldap_local_tooltip">
+					<span class="mo_ldap_local_d_inline mo_ldap_input_label_text"><?php echo esc_html__( 'Authenticate WP Users from both LDAP and WordPress', 'ldap-login-for-intranet-sites' ); ?> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></span>
+					<span class="mo_ldap_local_tooltiptext"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> <?php echo esc_html__( 'Premium Feature', 'ldap-login-for-intranet-sites' ); ?></span>
+				</span>
 			</div>
 			<br>
-			<div>
-				<input type="checkbox" id="mo_ldap_local_toggle_switch_4" class="mo_ldap_local_toggle_switch_hide" disabled/>
+			<div class="mo_ldap_local_login_settings_premium_row">
+				<input type="checkbox" id="mo_ldap_local_toggle_switch_4" class="mo_ldap_local_toggle_switch_hide" disabled="disabled" aria-disabled="true" />
 				<label for="mo_ldap_local_toggle_switch_4" class="mo_ldap_local_toggle_switch"></label>
-				Enable Kerberos/NTLM Auto-Login
+				<span class="mo_ldap_local_login_settings_premium_tooltip mo_ldap_local_tooltip">
+					<span class="mo_ldap_local_d_inline mo_ldap_input_label_text"><?php echo esc_html__( 'Enable Kerberos/NTLM Auto-Login', 'ldap-login-for-intranet-sites' ); ?> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></span>
+					<span class="mo_ldap_local_tooltiptext"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> <?php echo esc_html__( 'Premium Feature', 'ldap-login-for-intranet-sites' ); ?></span>
+				</span>
 			</div>
 			<br>
-			<div>
-				<input type="checkbox" id="mo_ldap_local_toggle_switch_5" class="mo_ldap_local_toggle_switch_hide" disabled/>
+			<div class="mo_ldap_local_login_settings_premium_row">
+				<input type="checkbox" id="mo_ldap_local_toggle_switch_5" class="mo_ldap_local_toggle_switch_hide" disabled="disabled" aria-disabled="true" />
 				<label for="mo_ldap_local_toggle_switch_5" class="mo_ldap_local_toggle_switch"></label>
-				Protect all website content by login
+				<span class="mo_ldap_local_login_settings_premium_tooltip mo_ldap_local_tooltip">
+					<span class="mo_ldap_local_d_inline mo_ldap_input_label_text"><?php echo esc_html__( 'Protect all website content by login', 'ldap-login-for-intranet-sites' ); ?> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></span>
+					<span class="mo_ldap_local_tooltiptext"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> <?php echo esc_html__( 'Premium Feature', 'ldap-login-for-intranet-sites' ); ?></span>
+				</span>
 			</div>
 			<br>
 			<h3>Restrict User login by Role</h3>
 			<br>
-			<input type="checkbox" style="background:#E1E1E1;" disabled>&nbsp;Enable Restrict User login by Role
+			<div class="mo_ldap_local_login_settings_premium_row">
+				<input type="checkbox" style="background:#E1E1E1;" disabled="disabled" aria-disabled="true" />
+				<span class="mo_ldap_local_login_settings_premium_tooltip mo_ldap_local_tooltip">
+					<span class="mo_ldap_input_label_text"><?php echo esc_html__( 'Enable Restrict User login by Role', 'ldap-login-for-intranet-sites' ); ?> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></span>
+					<span class="mo_ldap_local_tooltiptext"><img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15" width="15" alt=""> <?php echo esc_html__( 'Premium Feature', 'ldap-login-for-intranet-sites' ); ?></span>
+				</span>
+			</div>
 
 			<div class="mo_ldap_test_authentication_heading">
 				Note: User with the Administrator role will not be restricted while login.
 			</div>
 
 			<br>
-			<div class="mo_ldap_local_select_roles">Select Role(s)</div>
+			<div class="mo_ldap_local_select_roles">Select Role(s) <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></div>
 			<select id="mo-ldap-directory-server" name="directory-server" class="mo_ldap_local_standerd_input mo_ldap_select_directory_server" disabled>
 				<option class="mo_ldap_select_option" value="">Select Role(s)</option>
 			<?php
@@ -143,4 +144,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 		</div>
 	</div>
+
 </div>

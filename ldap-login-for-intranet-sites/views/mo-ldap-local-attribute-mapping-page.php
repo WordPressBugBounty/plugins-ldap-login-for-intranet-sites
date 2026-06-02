@@ -92,28 +92,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 					<div id="mo_ldap_local_premium_attribute_mapping" class="mo_ldap_local_attribute_mapping_premium_feature_all_feature mo_ldap_local_premium_feature_box">
 						<div class="mo_ldap_premium_feature_each_feature">
-							<div class="mo_ldap_premium_freature_input_common mo_ldap_local_attribute_mapping_fields"><label for="phone_attribute" class="mo_ldap_input_label_text">Phone Attribute</label></div>
+							<div class="mo_ldap_premium_freature_input_common mo_ldap_local_attribute_mapping_fields"><label for="phone_attribute" class="mo_ldap_input_label_text">Phone Attribute <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 4px;" /></label></div>
 							<div class="mo_ldap_premium_freature_input_common mo_ldap_premium_feature_input mo_ldap_local_tooltip"><input type="text" id="phone_attribute" name="phone_attribute" placeholder="Enter Phone Attribute" class="mo_ldap_local_disabled_input_field" disabled><span class="mo_ldap_local_tooltiptext"> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15px" width="15px"> Premium Feature</span></div>
 						</div>
 						<div class="mo_ldap_premium_feature_each_feature">
-							<div class="mo_ldap_premium_freature_input_common mo_ldap_local_attribute_mapping_fields"><label for="first_name_attribute" class="mo_ldap_input_label_text">First Name Attribute</label></div>
+							<div class="mo_ldap_premium_freature_input_common mo_ldap_local_attribute_mapping_fields"><label for="first_name_attribute" class="mo_ldap_input_label_text">First Name Attribute <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 4px;" /></label></div>
 							<div class="mo_ldap_premium_freature_input_common mo_ldap_premium_feature_input mo_ldap_local_tooltip"><input type="text" id="first_name_attribute" name="first_name_attribute" placeholder="Enter First Name Attribute" class="mo_ldap_local_disabled_input_field" disabled> <span class="mo_ldap_local_tooltiptext"> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15px" width="15px"> Premium Feature</span> </div>
 						</div>
 						<div class="mo_ldap_premium_feature_each_feature">
-							<div class="mo_ldap_premium_freature_input_common mo_ldap_local_attribute_mapping_fields"><label for="last_name_attribute" class="mo_ldap_input_label_text">Last Name Attribute</label></div>
+							<div class="mo_ldap_premium_freature_input_common mo_ldap_local_attribute_mapping_fields"><label for="last_name_attribute" class="mo_ldap_input_label_text">Last Name Attribute <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 4px;" /></label></div>
 							<div class="mo_ldap_premium_freature_input_common mo_ldap_premium_feature_input mo_ldap_local_tooltip"><input type="text" id="last_name_attribute" name="last_name_attribute" placeholder="Enter Last Name Attribute" class="mo_ldap_local_disabled_input_field" disabled><span class="mo_ldap_local_tooltiptext"> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15px" width="15px"> Premium Feature</span></div>
 						</div>
 						<div class="mo_ldap_premium_feature_each_feature">
-							<div class="mo_ldap_premium_freature_input_common mo_ldap_local_attribute_mapping_fields"><label for="display_name_attribute" class="mo_ldap_input_label_text">Display Name Attribute</label></div>
+							<div class="mo_ldap_premium_freature_input_common mo_ldap_local_attribute_mapping_fields"><label for="display_name_attribute" class="mo_ldap_input_label_text">Display Name Attribute <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 4px;" /></label></div>
 							<div class="mo_ldap_premium_freature_input_common mo_ldap_premium_feature_input mo_ldap_local_tooltip"><input type="text" id="display_name_attribute" name="display_name_attribute" placeholder="Enter Display Name Attribute" class="mo_ldap_local_disabled_input_field" disabled><span class="mo_ldap_local_tooltiptext"> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15px" width="15px"> Premium Feature</span></div>
 						</div>
 						<div class="mo_ldap_premium_feature_each_feature">
-							<div class="mo_ldap_premium_freature_input_common mo_ldap_local_attribute_mapping_fields"><label for="nickname_attribute" class="mo_ldap_input_label_text">Nickname Attribute</label></div>
+							<div class="mo_ldap_premium_freature_input_common mo_ldap_local_attribute_mapping_fields"><label for="nickname_attribute" class="mo_ldap_input_label_text">Nickname Attribute <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 4px;" /></label></div>
 							<div class="mo_ldap_premium_freature_input_common mo_ldap_premium_feature_input mo_ldap_local_tooltip"><input type="text" id="nickname_attribute" name="nickname_attribute" placeholder="Enter Nickname Attribute" class="mo_ldap_local_disabled_input_field" disabled><span class="mo_ldap_local_tooltiptext"> <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="15px" width="15px"> Premium Feature</span></div>
 						</div>
 
 						<br></br>
-						<h3>Add custom Attributes</h3>
+						<h3>Add custom Attributes <img src="<?php echo esc_url( MO_LDAP_LOCAL_IMAGES . 'crown.svg' ); ?>" height="30" width="30" alt="" style="vertical-align: middle; margin-left: 6px;" /></h3>
 						<p class="mo_ldap_local_custom_attri_msg">Enter custom LDAP attributes you wish to be included in the user profile</p>
 
 						<div class="mo_ldap_local_adding_custom_attributes">

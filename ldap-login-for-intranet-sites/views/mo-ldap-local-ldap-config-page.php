@@ -222,7 +222,7 @@ if ( strcasecmp( $mo_ldap_local_active_step, '1' ) === 0 ) {
 					</div>
 				</div>
 				<div> 
-				<div class="mo_ldap_local_input_field_container mo_ldap_local_input_field_row" style=" margin-top: 15px;">
+				<div class="mo_ldap_local_input_field_container mo_ldap_local_input_field_row">
 				<label for="mo_ldap_directory_server_value" class="mo_ldap_input_label_text mo_ldap_local_config_label">Directory Server <span style="color:red;">*</span></label>
 					<select name="mo_ldap_directory_server_value" id="mo_ldap_directory_server_value" onchange="showCustomDirectoryInputField()" class="mo_ldap_local_standerd_input mo_ldap_select_directory_server mo_ldap_local_select_directory_server_max_width" required>
 						<option class="mo_ldap_select_option" value="">Select</option>
