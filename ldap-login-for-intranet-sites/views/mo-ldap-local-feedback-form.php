@@ -67,38 +67,34 @@ wp_enqueue_style( 'mo_ldap_admin_plugins_page_style', MO_LDAP_LOCAL_INCLUDES . '
 					<div class="mo_ldap_local_feedback_options_container">
 						<h4 style="font-size: 14px">Please help us to improve our plugin by giving your opinion<span style="color:red;">*</span></h4>
 						<div class="mo_ldap_local_feedback_options">
-							<div>
-								<input type="checkbox" name="mo_ldap_local_feedback_options[]" value="I'll reactivate it later" class="mo_ldap_local_feedback_checkbox">
-								<label class="mo_ldap_local_dactivation_form_label">I'll reactivate it later</label>
-							</div>
-							<div>
-								<input type="checkbox" name="mo_ldap_local_feedback_options[]" value="plugin is not working" class="mo_ldap_local_feedback_checkbox"/>
-								<label class="mo_ldap_local_dactivation_form_label">The Plugin is not working</label>
-							</div>
-							<div>
-								<input type="checkbox" name="mo_ldap_local_feedback_options[]" value="Upgrading to premium version" class="mo_ldap_local_feedback_checkbox"/>
-								<label class="mo_ldap_local_dactivation_form_label">Upgrading to premium plugin</label>
-							</div>
-							<div>
-								<input type="checkbox" name="mo_ldap_local_feedback_options[]" value="Could not understand how to use" class="mo_ldap_local_feedback_checkbox"/>
-								<label class="mo_ldap_local_dactivation_form_label"> I could not understand how to use it</label>
-							</div>
-							<div>
-								<input type="checkbox" name="mo_ldap_local_feedback_options[]" value="Looking for specific feature" class="mo_ldap_local_feedback_checkbox"/>
-								<label class="mo_ldap_local_dactivation_form_label"> Looking for specific feature</label>
-							</div>
-							<div>
-								<input type="checkbox" name="mo_ldap_local_feedback_options[]" value="LDAP server connection failed" class="mo_ldap_local_feedback_checkbox"/>
-								<label class="mo_ldap_local_dactivation_form_label">LDAP server connection failed</label>
-							</div>
-							<div>
-								<input type="checkbox" name="mo_ldap_local_feedback_options[]" value="LDAP login not working" class="mo_ldap_local_feedback_checkbox"/>
-								<label class="mo_ldap_local_dactivation_form_label">LDAP login is not working</label>
-							</div>
-							<div>
-								<input type="checkbox" name="mo_ldap_local_feedback_options[]" value="other" class="mo_ldap_local_feedback_checkbox"/>
-								<label class="mo_ldap_local_dactivation_form_label">Other</label>
-							</div>
+								<div>
+									<input type="checkbox" name="mo_ldap_local_feedback_options[]" value="Upgrading to premium plugin" class="mo_ldap_local_feedback_checkbox"/>
+									<label class="mo_ldap_local_dactivation_form_label">Upgrading to premium plugin</label>
+								</div>
+								<div>
+									<input type="checkbox" name="mo_ldap_local_feedback_options[]" value="The Plugin is not working as expected" class="mo_ldap_local_feedback_checkbox"/>
+									<label class="mo_ldap_local_dactivation_form_label">The Plugin is not working as expected</label>
+								</div>
+								<div>
+									<input type="checkbox" name="mo_ldap_local_feedback_options[]" value="Could not understand how to use" class="mo_ldap_local_feedback_checkbox"/>
+									<label class="mo_ldap_local_dactivation_form_label">I could not understand how to use it</label>
+								</div>
+								<div>
+									<input type="checkbox" name="mo_ldap_local_feedback_options[]" value="Looking for specific feature" class="mo_ldap_local_feedback_checkbox"/>
+									<label class="mo_ldap_local_dactivation_form_label">Looking for specific feature</label>
+								</div>
+								<div>
+									<input type="checkbox" name="mo_ldap_local_feedback_options[]" value="I'll reactivate it later" class="mo_ldap_local_feedback_checkbox"/>
+									<label class="mo_ldap_local_dactivation_form_label">I'll reactivate it later</label>
+								</div>
+								<div>
+									<input type="checkbox" name="mo_ldap_local_feedback_options[]" value="Lack of Documentation" class="mo_ldap_local_feedback_checkbox"/>
+									<label class="mo_ldap_local_dactivation_form_label">Lack of Documentation</label>
+								</div>
+								<div>
+									<input type="checkbox" name="mo_ldap_local_feedback_options[]" value="other" class="mo_ldap_local_feedback_checkbox"/>
+									<label class="mo_ldap_local_dactivation_form_label">Other</label>
+								</div>
 						</div>
 
 						<div>					
