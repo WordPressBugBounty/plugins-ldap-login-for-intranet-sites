@@ -111,7 +111,7 @@ class OpenLDAP implements directorybase {
 	 * @return string
 	 */
 	public function get_user_search_filter( $user_info ) {
-		$this->user_search_filter = '(&(objectClass=*)(uid=' . $user_info->user_login . '))';
+		$this->user_search_filter = '(&(objectClass=*)(uid=' . ldap_escape( $user_info->user_login, '', LDAP_ESCAPE_FILTER ) . '))';
 
 		return $this->user_search_filter;
 	}
