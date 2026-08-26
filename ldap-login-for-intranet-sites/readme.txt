@@ -3,9 +3,9 @@ Contributors: miniOrange
 Donate link: https://miniorange.com
 Tags: active directory, active directory integration, ldap, ldap authentication, authentication
 Requires at least: 5.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 5.6.0
-Stable tag: 5.4.4
+Stable tag: 5.4.5
 License: Expat
 License URI: https://plugins.miniorange.com/mit-license
 
@@ -287,6 +287,9 @@ Yes. Free users receive basic support. Premium plans include priority support an
 14. Add New LDAP Server
 
 == Changelog ==
+
+= 5.4.5 =
+* Compatibility with WordPress 7.1
 
 = 5.4.4 =
 * Security Fixes
@@ -884,6 +887,9 @@ Enhanced Troubleshooting
 * this is the first release.
 
 == Upgrade Notice ==
+
+= 5.4.5 =
+* Compatibility with WordPress 7.1
 
 = 5.4.4 =
 * Security Fixes

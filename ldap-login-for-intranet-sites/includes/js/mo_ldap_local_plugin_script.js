@@ -1,7 +1,13 @@
+var server = mo_ldap_local_object.mo_ldap_directory_server_value;
+
 jQuery(document).ready(function () {
 	
 	jQuery('#authreports').DataTable({
 		order: [[2, 'desc']]
+	})
+
+	jQuery('#wptoldapsyncreports').DataTable({
+		order: [[0, 'asc']]
 	})
 
 	showOtherProductsPages();
@@ -175,6 +181,9 @@ jQuery(document).ready(function () {
 	});
 	jQuery('#mo_ldap_local_register_user').change(function () {
 		jQuery('#enable_register_user_form').submit();
+	});
+	jQuery('#mo_ldap_local_enable_ldap_add').change(function () {
+		jQuery('#enable_sync_user_form').submit();
 	});
 	jQuery("#auth_help").click(function () {
 		jQuery("#auth_troubleshoot").toggle();
@@ -471,7 +480,7 @@ jQuery(document).ready(function () {
 		jQuery('.mo_ldap_local_advanced_role_mapping_box').removeClass('mo_ldap_local_blur');
 	})
 
-	jQuery(".mo_ldap_local_premium_box").hover(function (e) {
+	jQuery(".mo_ldap_local_premium_box").not(".mo_ldap_local_premium_box_no_hover").hover(function (e) {
 		jQuery('.mo_ldap_local_premium_role_mapping_banner').removeClass('mo_ldap_d_none');
 		jQuery('.mo_ldap_local_premium_feature_box').addClass('mo_ldap_local_blur');
 		jQuery('.mo_ldap_local_advanced_role_mapping_box').addClass('mo_ldap_local_blur');
@@ -480,7 +489,7 @@ jQuery(document).ready(function () {
 		jQuery('.mo_ldap_local_premium_role_mapping_banner').addClass('mo_ldap_d_none');
 		jQuery('.mo_ldap_local_premium_feature_box').removeClass('mo_ldap_local_blur');
 		jQuery('.mo_ldap_local_advanced_role_mapping_box').removeClass('mo_ldap_local_blur');
-	})
+	});
 
 	jQuery("#mo_ldap_local_role_mapping_type_1").click(function (e) {
 		jQuery("#mo_ldap_local_advanced_role_mapping_box1").addClass("mo_ldap_d_none");
@@ -714,13 +723,15 @@ function show_custom_search_filter() {
 
 	const customSearchFilterInput = document.getElementById('custom_search_filter');
 	const selectedRadio = document.getElementById('ldap_username_attribute');
+	let objectClassFilter = (server === "freeipa") ? '(|(objectClass=person)(objectClass=user)(objectClass=posixAccount))' : '(|(objectClass=person)(objectClass=user))';
+
 	if (selectedRadio.value) {
 		if( selectedRadio.value === 'custom_ldap_attribute' ) {
 			var custom_attr_value = document.getElementById('mo_ldap_local_show_custom_field').value;
 			var single_attr = custom_attr_value.split(';')[0];
-			document.getElementById('mo_ldap_custom_search_filter_input_id').value = '(&(' + single_attr + '=?)' + '(|(objectClass=person)(objectClass=user)))';
+			document.getElementById('mo_ldap_custom_search_filter_input_id').value = '(&(' + single_attr + '=?)' + objectClassFilter + ')' ;
 		} else { 
-			document.getElementById('mo_ldap_custom_search_filter_input_id').value = '(&(' + selectedRadio.value + '=?)' + '(|(objectClass=person)(objectClass=user)))';
+			document.getElementById('mo_ldap_custom_search_filter_input_id').value = '(&(' + selectedRadio.value + '=?)' + objectClassFilter + ')';
 		}
 	}
 }
