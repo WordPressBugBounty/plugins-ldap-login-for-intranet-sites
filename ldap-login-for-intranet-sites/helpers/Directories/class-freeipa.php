@@ -149,4 +149,27 @@ class FreeIPA implements DirectoryBase {
 	public function get_attribute_set() {
 		return $this->attribute_set;
 	}
+
+	/**
+	 * Get the immutable unique identifier attribute name for FreeIPA.
+	 *
+	 * @return string
+	 */
+	public function get_unique_id_attribute() {
+		return 'ipaUniqueID';
+	}
+
+	/**
+	 * Normalize the FreeIPA ipaUniqueID. It is already a printable string, so
+	 * only trim and lowercase it for consistent storage and comparison.
+	 *
+	 * @param mixed $raw_value Raw ipaUniqueID value.
+	 * @return string
+	 */
+	public function normalize_unique_id( $raw_value ) {
+		if ( empty( $raw_value ) ) {
+			return '';
+		}
+		return strtolower( trim( $raw_value ) );
+	}
 }

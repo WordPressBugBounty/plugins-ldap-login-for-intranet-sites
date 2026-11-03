@@ -13,6 +13,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 if ( empty( get_option( 'en_save_config' ) ) || strcasecmp( get_option( 'en_save_config' ), '0' ) === 0 ) {
 	delete_option( 'mo_ldap_local_register_user' );
 	delete_option( 'mo_ldap_local_enable_admin_wp_login' );
+	delete_option( 'mo_ldap_local_enable_unique_id_login' );
 	delete_option( 'mo_ldap_local_enable_ldap_add' );
 	delete_option( 'mo_ldap_local_anonymous_bind' );
 	delete_option( 'mo_ldap_local_admin_email' );

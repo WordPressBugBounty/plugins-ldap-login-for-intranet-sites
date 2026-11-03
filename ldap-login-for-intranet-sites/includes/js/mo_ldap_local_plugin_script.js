@@ -182,6 +182,9 @@ jQuery(document).ready(function () {
 	jQuery('#mo_ldap_local_register_user').change(function () {
 		jQuery('#enable_register_user_form').submit();
 	});
+	jQuery('#mo_ldap_local_enable_unique_id_login').change(function () {
+		jQuery('#enable_unique_id_login_form').submit();
+	});
 	jQuery('#mo_ldap_local_enable_ldap_add').change(function () {
 		jQuery('#enable_sync_user_form').submit();
 	});

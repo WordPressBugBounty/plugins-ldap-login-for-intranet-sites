@@ -143,4 +143,27 @@ class Microsoft_Active_Directory implements DirectoryBase {
 	public function get_attribute_set() {
 		return $this->attribute_set;
 	}
+
+	/**
+	 * Get the immutable unique identifier attribute name for Active Directory.
+	 *
+	 * @return string
+	 */
+	public function get_unique_id_attribute() {
+		return 'objectGUID';
+	}
+
+	/**
+	 * Normalize the AD objectGUID. It is returned as raw binary, so convert it
+	 * to a stable lowercase hexadecimal string for storage and comparison.
+	 *
+	 * @param mixed $raw_value Raw binary objectGUID value.
+	 * @return string
+	 */
+	public function normalize_unique_id( $raw_value ) {
+		if ( empty( $raw_value ) ) {
+			return '';
+		}
+		return strtolower( bin2hex( $raw_value ) );
+	}
 }

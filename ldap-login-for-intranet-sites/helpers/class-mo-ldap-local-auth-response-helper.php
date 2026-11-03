@@ -52,5 +52,12 @@ if ( ! class_exists( 'Mo_Ldap_Local_Auth_Response_Helper' ) ) {
 		 * @var mixed
 		 */
 		public $profile_attributes_list;
+
+		/**
+		 * Var unique_id : immutable directory identifier (objectGUID / entryUUID / ipaUniqueID), normalized.
+		 *
+		 * @var mixed
+		 */
+		public $unique_id;
 	}
 }

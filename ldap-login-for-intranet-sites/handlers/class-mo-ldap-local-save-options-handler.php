@@ -726,6 +726,18 @@ if ( ! class_exists( 'Mo_Ldap_Local_Save_Options_Handler' ) ) {
 						update_option( 'mo_ldap_local_message', 'Auto Registering users has been disabled.' );
 						$this->utils->show_error_message();
 					}
+				} elseif ( strcmp( $post_option, 'mo_ldap_local_enable_unique_id_login' ) === 0 && check_admin_referer( 'mo_ldap_local_enable_unique_id_login' ) ) {
+
+					$enable_unique_id_login = ( isset( $_POST['mo_ldap_local_enable_unique_id_login'] ) && strcmp( sanitize_text_field( wp_unslash( $_POST['mo_ldap_local_enable_unique_id_login'] ) ), 1 ) === 0 ) ? 1 : 0;
+
+					update_option( 'mo_ldap_local_enable_unique_id_login', $enable_unique_id_login );
+					if ( $enable_unique_id_login ) {
+						update_option( 'mo_ldap_local_message', 'Mapping LDAP users to WordPress accounts using a unique LDAP identifier has been enabled.' );
+						$this->utils->show_success_message();
+					} else {
+						update_option( 'mo_ldap_local_message', 'Mapping LDAP users to WordPress accounts using a unique LDAP identifier has been disabled.' );
+						$this->utils->show_error_message();
+					}
 				} elseif ( strcmp( $post_option, 'mo_ldap_local_toggle_sync' ) === 0 && check_admin_referer( 'mo_ldap_local_toggle_sync' ) ) {
 					$enable_sync_user_wptoldap = ( isset( $_POST['mo_ldap_local_enable_ldap_add'] ) && strcmp( sanitize_text_field( wp_unslash( $_POST['mo_ldap_local_enable_ldap_add'] ) ), 1 ) === 0 ) ? 1 : 0;
 					if ( $enable_sync_user_wptoldap ) {

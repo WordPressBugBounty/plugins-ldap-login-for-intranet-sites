@@ -64,4 +64,22 @@ interface DirectoryBase {
 	 * @return array
 	 */
 	public function get_attribute_set();
+
+	/**
+	 * Get the immutable unique identifier attribute name for this directory
+	 * (e.g. objectGUID for AD, entryUUID for OpenLDAP, ipaUniqueID for FreeIPA).
+	 *
+	 * @return string
+	 */
+	public function get_unique_id_attribute();
+
+	/**
+	 * Normalize the raw unique identifier value into a consistent string used
+	 * for storage and comparison. The same normalization MUST be used wherever
+	 * the identifier is stored or matched.
+	 *
+	 * @param mixed $raw_value Raw value fetched from the directory.
+	 * @return string
+	 */
+	public function normalize_unique_id( $raw_value );
 }

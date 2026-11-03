@@ -124,6 +124,32 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login' ) ) {
 			register_deactivation_hook( MO_LDAP_LOCAL_PLUGIN_NAME, array( $this, 'mo_ldap_local_deactivate' ) );
 			add_action( 'admin_footer', array( $this, 'mo_ldap_local_feedback_request' ) );
 			add_filter( 'plugin_action_links_' . MO_LDAP_LOCAL_PLUGIN_NAME, array( $this, 'mo_ldap_local_links' ) );
+			add_action( 'admin_notices', array( $this, 'mo_ldap_local_unique_id_login_notice' ) );
+		}
+
+		/**
+		 * Function mo_ldap_local_unique_id_login_notice : Warns admins on the plugin page until unique-ID user mapping is enabled.
+		 *
+		 * @return void
+		 */
+		public function mo_ldap_local_unique_id_login_notice() {
+			if ( ! isset( $_GET['page'] ) || strcasecmp( sanitize_text_field( wp_unslash( $_GET['page'] ) ), 'mo_ldap_local_login' ) !== 0 ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Reading GET parameter to show the notice only on the plugin page, doesn't require nonce verification.
+				return;
+			}
+			if ( ! current_user_can( 'activate_plugins' ) || strcmp( (string) get_option( 'mo_ldap_local_enable_unique_id_login' ), '1' ) === 0 ) {
+				return;
+			}
+			$login_settings_url = admin_url( 'admin.php?page=mo_ldap_local_login&tab=default&subtab=login-settings' );
+			?>
+			<div class="notice notice-warning">
+				<p>
+					<strong><?php echo esc_html__( 'Security Recommendation:', 'ldap-login-for-intranet-sites' ); ?></strong>
+					<?php echo esc_html__( 'Your LDAP login settings need a security update. Please enable the recommended setting in', 'ldap-login-for-intranet-sites' ); ?>
+					<a href="<?php echo esc_url( $login_settings_url ); ?>"><?php echo esc_html__( 'Login Settings', 'ldap-login-for-intranet-sites' ); ?></a>
+					<?php echo esc_html__( 'to improve account security.', 'ldap-login-for-intranet-sites' ); ?>
+				</p>
+			</div>
+			<?php
 		}
 		/**
 		 * Function mo_ldap_local_create_sync_table : creates a table to store a wp to ldap sync reports

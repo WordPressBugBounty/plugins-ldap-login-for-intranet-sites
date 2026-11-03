@@ -149,4 +149,27 @@ class OpenLDAP implements directorybase {
 	public function get_attribute_set() {
 		return $this->attribute_set;
 	}
+
+	/**
+	 * Get the immutable unique identifier attribute name for OpenLDAP.
+	 *
+	 * @return string
+	 */
+	public function get_unique_id_attribute() {
+		return 'entryUUID';
+	}
+
+	/**
+	 * Normalize the OpenLDAP entryUUID. It is already a printable UUID string,
+	 * so only trim and lowercase it for consistent storage and comparison.
+	 *
+	 * @param mixed $raw_value Raw entryUUID value.
+	 * @return string
+	 */
+	public function normalize_unique_id( $raw_value ) {
+		if ( empty( $raw_value ) ) {
+			return '';
+		}
+		return strtolower( trim( $raw_value ) );
+	}
 }

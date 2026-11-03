@@ -91,18 +91,73 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login_Handler' ) ) {
 
 			if ( strcasecmp( $auth_response->status_message, 'LDAP_USER_BIND_SUCCESS' ) === 0 ) {
 
-				if ( username_exists( $username ) || email_exists( $username ) ) {
-					$user = get_user_by( 'login', $username );
-					if ( empty( $user ) ) {
-						$user = get_user_by( 'email', $username );
+				$unique_id_login    = strcmp( (string) get_option( 'mo_ldap_local_enable_unique_id_login' ), '1' ) === 0;
+				$ldap_unique_id     = isset( $auth_response->unique_id ) ? $auth_response->unique_id : '';
+				$profile_attributes = $auth_response->profile_attributes_list;
+
+				$user = null;
+				if ( $unique_id_login && ! empty( $ldap_unique_id ) ) {
+					$matched_users = get_users(
+						array(
+							'meta_key'   => 'mo_ldap_user_unique_id',
+							'meta_value' => $ldap_unique_id,
+							'number'     => 6,
+						)
+					);
+
+					if ( count( $matched_users ) === 1 ) {
+						$user = $matched_users[0];
+					} elseif ( count( $matched_users ) > 1 ) {
+						$linked_logins = wp_list_pluck( $matched_users, 'user_login' );
+						$shown_logins  = implode( ', ', array_map( 'esc_html', array_slice( $linked_logins, 0, 5 ) ) );
+						if ( count( $linked_logins ) > 5 ) {
+							$shown_logins .= ' and more';
+						}
+						$this->utils->mo_ldap_report_update( $username, 'ERROR', '<strong>Login Error:</strong> Multiple WordPress accounts are linked to the same LDAP user: ' . $shown_logins );
+						$error = new WP_Error();
+						$error->add( 'ambiguous_identity_error', __( '<strong>ERROR</strong>: Ambiguous account: multiple accounts are linked to your directory identity. Please contact your administrator.', 'ldap-login-for-intranet-sites' ) );
+						return $error;
 					}
-					if ( empty( $user ) ) {
+				}
+				if ( empty( $user ) && ( username_exists( $username ) || email_exists( $username ) ) ) {
+					$existing_user = get_user_by( 'login', $username );
+					if ( empty( $existing_user ) ) {
+						$existing_user = get_user_by( 'email', $username );
+					}
+
+					if ( empty( $existing_user ) ) {
 						$this->utils->mo_ldap_report_update( $username, 'ERROR', '<strong>Login Error:</strong> Invalid Username/Password combination' );
 						$error = new WP_Error();
 						$error->add( 'error_fetching_user', __( '<strong>ERROR</strong>: Invalid Username/Password combination.', 'ldap-login-for-intranet-sites' ) );
 						return $error;
 					}
 
+					if ( $unique_id_login ) {
+						$ldap_mail        = ! empty( $profile_attributes['mail'] ) ? $profile_attributes['mail'] : '';
+						$stored_unique_id = get_user_meta( $existing_user->ID, 'mo_ldap_user_unique_id', true );
+
+						if ( empty( $ldap_unique_id ) ) {
+							return $this->mo_ldap_local_identity_error( $username, 'unique_id_missing_error', 'Unique identifier (objectGUID / entryUUID / ipaUniqueID) was not received from LDAP.' );
+						}
+						if ( ! empty( $stored_unique_id ) && $stored_unique_id !== $ldap_unique_id ) {
+							return $this->mo_ldap_local_identity_error( $username, 'identity_already_linked_error', 'This WordPress account is already linked to a different LDAP user.' );
+						}
+						if ( empty( $ldap_mail ) ) {
+							return $this->mo_ldap_local_identity_error( $username, 'ldap_mail_missing_error', 'Mail attribute is empty in the LDAP entry.' );
+						}
+						if ( strcasecmp( $ldap_mail, $existing_user->user_email ) !== 0 ) {
+							return $this->mo_ldap_local_identity_error( $username, 'email_mismatch_error', 'LDAP mail (' . esc_html( $ldap_mail ) . ') does not match WordPress email (' . esc_html( $existing_user->user_email ) . ').' );
+						}
+
+						update_user_meta( $existing_user->ID, 'mo_ldap_user_unique_id', $ldap_unique_id );
+					}
+					$user = $existing_user;
+				}
+
+				/**
+				 * Existing account resolved (by identity, verified backfill, or legacy username match) - finalize login.
+				 */
+				if ( ! empty( $user ) ) {
 					if ( get_option( 'mo_ldap_local_enable_role_mapping' ) ) {
 						$new_registered_user  = false;
 						$mo_ldap_role_mapping = new Mo_Ldap_Local_Role_Mapping_Handler();
@@ -110,8 +165,6 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login_Handler' ) ) {
 					}
 
 					update_user_meta( $user->ID, 'mo_ldap_user_dn', $auth_response->user_dn, false );
-
-					$profile_attributes = $auth_response->profile_attributes_list;
 
 					$user_data['ID'] = $user->ID;
 					if ( ! empty( $profile_attributes['mail'] ) ) {
@@ -126,15 +179,19 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login_Handler' ) ) {
 
 					wp_update_user( $user_data );
 					return $user;
-				} elseif ( ! get_option( 'mo_ldap_local_register_user' ) ) {
+				}
+				if ( ! get_option( 'mo_ldap_local_register_user' ) ) {
 
 						$this->utils->mo_ldap_report_update( $username, 'ERROR', '<strong>Login Error:</strong> Your Administrator has not enabled Auto Registration. Please contact your Administrator.' );
 						$error = new WP_Error();
 						$error->add( 'registration_disabled_error', __( '<strong>ERROR</strong>: Your Administrator has not enabled Auto Registration. Please contact your Administrator.', 'ldap-login-for-intranet-sites' ) );
 						return $error;
 				} else {
-					$user_password      = wp_generate_password( 10, false );
-					$profile_attributes = $auth_response->profile_attributes_list;
+					if ( $unique_id_login && empty( $ldap_unique_id ) ) {
+						return $this->mo_ldap_local_identity_error( $username, 'unique_id_missing_error', 'Unique identifier (objectGUID / entryUUID / ipaUniqueID) was not received from LDAP. User was not created.' );
+					}
+
+					$user_password = wp_generate_password( 10, false );
 
 					$email = ! empty( $profile_attributes['mail'] ) ? $profile_attributes['mail'] : '';
 					if ( empty( $profile_attributes['mail'] ) && ! empty( $mo_ldap_local_ldap_email_domain ) ) {
@@ -143,11 +200,16 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login_Handler' ) ) {
 						}
 					}
 
+					$meta_input = array( 'mo_ldap_user_dn' => $auth_response->user_dn );
+					if ( $unique_id_login ) {
+						$meta_input['mo_ldap_user_unique_id'] = $ldap_unique_id;
+					}
+
 					$userdata = array(
 						'user_login' => $username,
 						'user_email' => $email,
 						'user_pass'  => $user_password,
-						'meta_input' => array( 'mo_ldap_user_dn' => $auth_response->user_dn ),
+						'meta_input' => $meta_input,
 					);
 
 					$user_id = wp_insert_user( $userdata );
@@ -203,6 +265,21 @@ if ( ! class_exists( 'Mo_Ldap_Local_Login_Handler' ) ) {
 				$error->add( 'UNKNOWN_ERROR', __( '<strong>ERROR</strong>: Unknown error occurred during authentication. Please contact your administrator.', 'ldap-login-for-intranet-sites' ) );
 				return $error;
 			}
+		}
+
+		/**
+		 * Function mo_ldap_local_identity_error : Log why the LDAP identity could not be verified and return a generic login error.
+		 *
+		 * @param  string $username : LDAP username.
+		 * @param  string $code : WP_Error code.
+		 * @param  string $report_message : Detailed reason shown only in the admin user report.
+		 * @return WP_Error
+		 */
+		private function mo_ldap_local_identity_error( $username, $code, $report_message ) {
+			$this->utils->mo_ldap_report_update( $username, 'ERROR', '<strong>Login Error:</strong> ' . $report_message );
+			$error = new WP_Error();
+			$error->add( $code, __( '<strong>ERROR</strong>: Your details were not found on the server. Please contact your administrator.', 'ldap-login-for-intranet-sites' ) );
+			return $error;
 		}
 	}
 }

@@ -81,6 +81,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 		</form>
 		<br>
+		<form name="enable_unique_id_login_form" id="enable_unique_id_login_form" method="post" action="">
+			<?php wp_nonce_field( 'mo_ldap_local_enable_unique_id_login' ); ?>
+			<input type="hidden" name="option" value="mo_ldap_local_enable_unique_id_login" />
+			<div>
+				<input type="checkbox" id="mo_ldap_local_enable_unique_id_login" class="mo_ldap_local_toggle_switch_hide" name="mo_ldap_local_enable_unique_id_login" value="1" <?php checked( esc_attr( strcasecmp( get_option( 'mo_ldap_local_enable_unique_id_login' ), '1' ) === 0 ) ); ?>/>
+				<label for="mo_ldap_local_enable_unique_id_login" class="mo_ldap_local_toggle_switch"></label>
+				<label for="mo_ldap_local_enable_unique_id_login" class="mo_ldap_local_d_inline mo_ldap_input_label_text">
+					Map LDAP users to WordPress accounts using a unique LDAP identifier (Recommended)
+				</label>
+			</div>
+			<div class="mo_ldap_test_authentication_heading">
+				Links each WordPress account to the LDAP user's objectGUID / entryUUID / ipaUniqueID, so a different LDAP user with the same username cannot log in to it. Turning this off is not recommended.
+			</div>
+		</form>
+		<br>
 		</div>
 	</div>
 

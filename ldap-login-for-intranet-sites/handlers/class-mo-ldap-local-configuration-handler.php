@@ -14,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use MO_LDAP\Utils\Mo_Ldap_Local_Utils;
 use MO_LDAP\Helpers\Mo_Ldap_Local_Auth_Response_Helper;
+use MO_LDAP\Helpers\Directories\Directory_Factory;
 
 if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 	/**
@@ -85,12 +86,19 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 				$email_attribute         = strtolower( get_option( 'mo_ldap_local_email_attribute' ) );
 				$search_filter_attribute = strtolower( get_option( 'Filter_search' ) );
 
+				$directory_server_value = get_option( 'mo_ldap_directory_server_value' );
+				$current_directory      = ( new Directory_Factory() )->select_directory_system( $directory_server_value );
+				$unique_id_attribute    = $current_directory->get_unique_id_attribute();
+
 				$attr = array();
 				if ( isset( $email_attribute ) && ! empty( $email_attribute ) ) {
 					array_push( $attr, $email_attribute );
 				}
 				if ( isset( $search_filter_attribute ) && ! empty( $search_filter_attribute ) ) {
 					array_push( $attr, $search_filter_attribute );
+				}
+				if ( ! empty( $unique_id_attribute ) ) {
+					array_push( $attr, $unique_id_attribute );
 				}
 				$username = ldap_escape( $username, '', LDAP_ESCAPE_FILTER );
 
@@ -158,6 +166,12 @@ if ( ! class_exists( 'Mo_Ldap_Local_Configuration_Handler' ) ) {
 					}
 
 					$authentication_response->profile_attributes_list = $profile_attributes;
+					if ( ! empty( $unique_id_attribute ) ) {
+						$unique_id_values = ldap_get_values_len( $ldapconn, $info, $unique_id_attribute );
+						if ( is_array( $unique_id_values ) && isset( $unique_id_values[0] ) ) {
+							$authentication_response->unique_id = $current_directory->normalize_unique_id( $unique_id_values[0] );
+						}
+					}
 				}
 				return $authentication_response;
 			} else {

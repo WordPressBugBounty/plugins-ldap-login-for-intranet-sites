@@ -165,7 +165,7 @@ if ( ! class_exists( 'Mo_Ldap_Local_Utils' ) ) {
 						'user_name'   => $username,
 						'time'        => current_time( 'mysql' ),
 						'ldap_status' => $status,
-						'ldap_error'  => $ldap_error,
+						'ldap_error'  => mb_substr( $ldap_error, 0, 250 ),
 
 					),
 					array( '%s', '%s', '%s', '%s' )
